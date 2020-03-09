@@ -91,6 +91,17 @@ return [
                     'sortable' => TRUE,
                     'form' => [],
                 ],
+                'config_data[condition_match_type]' => [
+                    'tab' => 'Conditions',
+                    'type' => 'radiolist',
+                    'context' => ['edit', 'preview'],
+                    'inlineMode' => TRUE,
+                    'default' => 'all',
+                    'options' => [
+                        'all' => 'lang:igniter.automation::default.text_condition_match_all',
+                        'any' => 'lang:igniter.automation::default.text_condition_match_any',
+                    ],
+                ],
                 '_condition' => [
                     'tab' => 'Conditions',
                     'label' => 'lang:igniter.automation::default.label_conditions',

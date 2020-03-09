@@ -5,7 +5,7 @@ namespace Igniter\Automation\AutomationRules\Actions;
 use Admin\Models\Staff_groups_model;
 use Admin\Models\Staffs_model;
 use ApplicationException;
-use Igniter\EventRules\Classes\BaseAction;
+use Igniter\Automation\Classes\BaseAction;
 use Mail;
 use System\Models\Mail_templates_model;
 

@@ -7,6 +7,8 @@ return [
     'text_condition_form_name' => 'Automation Rule Condition',
     'text_tab_general' => 'General',
     'text_empty' => 'No added automations',
+    'text_condition_match_any' => 'Match ANY of the below',
+    'text_condition_match_all' => 'Match ALL of the below',
 
     'column_event' => 'Event',
     'column_code' => 'Code',

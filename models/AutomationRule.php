@@ -52,22 +52,18 @@ class AutomationRule extends Model
         if (!$conditions = $this->conditions)
             throw new ApplicationException('Event rule is missing a condition');
 
-        $params = $this->getEventObject()->getEventParams();
-        $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
-            return $condition->getConditionObject()->isTrue($params);
-        });
+        try {
+            $params = $this->getEventObject()->getEventParams();
+            if (!$this->checkConditions($params))
+                return FALSE;
 
-        if (!$conditions->isEmpty() AND !$validConditions->count())
-            return FALSE;
-
-        $this->actions->each(function ($action) use ($params) {
-            try {
+            $this->actions->each(function ($action) use ($params) {
                 $action->triggerAction($params);
-            }
-            catch (Exception $ex) {
-                Log::error($ex);
-            }
-        });
+            });
+        }
+        catch (Exception $ex) {
+            Log::error($ex);
+        }
     }
 
     public function getEventClassOptions()
@@ -232,5 +228,23 @@ class AutomationRule extends Model
         }
 
         return $automation;
+    }
+
+    protected function checkConditions($params)
+    {
+        $conditions = $this->conditions;
+        if ($conditions->isEmpty())
+            return TRUE;
+
+        $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
+            return $condition->getConditionObject()->isTrue($params);
+        })->values();
+
+        $matchType = $this->config_data['condition_match_type'] ?? 'all';
+
+        if ($matchType == 'all' AND $validConditions->isEmpty())
+            return FALSE;
+
+        return $validConditions->isNotEmpty();
     }
 }
