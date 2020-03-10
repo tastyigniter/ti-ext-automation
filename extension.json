@@ -2,7 +2,7 @@
   "code": "igniter.automation",
   "name": "Automation",
   "description": "Configure automation rules to be triggered when other specific actions have taken place.",
-  "version": "v1.0.0",
+  "version": "v1.0.1",
   "author": "SamPoyigi",
   "icon": {
     "class": "fa fa-tasks",
