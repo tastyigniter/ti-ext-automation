@@ -212,7 +212,7 @@ class AutomationRule extends Model
             return;
 
         $automation = new self;
-        $automation->status = 1;
+        $automation->status = 0;
         $automation->is_custom = 0;
         $automation->code = $code;
         $automation->name = array_get($preset, 'name');

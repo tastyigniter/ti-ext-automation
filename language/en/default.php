@@ -30,4 +30,12 @@ return [
     'help_event' => 'This rule is triggered by the selected system event',
     'help_actions' => 'Choose one or more actions to perform when this automation is triggered',
     'help_conditions' => 'Only process the actions when ALL the conditions are TRUE.',
+
+    'webhook' => [
+        'label_webhooks' => 'Webhooks',
+        'label_url' => 'Url',
+
+        'help_webhooks' => 'Webhooks allow you to set up integrations, which triggers when certain events occur within TastyIgniter. When an event is triggered, a HTTP POST payload is sent to the webhook\'s URL. Webhooks can be used to push new orders to your POS.',
+        'help_url' => 'A POST request will be sent to the URL with details of the subscribed events. Data format will be JSON',
+    ],
 ];
