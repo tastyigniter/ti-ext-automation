@@ -51,7 +51,6 @@ class Extension extends BaseExtension
             'actions' => [
                 \Igniter\Automation\AutomationRules\Actions\AssignToGroup::class,
                 \Igniter\Automation\AutomationRules\Actions\SendMailTemplate::class,
-                \Igniter\Automation\AutomationRules\Actions\SendWebhook::class,
             ],
             'conditions' => [],
         ];
