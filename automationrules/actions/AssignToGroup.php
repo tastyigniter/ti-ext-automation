@@ -2,6 +2,7 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Admin\ActivityTypes\AssigneeUpdated;
 use Admin\Models\Staff_groups_model;
 use Admin\Traits\Assignable;
 use Igniter\Automation\Classes\BaseAction;
@@ -35,14 +36,18 @@ class AssignToGroup extends BaseAction
         if (!$groupId = $this->model->staff_group_id)
             throw new ApplicationException('Missing valid staff group to assign to.');
 
-        $assignable = array_get($params, 'order', array_get($params, 'reservation'));
-
-        if (!in_array(Assignable::class, class_uses_recursive(get_class($assignable))))
-            return;
-
         if (!$assigneeGroup = Staff_groups_model::find($groupId))
             throw new ApplicationException('Invalid staff group to assign to.');
 
-        $assignable->assignTo($assigneeGroup);
+        if (!$assigneeGroup->autoAssignEnabled())
+            throw new ApplicationException('The staff group auto assignment must be enabled to use with automations');
+
+        $assignable = array_get($params, 'order', array_get($params, 'reservation'));
+        if (!in_array(Assignable::class, class_uses_recursive(get_class($assignable))))
+            throw new ApplicationException('Missing assignable model.');
+
+        $log = $assignable->assignToGroup($assigneeGroup);
+
+        AssigneeUpdated::log($log);
     }
 }
