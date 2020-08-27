@@ -1,4 +1,6 @@
-<?php namespace Igniter\Automation\Jobs;
+<?php
+
+namespace Igniter\Automation\Jobs;
 
 use Igniter\Automation\Classes\EventManager;
 

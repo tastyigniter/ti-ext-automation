@@ -55,7 +55,7 @@ class RuleCondition extends Model
     /**
      * Extends this model with the condition class
      * @param string $class Class name
-     * @return boolean
+     * @return bool
      */
     public function applyConditionClass($class = null)
     {

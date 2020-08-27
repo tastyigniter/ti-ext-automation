@@ -1,4 +1,6 @@
-<?php namespace Igniter\Automation;
+<?php
+
+namespace Igniter\Automation;
 
 use Admin\Widgets\Form;
 use Event;
