@@ -71,7 +71,7 @@ class RuleAction extends Model
     /**
      * Extends this model with the action class
      * @param string $class Class name
-     * @return boolean
+     * @return bool
      */
     public function applyActionClass($class = null)
     {

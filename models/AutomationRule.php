@@ -135,7 +135,7 @@ class AutomationRule extends Model
     /**
      * Extends this class with the event class
      * @param string $class Class name
-     * @return boolean
+     * @return bool
      */
     public function applyEventClass($class = null)
     {
