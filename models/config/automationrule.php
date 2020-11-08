@@ -67,32 +67,36 @@ return [
                 'type' => 'select',
                 'comment' => 'lang:igniter.automation::default.help_event',
             ],
+            'name' => [
+                'label' => 'lang:admin::lang.label_name',
+                'type' => 'text',
+                'context' => ['edit', 'preview'],
+                'span' => 'left',
+            ],
+            'code' => [
+                'label' => 'lang:igniter.automation::default.label_code',
+                'type' => 'text',
+                'context' => ['edit', 'preview'],
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+            'status' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+                'default' => TRUE,
+                'context' => ['edit', 'preview'],
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+            'description' => [
+                'context' => ['edit', 'preview'],
+                'type' => 'hidden',
+            ],
         ],
         'tabs' => [
             'fields' => [
-                '_action' => [
-                    'tab' => 'Actions',
-                    'label' => 'lang:igniter.automation::default.label_actions',
-                    'type' => 'select',
-                    'context' => ['edit', 'preview'],
-                    'placeholder' => 'lang:admin::lang.text_select',
-                    'comment' => 'lang:igniter.automation::default.help_actions',
-                    'attributes' => [
-                        'data-request' => 'onLoadCreateActionForm',
-                        'data-request-success' => '$(\'[data-control="connector"]\').connector();',
-                    ],
-                ],
-                'actions' => [
-                    'tab' => 'Actions',
-                    'type' => 'connector',
-                    'context' => ['edit', 'preview'],
-                    'formName' => 'lang:igniter.automation::default.text_action_form_name',
-                    'popupSize' => 'modal-lg',
-                    'sortable' => TRUE,
-                    'form' => [],
-                ],
                 'config_data[condition_match_type]' => [
-                    'tab' => 'Conditions',
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
                     'type' => 'radiolist',
                     'context' => ['edit', 'preview'],
                     'inlineMode' => TRUE,
@@ -103,8 +107,7 @@ return [
                     ],
                 ],
                 '_condition' => [
-                    'tab' => 'Conditions',
-                    'label' => 'lang:igniter.automation::default.label_conditions',
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
                     'type' => 'select',
                     'context' => ['edit', 'preview'],
                     'placeholder' => 'lang:admin::lang.text_select',
@@ -115,7 +118,7 @@ return [
                     ],
                 ],
                 'conditions' => [
-                    'tab' => 'Conditions',
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
                     'type' => 'connector',
                     'context' => ['edit', 'preview'],
                     'formName' => 'lang:igniter.automation::default.text_condition_form_name',
@@ -155,32 +158,44 @@ return [
                     ],
                 ],
 
-                'name' => [
-                    'tab' => 'Settings',
-                    'label' => 'lang:admin::lang.label_name',
-                    'type' => 'text',
+                '_action' => [
+                    'tab' => 'lang:igniter.automation::default.label_actions',
+                    'type' => 'select',
                     'context' => ['edit', 'preview'],
-                    'span' => 'left',
+                    'placeholder' => 'lang:admin::lang.text_select',
+                    'comment' => 'lang:igniter.automation::default.help_actions',
+                    'attributes' => [
+                        'data-request' => 'onLoadCreateActionForm',
+                        'data-request-success' => '$(\'[data-control="connector"]\').connector();',
+                    ],
                 ],
-                'code' => [
-                    'tab' => 'Settings',
-                    'label' => 'lang:igniter.automation::default.label_code',
-                    'type' => 'text',
+                'actions' => [
+                    'tab' => 'lang:igniter.automation::default.label_actions',
+                    'type' => 'connector',
                     'context' => ['edit', 'preview'],
-                    'span' => 'right',
+                    'formName' => 'lang:igniter.automation::default.text_action_form_name',
+                    'popupSize' => 'modal-lg',
+                    'sortable' => TRUE,
+                    'form' => [],
                 ],
-                'description' => [
-                    'tab' => 'Settings',
-                    'label' => 'lang:admin::lang.label_description',
-                    'context' => ['edit', 'preview'],
-                    'type' => 'textarea',
-                ],
-                'status' => [
-                    'tab' => 'Settings',
-                    'label' => 'lang:admin::lang.label_status',
-                    'type' => 'switch',
-                    'default' => TRUE,
-                    'context' => ['edit', 'preview'],
+
+                'logs' => [
+                    'tab' => 'lang:igniter.automation::default.text_tab_logs',
+                    'type' => 'datatable',
+                    'columns' => [
+                        'created_since' => [
+                            'title' => 'lang:igniter.automation::default.column_time_date',
+                        ],
+                        'status_name' => [
+                            'title' => 'lang:igniter.automation::default.column_status',
+                        ],
+                        'action_name' => [
+                            'title' => 'lang:igniter.automation::default.column_action_name',
+                        ],
+                        'message' => [
+                            'title' => 'lang:igniter.automation::default.column_message',
+                        ],
+                    ],
                 ],
             ],
         ],

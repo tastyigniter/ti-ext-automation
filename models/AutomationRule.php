@@ -2,14 +2,12 @@
 
 namespace Igniter\Automation\Models;
 
-use ApplicationException;
 use Exception;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Automation\Classes\BaseEvent;
 use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
-use Illuminate\Support\Facades\Log;
 use Model;
 
 class AutomationRule extends Model
@@ -28,6 +26,7 @@ class AutomationRule extends Model
         'hasMany' => [
             'conditions' => [RuleCondition::class, 'delete' => TRUE],
             'actions' => [RuleAction::class, 'delete' => TRUE],
+            'logs' => [AutomationLog::class, 'delete' => TRUE],
         ],
     ];
 
@@ -49,21 +48,24 @@ class AutomationRule extends Model
      */
     public function triggerRule()
     {
-        if (!$conditions = $this->conditions)
-            throw new ApplicationException('Event rule is missing a condition');
+        if (!$this->conditions OR !$this->actions)
+            return FALSE;
 
-        try {
-            $params = $this->getEventObject()->getEventParams();
-            if (!$this->checkConditions($params))
-                return FALSE;
+        $params = $this->getEventObject()->getEventParams();
 
-            $this->actions->each(function ($action) use ($params) {
+        if (!$this->checkConditions($params))
+            return FALSE;
+
+        $this->actions->each(function ($action) use ($params) {
+            try {
                 $action->triggerAction($params);
-            });
-        }
-        catch (Exception $ex) {
-            Log::error($ex);
-        }
+
+                AutomationLog::createLog($action, 'Action performed successfully', TRUE, $params);
+            }
+            catch (Exception $ex) {
+                AutomationLog::createLog($action, $ex->getMessage(), FALSE, $params, $ex);
+            }
+        });
     }
 
     public function getEventClassOptions()
