@@ -182,6 +182,7 @@ return [
                 'logs' => [
                     'tab' => 'lang:igniter.automation::default.text_tab_logs',
                     'type' => 'datatable',
+                    'context' => ['edit', 'preview'],
                     'columns' => [
                         'created_since' => [
                             'title' => 'lang:igniter.automation::default.column_time_date',
