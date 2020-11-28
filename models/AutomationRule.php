@@ -53,19 +53,17 @@ class AutomationRule extends Model
 
         $params = $this->getEventObject()->getEventParams();
 
-        if (!$this->checkConditions($params))
-            return FALSE;
+        try {
+            if (!$this->checkConditions($params))
+                return FALSE;
 
-        $this->actions->each(function ($action) use ($params) {
-            try {
+            $this->actions->each(function ($action) use ($params) {
                 $action->triggerAction($params);
-
-                AutomationLog::createLog($action, 'Action performed successfully', TRUE, $params);
-            }
-            catch (Exception $ex) {
-                AutomationLog::createLog($action, $ex->getMessage(), FALSE, $params, $ex);
-            }
-        });
+            });
+        }
+        catch (Exception $ex) {
+            AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params, $ex);
+        }
     }
 
     public function getEventClassOptions()

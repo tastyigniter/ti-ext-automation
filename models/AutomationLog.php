@@ -41,11 +41,18 @@ class AutomationLog extends \Model
 
     protected $appends = ['action_name', 'status_name', 'created_since'];
 
-    public static function createLog(RuleAction $ruleAction, string $message, bool $isSuccess, array $params = [], $exception = [])
+    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], $exception = [])
     {
         $record = new static;
-        $record->automation_rule_id = $ruleAction->automation_rule_id;
-        $record->rule_action_id = $ruleAction->getKey();
+        if ($rule instanceof RuleAction) {
+            $record->automation_rule_id = $rule->automation_rule_id;
+            $record->rule_action_id = $rule->getKey();
+        }
+        else {
+            $record->automation_rule_id = $rule->getKey();
+            $record->rule_action_id = 0;
+        }
+
         $record->is_success = $isSuccess;
         $record->message = $message;
         $record->params = $params;
@@ -66,7 +73,7 @@ class AutomationLog extends \Model
 
     public function getActionNameAttribute($value)
     {
-        return optional($this->action)->name;
+        return optional($this->action)->name ?? '--';
     }
 
     public function getCreatedSinceAttribute($value)
