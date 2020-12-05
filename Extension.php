@@ -2,6 +2,7 @@
 
 namespace Igniter\Automation;
 
+use Admin\Models\Orders_model;
 use Admin\Widgets\Form;
 use Event;
 use Igniter\Automation\Classes\EventManager;
@@ -49,13 +50,34 @@ class Extension extends BaseExtension
     public function registerAutomationRules()
     {
         return [
-            'events' => [],
+            'events' => [
+                'automation.order.schedule.hourly' => \Igniter\Automation\AutomationRules\Events\OrderSchedule::class,
+            ],
             'actions' => [
                 \Igniter\Automation\AutomationRules\Actions\AssignToGroup::class,
                 \Igniter\Automation\AutomationRules\Actions\SendMailTemplate::class,
             ],
             'conditions' => [],
         ];
+    }
+
+    /**
+     * Registers scheduled tasks that are executed on a regular basis.
+     *
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
+     * @return void
+     */
+    public function registerSchedule($schedule)
+    {
+        $schedule->call(function () {
+            // Pull orders created within the last 30days
+            Orders_model::whereDate('date_added', '>=', now()->subDays(30))
+                ->get()
+                ->each(function ($order) {
+                    // Queue events instead?
+                    Event::fire('automation.order.schedule.hourly', [$order]);
+                });
+        })->name('automation-order-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
     }
 
     protected function extendActionFormFields()
