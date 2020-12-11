@@ -25,7 +25,7 @@ class RuleAction extends Model
         ],
     ];
 
-    public $casts = [
+    protected $casts = [
         'options' => 'array',
     ];
 

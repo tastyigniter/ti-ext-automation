@@ -30,7 +30,7 @@ class AutomationRule extends Model
         ],
     ];
 
-    public $casts = [
+    protected $casts = [
         'config_data' => 'array',
     ];
 

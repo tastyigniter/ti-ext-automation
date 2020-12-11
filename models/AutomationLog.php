@@ -31,7 +31,7 @@ class AutomationLog extends \Model
         'exception' => 'array',
     ];
 
-    public $casts = [
+    protected $casts = [
         'automation_rule_id' => 'integer',
         'rule_action_id' => 'integer',
         'is_success' => 'boolean',
