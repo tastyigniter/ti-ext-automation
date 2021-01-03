@@ -80,5 +80,4 @@ class AutomationLog extends \Model
     {
         return $this->created_at ? time_elapsed($this->created_at) : null;
     }
-
 }
