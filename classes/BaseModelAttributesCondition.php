@@ -2,6 +2,8 @@
 
 namespace Igniter\Automation\Classes;
 
+use Illuminate\Support\Str;
+
 class BaseModelAttributesCondition extends BaseCondition
 {
     protected $modelClass;
@@ -112,7 +114,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $attribute = array_get($subCondition, 'attribute');
         $operator = array_get($subCondition, 'operator');
         $conditionValue = mb_strtolower(trim(array_get($subCondition, 'value')));
-        $modelValue = mb_strtolower(trim($model->{$attribute}));
+        $modelValue = $this->getModelEvalAttribute($model, $attribute);
 
         if ($operator == 'is')
             return $modelValue == $conditionValue;
@@ -139,5 +141,15 @@ class BaseModelAttributesCondition extends BaseCondition
             return $modelValue < $conditionValue;
 
         return FALSE;
+    }
+
+    protected function getModelEvalAttribute($model, $attribute)
+    {
+        $value = $model->{$attribute};
+
+        if (method_exists($this, 'get'.Str::studly($attribute).'Attribute'))
+            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value);
+
+        return mb_strtolower(trim($value));
     }
 }
