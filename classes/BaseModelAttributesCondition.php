@@ -148,7 +148,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $value = $model->{$attribute};
 
         if (method_exists($this, 'get'.Str::studly($attribute).'Attribute'))
-            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value);
+            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model);
 
         return mb_strtolower(trim($value));
     }
