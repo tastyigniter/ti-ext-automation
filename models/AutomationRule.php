@@ -242,8 +242,8 @@ class AutomationRule extends Model
 
         $matchType = $this->config_data['condition_match_type'] ?? 'all';
 
-        if ($matchType == 'all' AND $validConditions->isEmpty())
-            return FALSE;
+        if ($matchType == 'all')
+            return $conditions->count() === $validConditions->count();
 
         return $validConditions->isNotEmpty();
     }
