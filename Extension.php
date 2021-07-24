@@ -4,8 +4,8 @@ namespace Igniter\Automation;
 
 use Admin\Models\Orders_model;
 use Admin\Widgets\Form;
-use Event;
 use Igniter\Automation\Classes\EventManager;
+use Illuminate\Support\Facades\Event;
 use System\Classes\BaseExtension;
 
 /**

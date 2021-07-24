@@ -4,9 +4,9 @@ namespace Igniter\Automation\AutomationRules\Actions;
 
 use Admin\Models\Staff_groups_model;
 use Admin\Models\Staffs_model;
-use ApplicationException;
 use Igniter\Automation\Classes\BaseAction;
-use Mail;
+use Igniter\Flame\Exception\ApplicationException;
+use Illuminate\Support\Facades\Mail;
 use System\Models\Mail_templates_model;
 
 class SendMailTemplate extends BaseAction

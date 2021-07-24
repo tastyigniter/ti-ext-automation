@@ -4,7 +4,7 @@ namespace Igniter\Automation\Models;
 
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
-use SystemException;
+use Igniter\Flame\Exception\SystemException;
 
 class RuleAction extends Model
 {

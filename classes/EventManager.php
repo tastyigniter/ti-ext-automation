@@ -2,12 +2,12 @@
 
 namespace Igniter\Automation\Classes;
 
-use App;
-use Event;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
-use Queue;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 
 class EventManager
 {

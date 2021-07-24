@@ -6,9 +6,9 @@ use Exception;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Automation\Classes\BaseEvent;
+use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
-use Model;
 
 class AutomationRule extends Model
 {

@@ -2,9 +2,9 @@
 
 namespace Igniter\Automation\Controllers;
 
-use AdminMenu;
-use ApplicationException;
+use Admin\Facades\AdminMenu;
 use Igniter\Automation\Models\AutomationRule;
+use Igniter\Flame\Exception\ApplicationException;
 
 /**
  * Automation Admin Controller
