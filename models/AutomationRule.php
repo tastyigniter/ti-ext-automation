@@ -226,6 +226,15 @@ class AutomationRule extends Model
             $ruleAction->automation_rule_id = $automation->getKey();
             $ruleAction->save();
         }
+        
+        $conditions = array_get($preset, 'conditions', []);
+        foreach ($conditions as $conditionClass => $config) {
+            $ruleCondition = new RuleCondition;
+            $ruleCondition->options = (object)$config;
+            $ruleCondition->class_name = $conditionClass;
+            $ruleCondition->automation_rule_id = $automation->getKey();
+            $ruleCondition->save();
+        }
 
         return $automation;
     }
