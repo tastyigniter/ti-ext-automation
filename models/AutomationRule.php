@@ -226,7 +226,7 @@ class AutomationRule extends Model
             $ruleAction->automation_rule_id = $automation->getKey();
             $ruleAction->save();
         }
-        
+
         $conditions = array_get($preset, 'conditions', []);
         foreach ($conditions as $conditionClass => $config) {
             $ruleCondition = new RuleCondition;
