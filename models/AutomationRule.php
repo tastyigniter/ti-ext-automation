@@ -230,7 +230,7 @@ class AutomationRule extends Model
         $conditions = array_get($preset, 'conditions', []);
         foreach ($conditions as $conditionClass => $config) {
             $ruleCondition = new RuleCondition;
-            $ruleCondition->options = (object)$config;
+            $ruleCondition->options = $config;
             $ruleCondition->class_name = $conditionClass;
             $ruleCondition->automation_rule_id = $automation->getKey();
             $ruleCondition->save();
