@@ -2,9 +2,10 @@
 
 namespace Igniter\Automation\Models;
 
+use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 
-class AutomationLog extends \Model
+class AutomationLog extends Model
 {
     use Validation;
 
