@@ -45,7 +45,7 @@ class CreateAllTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('event_class');
-            $table->morphs('eventible');
+            $table->morphs('eventible', 'automation_jobs_eventible');
             $table->mediumText('payload');
             $table->timestamps();
         });
