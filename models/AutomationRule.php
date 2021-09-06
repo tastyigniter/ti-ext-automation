@@ -9,6 +9,7 @@ use Igniter\Automation\Classes\BaseEvent;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
+use Throwable;
 
 class AutomationRule extends Model
 {
@@ -48,12 +49,12 @@ class AutomationRule extends Model
      */
     public function triggerRule()
     {
-        if (!$this->conditions OR !$this->actions)
-            return FALSE;
-
-        $params = $this->getEventObject()->getEventParams();
-
         try {
+            if (!$this->conditions OR !$this->actions)
+                return FALSE;
+
+            $params = $this->getEventObject()->getEventParams();
+
             if (!$this->checkConditions($params))
                 return FALSE;
 
@@ -61,7 +62,7 @@ class AutomationRule extends Model
                 $action->triggerAction($params);
             });
         }
-        catch (Exception $ex) {
+        catch (Throwable | Exception $ex) {
             AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params, $ex);
         }
     }
