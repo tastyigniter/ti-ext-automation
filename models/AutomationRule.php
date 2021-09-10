@@ -63,7 +63,7 @@ class AutomationRule extends Model
             });
         }
         catch (Throwable | Exception $ex) {
-            AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params, $ex);
+            AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params ?? [], $ex);
         }
     }
 
