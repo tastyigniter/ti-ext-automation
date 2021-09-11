@@ -71,7 +71,7 @@ class Extension extends BaseExtension
     {
         $schedule->call(function () {
             // Pull orders created within the last 30days
-            Orders_model::where('date_added', '>=', now()->subDays(30))
+            Orders_model::where('created_at', '>=', now()->subDays(30))
                 ->get()
                 ->each(function ($order) {
                     // Queue events instead?
