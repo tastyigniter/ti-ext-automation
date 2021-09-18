@@ -2,7 +2,6 @@
 
 namespace Igniter\Automation;
 
-use Admin\Models\Orders_model;
 use Admin\Widgets\Form;
 use Igniter\Automation\Classes\EventManager;
 use Illuminate\Support\Facades\Event;
@@ -52,6 +51,7 @@ class Extension extends BaseExtension
         return [
             'events' => [
                 'automation.order.schedule.hourly' => \Igniter\Automation\AutomationRules\Events\OrderSchedule::class,
+                'automation.reservation.schedule.hourly' => \Igniter\Automation\AutomationRules\Events\ReservationSchedule::class,
             ],
             'actions' => [
                 \Igniter\Automation\AutomationRules\Actions\AssignToGroup::class,
@@ -71,13 +71,13 @@ class Extension extends BaseExtension
     {
         $schedule->call(function () {
             // Pull orders created within the last 30days
-            Orders_model::where('created_at', '>=', now()->subDays(30))
-                ->get()
-                ->each(function ($order) {
-                    // Queue events instead?
-                    Event::fire('automation.order.schedule.hourly', [$order]);
-                });
+            EventManager::fireOrderScheduleEvents();
         })->name('automation-order-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
+
+        $schedule->call(function () {
+            // Pull reservations booked within the last 30days
+            EventManager::fireReservationScheduleEvents();
+        })->name('automation-reservation-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
     }
 
     protected function extendActionFormFields()

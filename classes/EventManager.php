@@ -2,6 +2,8 @@
 
 namespace Igniter\Automation\Classes;
 
+use Admin\Models\Orders_model;
+use Admin\Models\Reservations_model;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
@@ -58,6 +60,24 @@ class EventManager
             $params = $eventClass::makeParamsFromEvent(func_get_args(), $eventCode);
             self::instance()->queueEvent($eventClass, $params);
         });
+    }
+
+    public static function fireOrderScheduleEvents()
+    {
+        Orders_model::where('created_at', '>=', now()->subDays(30))
+            ->get()
+            ->each(function ($order) {
+                Event::fire('automation.order.schedule.hourly', [$order]);
+            });
+    }
+
+    public static function fireReservationScheduleEvents()
+    {
+        Reservations_model::where('reserve_date', '>=', now()->subDays(30))
+            ->get()
+            ->each(function ($reservation) {
+                Event::fire('automation.reservation.schedule.hourly', [$reservation]);
+            });
     }
 
     public function queueEvent($eventClass, array $params)
