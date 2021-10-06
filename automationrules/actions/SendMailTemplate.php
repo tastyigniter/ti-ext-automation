@@ -56,14 +56,13 @@ class SendMailTemplate extends BaseAction
 
     public function triggerAction($params)
     {
-        $template = $this->model->template;
-        $recipient = $this->getRecipientAddress($params);
+        if (!$templateCode = $this->model->template)
+            throw new ApplicationException('SendMailTemplate: Missing a valid mail template');
 
-        if (!$recipient OR !$template) {
-            throw new ApplicationException('Missing valid recipient or mail template');
-        }
+        if (!$recipient = $this->getRecipientAddress($params))
+            throw new ApplicationException('SendMailTemplate: Missing a valid recipient from the event payload');
 
-        Mail::sendToMany($recipient, $template, $params);
+        Mail::sendToMany($recipient, $templateCode, $params);
     }
 
     public function getTemplateOptions()
@@ -96,8 +95,8 @@ class SendMailTemplate extends BaseAction
 
                 return [$address => $name];
             case 'restaurant':
-                $name = setting('site_name', 'Your Site');
-                $address = setting('site_email', 'admin@domain.tld');
+                $name = setting('site_name', config('app.name'));
+                $address = setting('site_email', config('mail.from.address'));
 
                 return [$address => $name];
             case 'location':
@@ -113,21 +112,26 @@ class SendMailTemplate extends BaseAction
 
                     return $staffGroup->staffs->lists('staff_name', 'staff_email');
                 }
-                else {
-                    return Staffs_model::all()->lists('staff_name', 'staff_email');
-                }
+
+                return Staffs_model::all()->lists('staff_name', 'staff_email');
             case 'customer':
                 $customer = array_get($params, 'customer');
-                if (empty($customer->email) AND empty($customer->full_name))
-                    return null;
+                if (!empty($customer->email) AND !empty($customer->full_name))
+                    return [$customer->email => $customer->full_name];
 
-                return [$customer->email => $customer->full_name];
+                $fullName = array_get($params, 'first_name').' '.array_get($params, 'last_name');
+                if (array_key_exists('email', $params))
+                    return [$params['email'] => $fullName];
+
+                return null;
             case 'staff':
                 $staff = array_get($params, 'staff');
-                if (empty($staff->staff_email) AND empty($staff->staff_name))
-                    return null;
+                if (!empty($staff->staff_email) AND !empty($staff->staff_name))
+                    return [$staff->staff_email => $staff->staff_name];
 
-                return [$staff->staff_email => $staff->staff_name];
+                $orderOrReservation = array_get($params, 'order', array_get($params, 'reservation'));
+                if ($orderOrReservation AND $staff = $orderOrReservation->assignee)
+                    return [$staff->staff_email => $staff->staff_name];
         }
     }
 }
