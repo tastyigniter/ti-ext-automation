@@ -50,7 +50,7 @@ class AutomationRule extends Model
     public function triggerRule()
     {
         try {
-            if (!$this->conditions OR !$this->actions)
+            if (!$this->conditions || !$this->actions)
                 return FALSE;
 
             $params = $this->getEventObject()->getEventParams();
@@ -193,7 +193,7 @@ class AutomationRule extends Model
 
         // Clean up non-customized rules
         foreach ($dbRules as $code => $isCustom) {
-            if ($isCustom OR !$code)
+            if ($isCustom || !$code)
                 continue;
 
             if (!array_key_exists($code, $presets))
@@ -209,7 +209,7 @@ class AutomationRule extends Model
     public static function createFromPreset($code, $preset)
     {
         $actions = array_get($preset, 'actions');
-        if (!$actions OR !is_array($actions))
+        if (!$actions || !is_array($actions))
             return;
 
         $automation = new self;

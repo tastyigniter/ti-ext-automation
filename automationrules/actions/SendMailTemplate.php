@@ -101,7 +101,7 @@ class SendMailTemplate extends BaseAction
                 return [$address => $name];
             case 'location':
                 $location = array_get($params, 'location');
-                if (empty($location->location_email) AND empty($location->location_name))
+                if (empty($location->location_email) && empty($location->location_name))
                     return null;
 
                 return [$location->location_email => $location->location_name];
@@ -116,7 +116,7 @@ class SendMailTemplate extends BaseAction
                 return Staffs_model::all()->lists('staff_name', 'staff_email');
             case 'customer':
                 $customer = array_get($params, 'customer');
-                if (!empty($customer->email) AND !empty($customer->full_name))
+                if (!empty($customer->email) && !empty($customer->full_name))
                     return [$customer->email => $customer->full_name];
 
                 $fullName = array_get($params, 'first_name').' '.array_get($params, 'last_name');
@@ -126,11 +126,11 @@ class SendMailTemplate extends BaseAction
                 return null;
             case 'staff':
                 $staff = array_get($params, 'staff');
-                if (!empty($staff->staff_email) AND !empty($staff->staff_name))
+                if (!empty($staff->staff_email) && !empty($staff->staff_name))
                     return [$staff->staff_email => $staff->staff_name];
 
                 $orderOrReservation = array_get($params, 'order', array_get($params, 'reservation'));
-                if ($orderOrReservation AND $staff = $orderOrReservation->assignee)
+                if ($orderOrReservation && $staff = $orderOrReservation->assignee)
                     return [$staff->staff_email => $staff->staff_name];
         }
     }
