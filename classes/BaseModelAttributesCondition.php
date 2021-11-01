@@ -101,7 +101,7 @@ class BaseModelAttributesCondition extends BaseCondition
             return $this->modelAttributes;
 
         $attributes = array_map(function ($info) {
-            isset($info['type']) OR $info['type'] = 'string';
+            isset($info['type']) || $info['type'] = 'string';
 
             return $info;
         }, $this->defineModelAttributes());
