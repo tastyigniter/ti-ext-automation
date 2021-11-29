@@ -14,7 +14,7 @@ class AddForeignKeyConstraintsToTables extends Migration
 
         Schema::table('igniter_automation_rule_actions', function (Blueprint $table) {
             $table->foreignId('automation_rule_id')->nullable()->change();
-            $table->foreign('automation_rule_id')
+            $table->foreign('automation_rule_id', 'igniter_actions_automation_rule_id_foreign')
                 ->references('id')
                 ->on('igniter_automation_rules')
                 ->cascadeOnDelete()
@@ -23,7 +23,7 @@ class AddForeignKeyConstraintsToTables extends Migration
 
         Schema::table('igniter_automation_rule_conditions', function (Blueprint $table) {
             $table->foreignId('automation_rule_id')->nullable()->change();
-            $table->foreign('automation_rule_id')
+            $table->foreign('automation_rule_id', 'igniter_conditions_automation_rule_id_foreign')
                 ->references('id')
                 ->on('igniter_automation_rules')
                 ->cascadeOnDelete()
