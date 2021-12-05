@@ -51,7 +51,7 @@ class AutomationLog extends Model
         }
         else {
             $record->automation_rule_id = $rule->getKey();
-            $record->rule_action_id = 0;
+            $record->rule_action_id = null;
         }
 
         $record->is_success = $isSuccess;
