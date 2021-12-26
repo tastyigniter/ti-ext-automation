@@ -25,7 +25,7 @@ class AutomationLog extends Model
 
     public $rules = [
         'automation_rule_id' => 'integer',
-        'rule_action_id' => 'integer',
+        'rule_action_id' => 'nullable|integer',
         'is_success' => 'boolean',
         'message' => 'string',
         'params' => 'array',
