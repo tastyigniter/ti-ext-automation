@@ -38,9 +38,9 @@ class AutomationRule extends Model
     protected $purgeable = ['actions', 'conditions'];
 
     public $rules = [
-        'name' => 'sometimes|required|string',
-        'code' => 'sometimes|required|alpha_dash|unique:igniter_automation_rules,code',
-        'event_class' => 'required',
+        'name' => ['sometimes', 'required', 'string'],
+        'code' => ['sometimes', 'required', 'alpha_dash', 'unique:igniter_automation_rules,code'],
+        'event_class' => ['required'],
     ];
 
     /**
@@ -62,7 +62,7 @@ class AutomationRule extends Model
                 $action->triggerAction($params);
             });
         }
-        catch (Throwable|Exception $ex) {
+        catch (Throwable | Exception $ex) {
             AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params ?? [], $ex);
         }
     }
