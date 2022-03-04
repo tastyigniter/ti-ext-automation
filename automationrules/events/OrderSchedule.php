@@ -2,7 +2,7 @@
 
 namespace Igniter\Automation\AutomationRules\Events;
 
-use Admin\Models\Orders_model;
+use Admin\Models\Order;
 use Igniter\Automation\Classes\BaseEvent;
 
 class OrderSchedule extends BaseEvent
@@ -20,7 +20,7 @@ class OrderSchedule extends BaseEvent
     {
         $params = [];
         $order = array_get($args, 0);
-        if ($order instanceof Orders_model)
+        if ($order instanceof Order)
             $params = $order->mailGetData();
 
         return $params;
