@@ -2,7 +2,7 @@
 
 namespace Igniter\Automation\AutomationRules\Events;
 
-use Admin\Models\Reservations_model;
+use Admin\Models\Reservation;
 use Igniter\Automation\Classes\BaseEvent;
 
 class ReservationSchedule extends BaseEvent
@@ -20,7 +20,7 @@ class ReservationSchedule extends BaseEvent
     {
         $params = [];
         $reservation = array_get($args, 0);
-        if ($reservation instanceof Reservations_model)
+        if ($reservation instanceof Reservation)
             $params = $reservation->mailGetData();
 
         return $params;

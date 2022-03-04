@@ -2,8 +2,8 @@
 
 namespace Igniter\Automation\Classes;
 
-use Admin\Models\Orders_model;
-use Admin\Models\Reservations_model;
+use Admin\Models\Order;
+use Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
@@ -64,7 +64,7 @@ class EventManager
 
     public static function fireOrderScheduleEvents()
     {
-        Orders_model::where('created_at', '>=', now()->subDays(30))
+        Order::where('created_at', '>=', now()->subDays(30))
             ->get()
             ->each(function ($order) {
                 Event::fire('automation.order.schedule.hourly', [$order]);
@@ -73,7 +73,7 @@ class EventManager
 
     public static function fireReservationScheduleEvents()
     {
-        Reservations_model::where('reserve_date', '>=', now()->subDays(30))
+        Reservation::where('reserve_date', '>=', now()->subDays(30))
             ->get()
             ->each(function ($reservation) {
                 Event::fire('automation.reservation.schedule.hourly', [$reservation]);
@@ -131,10 +131,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-            'isAdmin' => App::runningInAdmin() ? 1 : 0,
-            'isConsole' => App::runningInConsole() ? 1 : 0,
-            'appLocale' => App::getLocale(),
-        ] + $globals;
+                'isAdmin' => App::runningInAdmin() ? 1 : 0,
+                'isConsole' => App::runningInConsole() ? 1 : 0,
+                'appLocale' => App::getLocale(),
+            ] + $globals;
     }
 
     /**
