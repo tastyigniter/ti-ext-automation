@@ -34,7 +34,7 @@ class SendMailTemplate extends BaseAction
                 'staff_group' => [
                     'label' => 'lang:igniter.user::default.label_send_to_staff_group',
                     'type' => 'select',
-                    'options' => ['Admin\Models\UserGroup', 'getDropdownOptions'],
+                    'options' => [\Admin\Models\UserGroup::class, 'getDropdownOptions'],
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
