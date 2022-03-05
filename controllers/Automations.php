@@ -12,8 +12,8 @@ use Igniter\Flame\Exception\ApplicationException;
 class Automations extends \Admin\Classes\AdminController
 {
     public $implement = [
-        'Admin\Actions\FormController',
-        'Admin\Actions\ListController',
+        \Admin\Actions\FormController::class,
+        \Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
