@@ -25,7 +25,7 @@ class AssignToGroup extends BaseAction
                 'staff_group_id' => [
                     'label' => 'lang:igniter.automation::default.label_assign_to_staff_group',
                     'type' => 'select',
-                    'options' => ['Admin\Models\Staff_groups_model', 'getDropdownOptions'],
+                    'options' => [\Admin\Models\Staff_groups_model::class, 'getDropdownOptions'],
                 ],
             ],
         ];

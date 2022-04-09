@@ -12,13 +12,13 @@ use Igniter\Flame\Exception\ApplicationException;
 class Automations extends \Admin\Classes\AdminController
 {
     public $implement = [
-        'Admin\Actions\FormController',
-        'Admin\Actions\ListController',
+        \Admin\Actions\FormController::class,
+        \Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
         'list' => [
-            'model' => 'Igniter\Automation\Models\AutomationRule',
+            'model' => \Igniter\Automation\Models\AutomationRule::class,
             'title' => 'lang:igniter.automation::default.text_title',
             'emptyMessage' => 'lang:igniter.automation::default.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -28,7 +28,7 @@ class Automations extends \Admin\Classes\AdminController
 
     public $formConfig = [
         'name' => 'lang:igniter.automation::default.text_form_name',
-        'model' => 'Igniter\Automation\Models\AutomationRule',
+        'model' => \Igniter\Automation\Models\AutomationRule::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniter/automation/automations/edit/{id}',
