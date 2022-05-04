@@ -15,7 +15,7 @@ class RuleAction extends Model
      */
     protected $table = 'igniter_automation_rule_actions';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     protected $guarded = [];
 
@@ -79,7 +79,7 @@ class RuleAction extends Model
             $class = $this->class_name;
 
         if (!$class)
-            return FALSE;
+            return false;
 
         if (!$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
@@ -87,7 +87,7 @@ class RuleAction extends Model
 
         $this->class_name = $class;
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -107,7 +107,7 @@ class RuleAction extends Model
 
     protected function loadCustomData()
     {
-        $this->setRawAttributes((array)$this->getAttributes() + (array)$this->options, TRUE);
+        $this->setRawAttributes((array)$this->getAttributes() + (array)$this->options, true);
     }
 
     protected function setCustomData()

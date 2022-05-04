@@ -44,26 +44,26 @@ return [
             'event_name' => [
                 'label' => 'lang:igniter.automation::default.column_event',
                 'type' => 'text',
-                'sortable' => FALSE,
+                'sortable' => false,
             ],
             'name' => [
                 'label' => 'lang:admin::lang.label_name',
                 'type' => 'text',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'code' => [
                 'label' => 'lang:igniter.automation::default.column_code',
                 'type' => 'text',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'status' => [
                 'label' => 'lang:admin::lang.label_status',
                 'type' => 'switch',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'id' => [
                 'label' => 'lang:admin::lang.column_id',
-                'invisible' => TRUE,
+                'invisible' => true,
             ],
         ],
     ],
@@ -107,7 +107,7 @@ return [
             'status' => [
                 'label' => 'lang:admin::lang.label_status',
                 'type' => 'switch',
-                'default' => TRUE,
+                'default' => true,
                 'context' => ['edit', 'preview'],
                 'span' => 'right',
                 'cssClass' => 'flex-width',
@@ -123,7 +123,7 @@ return [
                     'tab' => 'lang:igniter.automation::default.label_conditions',
                     'type' => 'radiolist',
                     'context' => ['edit', 'preview'],
-                    'inlineMode' => TRUE,
+                    'inlineMode' => true,
                     'default' => 'all',
                     'options' => [
                         'all' => 'lang:igniter.automation::default.text_condition_match_all',
@@ -147,14 +147,14 @@ return [
                     'context' => ['edit', 'preview'],
                     'formName' => 'lang:igniter.automation::default.text_condition_form_name',
                     'popupSize' => 'modal-lg',
-                    'sortable' => TRUE,
+                    'sortable' => true,
                     'form' => [
                         'fields' => [
                             'options' => [
                                 'label' => 'lang:igniter.automation::default.label_conditions',
                                 'type' => 'repeater',
                                 'commentAbove' => 'lang:igniter.automation::default.help_conditions',
-                                'sortable' => TRUE,
+                                'sortable' => true,
                                 'form' => [
                                     'fields' => [
                                         'priority' => [
@@ -199,7 +199,7 @@ return [
                     'context' => ['edit', 'preview'],
                     'formName' => 'lang:igniter.automation::default.text_action_form_name',
                     'popupSize' => 'modal-lg',
-                    'sortable' => TRUE,
+                    'sortable' => true,
                     'form' => [],
                 ],
 
@@ -209,7 +209,7 @@ return [
                     'context' => ['edit', 'preview'],
                     'defaultSort' => ['created_at', 'desc'],
                     'searchableFields' => ['message'],
-                    'useAjax' => TRUE,
+                    'useAjax' => true,
                     'columns' => [
                         'created_since' => [
                             'title' => 'lang:igniter.automation::default.column_time_date',

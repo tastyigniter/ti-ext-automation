@@ -194,7 +194,7 @@ class BaseEvent extends AbstractBase
     {
         $results = [];
         foreach (self::findEventPresets() as $code => $definition) {
-            if (array_get($definition, 'event', FALSE) != $className)
+            if (array_get($definition, 'event', false) != $className)
                 continue;
 
             $results[$code] = $definition;

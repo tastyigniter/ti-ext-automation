@@ -14,7 +14,7 @@ class AutomationLog extends Model
      */
     protected $table = 'igniter_automation_logs';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     public $relation = [
         'belongsTo' => [

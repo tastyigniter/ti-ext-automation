@@ -79,13 +79,13 @@ class Automations extends \Admin\Classes\AdminController
     public function formExtendFields($form)
     {
         if ($form->context != 'create')
-            $form->getField('event_class')->disabled = TRUE;
+            $form->getField('event_class')->disabled = true;
     }
 
     public function formBeforeCreate($model)
     {
-        $model->is_custom = TRUE;
-        $model->status = TRUE;
+        $model->is_custom = true;
+        $model->status = true;
     }
 
     public function formValidate($model, $form)
@@ -117,7 +117,7 @@ class Automations extends \Admin\Classes\AdminController
         return [
             '#notification' => $this->makePartial('flash'),
             '#'.$formField->getId('group') => $this->widgets['form']->renderField($formField, [
-                'useContainer' => FALSE,
+                'useContainer' => false,
             ]),
         ];
     }

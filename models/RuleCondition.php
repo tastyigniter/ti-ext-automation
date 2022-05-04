@@ -11,7 +11,7 @@ class RuleCondition extends Model
      */
     protected $table = 'igniter_automation_rule_conditions';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     protected $guarded = [];
 
@@ -63,7 +63,7 @@ class RuleCondition extends Model
             $class = $this->class_name;
 
         if (!$class)
-            return FALSE;
+            return false;
 
         if (!$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
@@ -71,7 +71,7 @@ class RuleCondition extends Model
 
         $this->class_name = $class;
 
-        return TRUE;
+        return true;
     }
 
     /**
