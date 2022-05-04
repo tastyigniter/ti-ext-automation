@@ -21,13 +21,13 @@ class AutomationRule extends Model
      */
     protected $table = 'igniter_automation_rules';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     public $relation = [
         'hasMany' => [
-            'conditions' => [RuleCondition::class, 'delete' => TRUE],
-            'actions' => [RuleAction::class, 'delete' => TRUE],
-            'logs' => [AutomationLog::class, 'delete' => TRUE],
+            'conditions' => [RuleCondition::class, 'delete' => true],
+            'actions' => [RuleAction::class, 'delete' => true],
+            'logs' => [AutomationLog::class, 'delete' => true],
         ],
     ];
 
@@ -51,19 +51,19 @@ class AutomationRule extends Model
     {
         try {
             if (!$this->conditions || !$this->actions)
-                return FALSE;
+                return false;
 
             $params = $this->getEventObject()->getEventParams();
 
             if (!$this->checkConditions($params))
-                return FALSE;
+                return false;
 
             $this->actions->each(function ($action) use ($params) {
                 $action->triggerAction($params);
             });
         }
-        catch (Throwable | Exception $ex) {
-            AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params ?? [], $ex);
+        catch (Throwable|Exception $ex) {
+            AutomationLog::createLog($this, $ex->getMessage(), false, $params ?? [], $ex);
         }
     }
 
@@ -115,7 +115,7 @@ class AutomationRule extends Model
     // Scope
     //
 
-    public function scopeApplyStatus($query, $status = TRUE)
+    public function scopeApplyStatus($query, $status = true)
     {
         return $query->where('status', $status);
     }
@@ -144,7 +144,7 @@ class AutomationRule extends Model
             $class = $this->event_class;
 
         if (!$class)
-            return FALSE;
+            return false;
 
         if (!$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
@@ -152,7 +152,7 @@ class AutomationRule extends Model
 
         $this->event_class = $class;
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -244,7 +244,7 @@ class AutomationRule extends Model
     {
         $conditions = $this->conditions;
         if ($conditions->isEmpty())
-            return TRUE;
+            return true;
 
         $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
             return $condition->getConditionObject()->isTrue($params);
