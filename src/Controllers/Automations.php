@@ -2,18 +2,18 @@
 
 namespace Igniter\Automation\Controllers;
 
-use Admin\Facades\AdminMenu;
+use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Exception\ApplicationException;
 
 /**
  * Automation Admin Controller
  */
-class Automations extends \Admin\Classes\AdminController
+class Automations extends \Igniter\Admin\Classes\AdminController
 {
     public $implement = [
-        \Admin\Actions\FormController::class,
-        \Admin\Actions\ListController::class,
+        \Igniter\Admin\Actions\FormController::class,
+        \Igniter\Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [

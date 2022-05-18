@@ -30,8 +30,8 @@ return [
     'label_conditions' => 'Conditions',
     'label_status' => 'Status',
 
-    'label_assign_to_staff' => 'Assign To User',
-    'label_assign_to_staff_group' => 'Assign To User Group',
+    'label_assign_to_staff' => 'Assign To Staff',
+    'label_assign_to_staff_group' => 'Assign To Staff Group',
 
     'help_event' => 'This rule is triggered by the selected system event',
     'help_actions' => 'Choose one or more actions to perform when this automation is triggered',

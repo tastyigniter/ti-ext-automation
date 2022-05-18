@@ -127,17 +127,11 @@ class BaseModelAttributesCondition extends BaseCondition
         if ($operator === 'is_not')
             return $modelValue != $conditionValue;
 
-        if ($operator === 'contains') {
-            return is_array($conditionValue)
-                ? in_array($modelValue, $conditionValue) !== false
-                : mb_strpos($modelValue, $conditionValue) !== false;
-        }
+        if ($operator == 'contains')
+            return mb_strpos($modelValue, $conditionValue) !== false;
 
-        if ($operator === 'does_not_contain') {
-            return is_array($conditionValue)
-                ? in_array($modelValue, $conditionValue) === false
-                : mb_strpos($modelValue, $conditionValue) === false;
-        }
+        if ($operator == 'does_not_contain')
+            return mb_strpos($modelValue, $conditionValue) === false;
 
         if ($operator === 'equals_or_greater')
             return $modelValue >= $conditionValue;

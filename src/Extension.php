@@ -2,10 +2,10 @@
 
 namespace Igniter\Automation;
 
-use Admin\Widgets\Form;
+use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\Classes\EventManager;
+use Igniter\System\Classes\BaseExtension;
 use Illuminate\Support\Facades\Event;
-use System\Classes\BaseExtension;
 
 /**
  * Automation Extension Information File

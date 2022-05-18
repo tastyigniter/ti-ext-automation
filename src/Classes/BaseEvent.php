@@ -2,7 +2,7 @@
 
 namespace Igniter\Automation\Classes;
 
-use System\Classes\ExtensionManager;
+use Igniter\System\Classes\ExtensionManager;
 
 class BaseEvent extends AbstractBase
 {
@@ -164,5 +164,18 @@ class BaseEvent extends AbstractBase
     public static function findEventPresets()
     {
         return self::findRulesValues('presets');
+    }
+
+    public static function findEventPresetsByClass($className)
+    {
+        $results = [];
+        foreach (self::findEventPresets() as $code => $definition) {
+            if (array_get($definition, 'event', false) != $className)
+                continue;
+
+            $results[$code] = $definition;
+        }
+
+        return $results;
     }
 }

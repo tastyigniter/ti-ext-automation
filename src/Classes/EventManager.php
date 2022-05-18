@@ -2,8 +2,8 @@
 
 namespace Igniter\Automation\Classes;
 
-use Admin\Models\Order;
-use Admin\Models\Reservation;
+use Igniter\Admin\Models\Order;
+use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
