@@ -2,7 +2,7 @@
 
 namespace Igniter\Automation\AutomationRules\Events;
 
-use Admin\Models\Order;
+use Igniter\Admin\Models\Order;
 use Igniter\Automation\Classes\BaseEvent;
 
 class OrderSchedule extends BaseEvent

@@ -1,260 +1,231 @@
 <?php
 
-namespace Igniter\Automation\Models;
-
-use Exception;
-use Igniter\Automation\Classes\BaseAction;
-use Igniter\Automation\Classes\BaseCondition;
-use Igniter\Automation\Classes\BaseEvent;
-use Igniter\Flame\Database\Model;
-use Igniter\Flame\Database\Traits\Purgeable;
-use Igniter\Flame\Database\Traits\Validation;
-use Throwable;
-
-class AutomationRule extends Model
-{
-    use Validation;
-    use Purgeable;
-
-    /**
-     * @var string The database table name
-     */
-    protected $table = 'igniter_automation_rules';
-
-    public $timestamps = TRUE;
-
-    public $relation = [
-        'hasMany' => [
-            'conditions' => [RuleCondition::class, 'delete' => TRUE],
-            'actions' => [RuleAction::class, 'delete' => TRUE],
-            'logs' => [AutomationLog::class, 'delete' => TRUE],
+return [
+    'list' => [
+        'toolbar' => [
+            'buttons' => [
+                'create' => ['label' => 'lang:admin::lang.button_new', 'class' => 'btn btn-primary', 'href' => 'igniter/automation/automations/create'],
+            ],
         ],
-    ];
+        'bulkActions' => [
+            'status' => [
+                'label' => 'lang:admin::lang.list.actions.label_status',
+                'type' => 'dropdown',
+                'class' => 'btn btn-light',
+                'statusColumn' => 'status',
+                'menuItems' => [
+                    'enable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_enable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item',
+                    ],
+                    'disable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_disable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item text-danger',
+                    ],
+                ],
+            ],
+            'delete' => [
+                'label' => 'lang:admin::lang.button_delete',
+                'class' => 'btn btn-light text-danger',
+                'data-request-confirm' => 'lang:admin::lang.alert_warning_confirm',
+            ],
+        ],
+        'columns' => [
+            'edit' => [
+                'type' => 'button',
+                'iconCssClass' => 'fa fa-pencil',
+                'attributes' => [
+                    'class' => 'btn btn-edit',
+                    'href' => 'igniter/automation/automations/edit/{id}',
+                ],
+            ],
+            'event_name' => [
+                'label' => 'lang:igniter.automation::default.column_event',
+                'type' => 'text',
+                'sortable' => false,
+            ],
+            'name' => [
+                'label' => 'lang:admin::lang.label_name',
+                'type' => 'text',
+                'searchable' => true,
+            ],
+            'code' => [
+                'label' => 'lang:igniter.automation::default.column_code',
+                'type' => 'text',
+                'searchable' => true,
+            ],
+            'status' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+                'searchable' => true,
+            ],
+            'id' => [
+                'label' => 'lang:admin::lang.column_id',
+                'invisible' => true,
+            ],
+        ],
+    ],
 
-    protected $casts = [
-        'config_data' => 'array',
-    ];
+    'form' => [
+        'toolbar' => [
+            'buttons' => [
+                'back' => ['label' => 'lang:admin::lang.button_icon_back', 'class' => 'btn btn-default', 'href' => 'igniter/automation/automations'],
+                'save' => [
+                    'label' => 'lang:admin::lang.button_save',
+                    'class' => 'btn btn-primary',
+                    'data-request' => 'onSave',
+                ],
+                'saveClose' => [
+                    'label' => 'lang:admin::lang.button_save_close',
+                    'class' => 'btn btn-default',
+                    'data-request' => 'onSave',
+                    'data-request-data' => 'close:1',
+                ],
+            ],
+        ],
+        'fields' => [
+            'event_class' => [
+                'label' => 'lang:igniter.automation::default.label_event',
+                'type' => 'select',
+                'comment' => 'lang:igniter.automation::default.help_event',
+            ],
+            'name' => [
+                'label' => 'lang:admin::lang.label_name',
+                'type' => 'text',
+                'context' => ['edit', 'preview'],
+                'span' => 'left',
+            ],
+            'code' => [
+                'label' => 'lang:igniter.automation::default.label_code',
+                'type' => 'text',
+                'context' => ['edit', 'preview'],
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+            'status' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+                'default' => true,
+                'context' => ['edit', 'preview'],
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+            'description' => [
+                'context' => ['edit', 'preview'],
+                'type' => 'hidden',
+            ],
+        ],
+        'tabs' => [
+            'fields' => [
+                'config_data[condition_match_type]' => [
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
+                    'type' => 'radiolist',
+                    'context' => ['edit', 'preview'],
+                    'inlineMode' => true,
+                    'default' => 'all',
+                    'options' => [
+                        'all' => 'lang:igniter.automation::default.text_condition_match_all',
+                        'any' => 'lang:igniter.automation::default.text_condition_match_any',
+                    ],
+                ],
+                '_condition' => [
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
+                    'type' => 'select',
+                    'context' => ['edit', 'preview'],
+                    'placeholder' => 'lang:admin::lang.text_select',
+                    'comment' => 'lang:igniter.automation::default.help_conditions',
+                    'attributes' => [
+                        'data-request' => 'onLoadCreateConditionForm',
+                        'data-request-success' => '$(\'[data-control="connector"]\').connector();',
+                    ],
+                ],
+                'conditions' => [
+                    'tab' => 'lang:igniter.automation::default.label_conditions',
+                    'type' => 'connector',
+                    'context' => ['edit', 'preview'],
+                    'formName' => 'lang:igniter.automation::default.text_condition_form_name',
+                    'popupSize' => 'modal-lg',
+                    'sortable' => true,
+                    'form' => [
+                        'fields' => [
+                            'options' => [
+                                'label' => 'lang:igniter.automation::default.label_conditions',
+                                'type' => 'repeater',
+                                'commentAbove' => 'lang:igniter.automation::default.help_conditions',
+                                'sortable' => true,
+                                'form' => [
+                                    'fields' => [
+                                        'priority' => [
+                                            'label' => 'lang:igniter.automation::default.column_condition_priority',
+                                            'type' => 'hidden',
+                                        ],
+                                        'attribute' => [
+                                            'label' => 'lang:igniter.automation::default.column_condition_attribute',
+                                            'type' => 'select',
+                                            'options' => 'getAttributeOptions',
+                                        ],
+                                        'operator' => [
+                                            'label' => 'lang:igniter.automation::default.column_condition_operator',
+                                            'type' => 'select',
+                                            'options' => 'getOperatorOptions',
+                                        ],
+                                        'value' => [
+                                            'label' => 'lang:igniter.automation::default.column_condition_value',
+                                            'type' => 'text',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
 
-    protected $purgeable = ['actions', 'conditions'];
+                '_action' => [
+                    'tab' => 'lang:igniter.automation::default.label_actions',
+                    'type' => 'select',
+                    'context' => ['edit', 'preview'],
+                    'placeholder' => 'lang:admin::lang.text_select',
+                    'comment' => 'lang:igniter.automation::default.help_actions',
+                    'attributes' => [
+                        'data-request' => 'onLoadCreateActionForm',
+                        'data-request-success' => '$(\'[data-control="connector"]\').connector();',
+                    ],
+                ],
+                'actions' => [
+                    'tab' => 'lang:igniter.automation::default.label_actions',
+                    'type' => 'connector',
+                    'context' => ['edit', 'preview'],
+                    'formName' => 'lang:igniter.automation::default.text_action_form_name',
+                    'popupSize' => 'modal-lg',
+                    'sortable' => true,
+                    'form' => [],
+                ],
 
-    public $rules = [
-        'name' => ['sometimes', 'required', 'string'],
-        'code' => ['sometimes', 'required', 'alpha_dash', 'unique:igniter_automation_rules,code'],
-        'event_class' => ['required'],
-    ];
-
-    /**
-     * Kicks off this notification rule, fires the event to obtain its parameters,
-     * checks the rule conditions evaluate as true, then spins over each action.
-     */
-    public function triggerRule()
-    {
-        try {
-            if (!$this->conditions || !$this->actions)
-                return FALSE;
-
-            $params = $this->getEventObject()->getEventParams();
-
-            if (!$this->checkConditions($params))
-                return FALSE;
-
-            $this->actions->each(function ($action) use ($params) {
-                $action->triggerAction($params);
-            });
-        }
-        catch (Throwable | Exception $ex) {
-            AutomationLog::createLog($this, $ex->getMessage(), FALSE, $params ?? [], $ex);
-        }
-    }
-
-    public function getEventClassOptions()
-    {
-        return array_map(function (BaseEvent $eventObj) {
-            return $eventObj->getEventName().' - '.$eventObj->getEventDescription();
-        }, BaseEvent::findEventObjects());
-    }
-
-    public function getActionOptions()
-    {
-        return array_map(function (BaseAction $actionObj) {
-            return $actionObj->getActionName();
-        }, BaseAction::findActions());
-    }
-
-    public function getConditionOptions()
-    {
-        return array_map(function (BaseCondition $conditionObj) {
-            return $conditionObj->getConditionName();
-        }, BaseCondition::findConditions());
-    }
-
-    //
-    // Attributes
-    //
-
-    public function getEventNameAttribute()
-    {
-        return $this->getEventObject()->getEventName();
-    }
-
-    public function getEventDescriptionAttribute()
-    {
-        return $this->getEventObject()->getEventDescription();
-    }
-
-    //
-    // Events
-    //
-
-    protected function afterFetch()
-    {
-        $this->applyEventClass();
-    }
-
-    //
-    // Scope
-    //
-
-    public function scopeApplyStatus($query, $status = TRUE)
-    {
-        return $query->where('status', $status);
-    }
-
-    public function scopeApplyClass($query, $class)
-    {
-        if (!is_string($class)) {
-            $class = get_class($class);
-        }
-
-        return $query->where('event_class', $class);
-    }
-
-    //
-    // Manager
-    //
-
-    /**
-     * Extends this class with the event class
-     * @param string $class Class name
-     * @return bool
-     */
-    public function applyEventClass($class = null)
-    {
-        if (!$class)
-            $class = $this->event_class;
-
-        if (!$class)
-            return FALSE;
-
-        if (!$this->isClassExtendedWith($class)) {
-            $this->extendClassWith($class);
-        }
-
-        $this->event_class = $class;
-
-        return TRUE;
-    }
-
-    /**
-     * Returns the event class extension object.
-     * @return \Igniter\Automation\Classes\BaseEvent
-     */
-    public function getEventObject()
-    {
-        $this->applyEventClass();
-
-        return $this->asExtension($this->getEventClass());
-    }
-
-    public function getEventClass()
-    {
-        return $this->event_class;
-    }
-
-    /**
-     * Returns an array of rule codes and descriptions.
-     * @param $eventClass
-     * @return \Illuminate\Support\Collection
-     */
-    public static function listRulesForEvent($eventClass)
-    {
-        return self::applyStatus()->applyClass($eventClass)->get();
-    }
-
-    /**
-     * Synchronise all file-based rules to the database.
-     * @return void
-     */
-    public static function syncAll()
-    {
-        $presets = BaseEvent::findEventPresets();
-        $dbRules = self::pluck('is_custom', 'code')->toArray();
-        $newRules = array_diff_key($presets, $dbRules);
-
-        // Clean up non-customized rules
-        foreach ($dbRules as $code => $isCustom) {
-            if ($isCustom || !$code)
-                continue;
-
-            if (!array_key_exists($code, $presets))
-                self::whereName($code)->delete();
-        }
-
-        // Create new rules
-        foreach ($newRules as $code => $preset) {
-            self::createFromPreset($code, $preset);
-        }
-    }
-
-    public static function createFromPreset($code, $preset)
-    {
-        $actions = array_get($preset, 'actions');
-        if (!$actions || !is_array($actions))
-            return;
-
-        $automation = new self;
-        $automation->status = 0;
-        $automation->is_custom = 0;
-        $automation->code = $code;
-        $automation->name = array_get($preset, 'name');
-        $automation->event_class = array_get($preset, 'event');
-        $automation->save();
-
-        foreach ($actions as $actionClass => $config) {
-            $ruleAction = new RuleAction;
-            $ruleAction->fill($config);
-            $ruleAction->class_name = $actionClass;
-            $ruleAction->automation_rule_id = $automation->getKey();
-            $ruleAction->save();
-        }
-
-        $conditions = array_get($preset, 'conditions', []);
-        foreach ($conditions as $conditionClass => $config) {
-            $ruleCondition = new RuleCondition;
-            $ruleCondition->options = $config;
-            $ruleCondition->class_name = $conditionClass;
-            $ruleCondition->automation_rule_id = $automation->getKey();
-            $ruleCondition->save();
-        }
-
-        return $automation;
-    }
-
-    protected function checkConditions($params)
-    {
-        $conditions = $this->conditions;
-        if ($conditions->isEmpty())
-            return TRUE;
-
-        $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
-            return $condition->getConditionObject()->isTrue($params);
-        })->values();
-
-        $matchType = $this->config_data['condition_match_type'] ?? 'all';
-
-        if ($matchType == 'all')
-            return $conditions->count() === $validConditions->count();
-
-        return $validConditions->isNotEmpty();
-    }
-}
+                'logs' => [
+                    'tab' => 'lang:igniter.automation::default.text_tab_logs',
+                    'type' => 'datatable',
+                    'context' => ['edit', 'preview'],
+                    'defaultSort' => ['created_at', 'desc'],
+                    'searchableFields' => ['message'],
+                    'useAjax' => true,
+                    'columns' => [
+                        'created_since' => [
+                            'title' => 'lang:igniter.automation::default.column_time_date',
+                        ],
+                        'status_name' => [
+                            'title' => 'lang:igniter.automation::default.column_status',
+                        ],
+                        'action_name' => [
+                            'title' => 'lang:igniter.automation::default.column_action_name',
+                        ],
+                        'message' => [
+                            'title' => 'lang:igniter.automation::default.column_message',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

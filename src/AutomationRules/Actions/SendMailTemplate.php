@@ -2,12 +2,12 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Admin\Models\User;
-use Admin\Models\UserGroup;
+use Igniter\Admin\Models\Staff;
+use Igniter\Admin\Models\UserGroup;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\System\Models\MailTemplate;
 use Illuminate\Support\Facades\Mail;
-use System\Models\MailTemplate;
 
 class SendMailTemplate extends BaseAction
 {
@@ -34,7 +34,7 @@ class SendMailTemplate extends BaseAction
                 'staff_group' => [
                     'label' => 'lang:igniter.user::default.label_send_to_staff_group',
                     'type' => 'select',
-                    'options' => [\Admin\Models\UserGroup::class, 'getDropdownOptions'],
+                    'options' => [\Igniter\Admin\Models\UserGroup::class, 'getDropdownOptions'],
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
@@ -108,12 +108,12 @@ class SendMailTemplate extends BaseAction
             case 'staff_group':
                 if ($groupId = $this->model->staff_group) {
                     if (!$staffGroup = UserGroup::find($groupId))
-                        throw new ApplicationException('Unable to find user group with ID: '.$groupId);
+                        throw new ApplicationException('Unable to find staff group with ID: '.$groupId);
 
-                    return $staffGroup->users->lists('staff_name', 'staff_email');
+                    return $staffGroup->staffs->lists('staff_name', 'staff_email');
                 }
 
-                return User::all()->lists('name', 'email');
+                return Staff::all()->lists('staff_name', 'staff_email');
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name))
@@ -125,7 +125,7 @@ class SendMailTemplate extends BaseAction
 
                 return null;
             case 'staff':
-                $user = array_get($params, 'staff');
+                $staff = array_get($params, 'staff');
                 if (!empty($staff->staff_email) && !empty($staff->staff_name))
                     return [$staff->staff_email => $staff->staff_name];
 

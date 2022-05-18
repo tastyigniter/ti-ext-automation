@@ -68,7 +68,7 @@ class BaseCondition extends AbstractBase
      */
     public function isTrue(&$params)
     {
-        return FALSE;
+        return false;
     }
 
     public static function findConditions()

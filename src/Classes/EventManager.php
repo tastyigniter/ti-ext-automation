@@ -2,8 +2,8 @@
 
 namespace Igniter\Automation\Classes;
 
-use Admin\Models\Order;
-use Admin\Models\Reservation;
+use Igniter\Admin\Models\Order;
+use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
@@ -23,7 +23,7 @@ class EventManager
     /**
      * @var bool Internal marker to see if callbacks are run.
      */
-    protected $registered = FALSE;
+    protected $registered = false;
 
     /**
      * @var array List of registered global params in the system
@@ -151,6 +151,6 @@ class EventManager
             $callback($this);
         }
 
-        $this->registered = TRUE;
+        $this->registered = true;
     }
 }

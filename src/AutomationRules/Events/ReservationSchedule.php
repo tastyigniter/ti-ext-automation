@@ -2,7 +2,7 @@
 
 namespace Igniter\Automation\AutomationRules\Events;
 
-use Admin\Models\Reservation;
+use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Classes\BaseEvent;
 
 class ReservationSchedule extends BaseEvent

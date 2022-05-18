@@ -2,23 +2,23 @@
 
 namespace Igniter\Automation\Controllers;
 
-use Admin\Facades\AdminMenu;
+use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Exception\ApplicationException;
 
 /**
  * Automation Admin Controller
  */
-class Automations extends \Admin\Classes\AdminController
+class Automations extends \Igniter\Admin\Classes\AdminController
 {
     public $implement = [
-        \Admin\Actions\FormController::class,
-        \Admin\Actions\ListController::class,
+        \Igniter\Admin\Actions\FormController::class,
+        \Igniter\Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
         'list' => [
-            'model' => 'Igniter\Automation\Models\AutomationRule',
+            'model' => \Igniter\Automation\Models\AutomationRule::class,
             'title' => 'lang:igniter.automation::default.text_title',
             'emptyMessage' => 'lang:igniter.automation::default.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -28,7 +28,7 @@ class Automations extends \Admin\Classes\AdminController
 
     public $formConfig = [
         'name' => 'lang:igniter.automation::default.text_form_name',
-        'model' => 'Igniter\Automation\Models\AutomationRule',
+        'model' => \Igniter\Automation\Models\AutomationRule::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniter/automation/automations/edit/{id}',
@@ -79,13 +79,13 @@ class Automations extends \Admin\Classes\AdminController
     public function formExtendFields($form)
     {
         if ($form->context != 'create')
-            $form->getField('event_class')->disabled = TRUE;
+            $form->getField('event_class')->disabled = true;
     }
 
     public function formBeforeCreate($model)
     {
-        $model->is_custom = TRUE;
-        $model->status = TRUE;
+        $model->is_custom = true;
+        $model->status = true;
     }
 
     public function formValidate($model, $form)
@@ -117,7 +117,7 @@ class Automations extends \Admin\Classes\AdminController
         return [
             '#notification' => $this->makePartial('flash'),
             '#'.$formField->getId('group') => $this->widgets['form']->renderField($formField, [
-                'useContainer' => FALSE,
+                'useContainer' => false,
             ]),
         ];
     }
