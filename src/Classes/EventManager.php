@@ -7,6 +7,7 @@ use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Traits\Singleton;
+use Igniter\Igniter;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
@@ -131,7 +132,7 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-                'isAdmin' => App::runningInAdmin() ? 1 : 0,
+                'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
                 'isConsole' => App::runningInConsole() ? 1 : 0,
                 'appLocale' => App::getLocale(),
             ] + $globals;
