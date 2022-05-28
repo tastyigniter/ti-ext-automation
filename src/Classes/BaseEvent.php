@@ -113,7 +113,7 @@ class BaseEvent extends AbstractBase
     public static function findRulesValues($key = null)
     {
         $results = [];
-        $automationRules = ExtensionManager::instance()->getRegistrationMethodValues('registerAutomationRules');
+        $automationRules = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerAutomationRules');
         if (is_null($key))
             return $automationRules;
 
