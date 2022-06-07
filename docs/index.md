@@ -69,7 +69,7 @@ public function registerAutomationRules()
 These parameters are available globally to all automation rules.
 
 ```
-\Igniter\Automation\Classes\EventManager::instance()->registerCallback(function($manager) {
+resolve(\Igniter\Automation\Classes\EventManager::class)->registerCallback(function($manager) {
     $manager->registerGlobalParams([
         'customer' => Auth::customer()
     ]);

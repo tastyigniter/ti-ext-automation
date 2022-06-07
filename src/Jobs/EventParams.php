@@ -33,7 +33,7 @@ class EventParams
      */
     public function handle()
     {
-        EventManager::instance()->fireEvent(
+        resolve(EventManager::class)->fireEvent(
             $this->eventClass,
             $this->unserializeParams()
         );
