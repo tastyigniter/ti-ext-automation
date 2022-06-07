@@ -7,15 +7,12 @@ use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Igniter;
-use Igniter\Flame\Traits\Singleton;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 
 class EventManager
 {
-    use Singleton;
-
     /**
      * @var array Cache of registration callbacks.
      */
@@ -59,7 +56,7 @@ class EventManager
                 return;
 
             $params = $eventClass::makeParamsFromEvent(func_get_args(), $eventCode);
-            self::instance()->queueEvent($eventClass, $params);
+            (new static)->queueEvent($eventClass, $params);
         });
     }
 

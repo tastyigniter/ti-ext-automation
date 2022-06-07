@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Event;
  */
 class Extension extends BaseExtension
 {
+    public function register()
+    {
+        $this->app->singleton(EventManager::class);
+    }
+
     public function boot()
     {
         EventManager::bindRules();
