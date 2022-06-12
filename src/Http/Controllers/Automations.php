@@ -1,6 +1,6 @@
 <?php
 
-namespace Igniter\Automation\Controllers;
+namespace Igniter\Automation\Http\Controllers;
 
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Automation\Models\AutomationRule;
