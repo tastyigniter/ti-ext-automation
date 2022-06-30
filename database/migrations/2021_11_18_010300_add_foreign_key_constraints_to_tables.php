@@ -14,6 +14,9 @@ class AddForeignKeyConstraintsToTables extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
+        // Commented out so foreign keys are not added on new installations.
+        // For existing installations, another migration has been added to drop all foreign keys.
+
         Schema::table('igniter_automation_rule_actions', function (Blueprint $table) {
             $table->foreignId('automation_rule_id')->nullable()->change();
             $table->foreign('automation_rule_id', DB::getTablePrefix().'igniter_actions_automation_rule_id_foreign')
