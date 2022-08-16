@@ -27,4 +27,5 @@ security vulnerabilities.
 
 ### License
 
-TastyIgniter Automation extension is open-sourced software licensed under the [MIT license](LICENSE).
+TastyIgniter Automation extension is open-sourced software licensed under
+the [MIT license](https://github.com/tastyigniter/ti-ext-automation/LICENSE.md).
