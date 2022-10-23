@@ -12,6 +12,11 @@ use System\Classes\BaseExtension;
  */
 class Extension extends BaseExtension
 {
+    public function register()
+    {
+        $this->registerConsoleCommand('automation.cleanup', Console\Cleanup::class);
+    }
+
     public function boot()
     {
         EventManager::bindRules();
@@ -78,6 +83,8 @@ class Extension extends BaseExtension
             // Pull reservations booked within the last 30days
             EventManager::fireReservationScheduleEvents();
         })->name('automation-reservation-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
+
+        $schedule->command('automation:cleanup')->name('Automation Log Cleanup')->daily();
     }
 
     protected function extendActionFormFields()
