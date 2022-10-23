@@ -15,6 +15,8 @@ class Extension extends BaseExtension
     public function register()
     {
         $this->app->singleton(EventManager::class);
+
+        $this->registerConsoleCommand('automation.cleanup', Console\Cleanup::class);
     }
 
     public function boot()
