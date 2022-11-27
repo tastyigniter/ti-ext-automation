@@ -1,8 +1,5 @@
 <?php
 
-namespace Igniter\Automation\Database\Migrations;
-
-use Exception;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
