@@ -64,8 +64,8 @@ class EventManager
 
     public static function fireOrderScheduleEvents()
     {
-        Orders_model::where('created_at', '>=', now()->subDays(30))
-            ->get()
+        Orders_model::whereDate('order_date', '>=', now()->subDays(30))
+            ->lazy()
             ->each(function ($order) {
                 Event::fire('automation.order.schedule.hourly', [$order]);
             });
@@ -73,8 +73,8 @@ class EventManager
 
     public static function fireReservationScheduleEvents()
     {
-        Reservations_model::where('reserve_date', '>=', now()->subDays(30))
-            ->get()
+        Reservations_model::whereDate('reserve_date', '>=', now()->subDays(30))
+            ->lazy()
             ->each(function ($reservation) {
                 Event::fire('automation.reservation.schedule.hourly', [$reservation]);
             });
@@ -131,10 +131,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-            'isAdmin' => App::runningInAdmin() ? 1 : 0,
-            'isConsole' => App::runningInConsole() ? 1 : 0,
-            'appLocale' => App::getLocale(),
-        ] + $globals;
+                'isAdmin' => App::runningInAdmin() ? 1 : 0,
+                'isConsole' => App::runningInConsole() ? 1 : 0,
+                'appLocale' => App::getLocale(),
+            ] + $globals;
     }
 
     /**

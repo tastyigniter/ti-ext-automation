@@ -93,7 +93,7 @@ class Extension extends BaseExtension
             if (!$form->getController() instanceof \Igniter\Automation\Controllers\Automations) return;
             if ($form->model instanceof \Igniter\Automation\Models\RuleAction) {
                 $form->arrayName .= '[options]';
-                $form->fields = array_get($form->model->getFieldConfig(), 'fields', []);
+                $form->fields = array_get($form->model->getFieldConfig(null), 'fields', []);
             }
         });
     }

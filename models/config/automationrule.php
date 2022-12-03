@@ -41,11 +41,6 @@ return [
                     'href' => 'igniter/automation/automations/edit/{id}',
                 ],
             ],
-            'event_name' => [
-                'label' => 'lang:igniter.automation::default.column_event',
-                'type' => 'text',
-                'sortable' => false,
-            ],
             'name' => [
                 'label' => 'lang:admin::lang.label_name',
                 'type' => 'text',
@@ -55,6 +50,11 @@ return [
                 'label' => 'lang:igniter.automation::default.column_code',
                 'type' => 'text',
                 'searchable' => true,
+            ],
+            'event_name' => [
+                'label' => 'lang:igniter.automation::default.column_event',
+                'type' => 'text',
+                'sortable' => false,
             ],
             'status' => [
                 'label' => 'lang:admin::lang.label_status',
