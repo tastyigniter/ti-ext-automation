@@ -131,10 +131,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-                'isAdmin' => App::runningInAdmin() ? 1 : 0,
-                'isConsole' => App::runningInConsole() ? 1 : 0,
-                'appLocale' => App::getLocale(),
-            ] + $globals;
+            'isAdmin' => App::runningInAdmin() ? 1 : 0,
+            'isConsole' => App::runningInConsole() ? 1 : 0,
+            'appLocale' => App::getLocale(),
+        ] + $globals;
     }
 
     /**
