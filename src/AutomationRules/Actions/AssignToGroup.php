@@ -2,7 +2,6 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Igniter\Admin\ActivityTypes\AssigneeUpdated;
 use Igniter\Admin\Models\UserGroup;
 use Igniter\Admin\Traits\Assignable;
 use Igniter\Automation\Classes\BaseAction;
@@ -46,8 +45,6 @@ class AssignToGroup extends BaseAction
         if (!in_array(Assignable::class, class_uses_recursive(get_class($assignable))))
             throw new ApplicationException('Missing assignable model.');
 
-        $log = $assignable->assignToGroup($assigneeGroup);
-
-        AssigneeUpdated::log($log);
+        $assignable->assignToGroup($assigneeGroup);
     }
 }
