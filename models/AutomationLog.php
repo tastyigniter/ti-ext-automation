@@ -4,6 +4,7 @@ namespace Igniter\Automation\Models;
 
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
+use Throwable;
 
 class AutomationLog extends Model
 {
@@ -42,7 +43,7 @@ class AutomationLog extends Model
 
     protected $appends = ['action_name', 'status_name', 'created_since'];
 
-    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], $exception = [])
+    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], Throwable $exception = null)
     {
         $record = new static;
         if ($rule instanceof RuleAction) {
@@ -57,7 +58,13 @@ class AutomationLog extends Model
         $record->is_success = $isSuccess;
         $record->message = $message;
         $record->params = $params;
-        $record->exception = $exception;
+        $record->exception = $exception ? [
+            'message' => $exception->getMessage(),
+            'code' => $exception->getCode(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
+        ] : null;
 
         $record->save();
 
