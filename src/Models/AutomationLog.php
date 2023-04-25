@@ -49,8 +49,7 @@ class AutomationLog extends Model
         if ($rule instanceof RuleAction) {
             $record->automation_rule_id = $rule->automation_rule_id;
             $record->rule_action_id = $rule->getKey();
-        }
-        else {
+        } else {
             $record->automation_rule_id = $rule->getKey();
             $record->rule_action_id = null;
         }

@@ -20,8 +20,9 @@ class ReservationSchedule extends BaseEvent
     {
         $params = [];
         $reservation = array_get($args, 0);
-        if ($reservation instanceof Reservation)
+        if ($reservation instanceof Reservation) {
             $params = $reservation->mailGetData();
+        }
 
         return $params;
     }

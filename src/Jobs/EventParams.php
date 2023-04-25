@@ -15,9 +15,6 @@ class EventParams
 
     /**
      * Create a new job instance.
-     *
-     * @param $eventClass
-     * @param array $params
      */
     public function __construct($eventClass, array $params)
     {

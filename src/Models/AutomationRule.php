@@ -50,19 +50,20 @@ class AutomationRule extends Model
     public function triggerRule()
     {
         try {
-            if (!$this->conditions || !$this->actions)
+            if (!$this->conditions || !$this->actions) {
                 return false;
+            }
 
             $params = $this->getEventObject()->getEventParams();
 
-            if (!$this->checkConditions($params))
+            if (!$this->checkConditions($params)) {
                 return false;
+            }
 
             $this->actions->each(function ($action) use ($params) {
                 $action->triggerAction($params);
             });
-        }
-        catch (Throwable | Exception $ex) {
+        } catch (Throwable|Exception $ex) {
             AutomationLog::createLog($this, $ex->getMessage(), false, $params ?? [], $ex);
         }
     }
@@ -140,11 +141,13 @@ class AutomationRule extends Model
      */
     public function applyEventClass($class = null)
     {
-        if (!$class)
+        if (!$class) {
             $class = $this->event_class;
+        }
 
-        if (!$class)
+        if (!$class) {
             return false;
+        }
 
         if (!$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
@@ -173,7 +176,6 @@ class AutomationRule extends Model
 
     /**
      * Returns an array of rule codes and descriptions.
-     * @param $eventClass
      * @return \Illuminate\Support\Collection
      */
     public static function listRulesForEvent($eventClass)
@@ -193,11 +195,13 @@ class AutomationRule extends Model
 
         // Clean up non-customized rules
         foreach ($dbRules as $code => $isCustom) {
-            if ($isCustom || !$code)
+            if ($isCustom || !$code) {
                 continue;
+            }
 
-            if (!array_key_exists($code, $presets))
+            if (!array_key_exists($code, $presets)) {
                 self::whereName($code)->delete();
+            }
         }
 
         // Create new rules
@@ -209,8 +213,9 @@ class AutomationRule extends Model
     public static function createFromPreset($code, $preset)
     {
         $actions = array_get($preset, 'actions');
-        if (!$actions || !is_array($actions))
+        if (!$actions || !is_array($actions)) {
             return;
+        }
 
         $automation = new self;
         $automation->status = 0;
@@ -243,8 +248,9 @@ class AutomationRule extends Model
     protected function checkConditions($params)
     {
         $conditions = $this->conditions;
-        if ($conditions->isEmpty())
+        if ($conditions->isEmpty()) {
             return true;
+        }
 
         $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
             return $condition->getConditionObject()->isTrue($params);
@@ -252,8 +258,9 @@ class AutomationRule extends Model
 
         $matchType = $this->config_data['condition_match_type'] ?? 'all';
 
-        if ($matchType == 'all')
+        if ($matchType == 'all') {
             return $conditions->count() === $validConditions->count();
+        }
 
         return $validConditions->isNotEmpty();
     }

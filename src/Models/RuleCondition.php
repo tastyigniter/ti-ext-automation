@@ -59,11 +59,13 @@ class RuleCondition extends Model
      */
     public function applyConditionClass($class = null)
     {
-        if (!$class)
+        if (!$class) {
             $class = $this->class_name;
+        }
 
-        if (!$class)
+        if (!$class) {
             return false;
+        }
 
         if (!$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
