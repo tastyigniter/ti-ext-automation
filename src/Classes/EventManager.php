@@ -63,7 +63,7 @@ class EventManager
     public static function fireOrderScheduleEvents()
     {
         Order::where('created_at', '>=', now()->subDays(30))
-            ->get()
+            ->lazy()
             ->each(function ($order) {
                 Event::fire('automation.order.schedule.hourly', [$order]);
             });
@@ -72,7 +72,7 @@ class EventManager
     public static function fireReservationScheduleEvents()
     {
         Reservation::where('reserve_date', '>=', now()->subDays(30))
-            ->get()
+            ->lazy()
             ->each(function ($reservation) {
                 Event::fire('automation.reservation.schedule.hourly', [$reservation]);
             });

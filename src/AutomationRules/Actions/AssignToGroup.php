@@ -38,9 +38,6 @@ class AssignToGroup extends BaseAction
         if (!$assigneeGroup = UserGroup::find($groupId))
             throw new ApplicationException('Invalid staff group to assign to.');
 
-        if (!$assigneeGroup->autoAssignEnabled())
-            throw new ApplicationException('The staff group auto assignment must be enabled to use with automations');
-
         $assignable = array_get($params, 'order', array_get($params, 'reservation'));
         if (!in_array(Assignable::class, class_uses_recursive(get_class($assignable))))
             throw new ApplicationException('Missing assignable model.');

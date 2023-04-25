@@ -6,8 +6,6 @@ use Illuminate\Support\Str;
 
 class BaseModelAttributesCondition extends BaseCondition
 {
-    protected $modelClass;
-
     protected $operators = [
         'is' => 'is',
         'is_not' => 'is not',
@@ -47,7 +45,7 @@ class BaseModelAttributesCondition extends BaseCondition
             return $result;
         })->toArray();
 
-        return implode(' - ', $result);
+        return implode(' <b>AND</b> ', $result);
     }
 
     protected function getConditionAttributePrefix($attribute, $attributes)
