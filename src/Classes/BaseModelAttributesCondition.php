@@ -51,8 +51,9 @@ class BaseModelAttributesCondition extends BaseCondition
     protected function getConditionAttributePrefix($attribute, $attributes)
     {
         $result = [];
-        if (isset($attributes[$attribute]))
+        if (isset($attributes[$attribute])) {
             $result = $attributes[$attribute];
+        }
 
         return array_get($result, 'label', 'Unknown attribute');
     }
@@ -71,7 +72,6 @@ class BaseModelAttributesCondition extends BaseCondition
 
     /**
      * Checks whether the condition is TRUE for a specified model
-     * @param $modelToEval
      * @return bool
      */
     public function evalIsTrue($modelToEval)
@@ -84,8 +84,9 @@ class BaseModelAttributesCondition extends BaseCondition
             $attribute = array_get($subCondition, 'attribute');
             $attributeType = array_get($attributes, $attribute.'.type');
 
-            if ($attributeType == 'string')
+            if ($attributeType == 'string') {
                 $success = $this->evalAttributeStringType($modelToEval, $subCondition);
+            }
 
             return $success;
         });
@@ -95,8 +96,9 @@ class BaseModelAttributesCondition extends BaseCondition
 
     protected function listModelAttributes()
     {
-        if ($this->modelAttributes)
+        if ($this->modelAttributes) {
             return $this->modelAttributes;
+        }
 
         $attributes = array_map(function ($info) {
             isset($info['type']) || $info['type'] = 'string';
@@ -114,29 +116,37 @@ class BaseModelAttributesCondition extends BaseCondition
         $conditionValue = mb_strtolower(trim(array_get($subCondition, 'value')));
         $modelValue = $this->getModelEvalAttribute($model, $attribute);
 
-        if ($operator == 'is')
+        if ($operator == 'is') {
             return $modelValue == $conditionValue;
+        }
 
-        if ($operator == 'is_not')
+        if ($operator == 'is_not') {
             return $modelValue != $conditionValue;
+        }
 
-        if ($operator == 'contains')
+        if ($operator == 'contains') {
             return mb_strpos($modelValue, $conditionValue) !== false;
+        }
 
-        if ($operator == 'does_not_contain')
+        if ($operator == 'does_not_contain') {
             return mb_strpos($modelValue, $conditionValue) === false;
+        }
 
-        if ($operator == 'equals_or_greater')
+        if ($operator == 'equals_or_greater') {
             return $modelValue >= $conditionValue;
+        }
 
-        if ($operator == 'equals_or_less')
+        if ($operator == 'equals_or_less') {
             return $modelValue <= $conditionValue;
+        }
 
-        if ($operator == 'greater')
+        if ($operator == 'greater') {
             return $modelValue > $conditionValue;
+        }
 
-        if ($operator == 'less')
+        if ($operator == 'less') {
             return $modelValue < $conditionValue;
+        }
 
         return false;
     }
@@ -145,8 +155,9 @@ class BaseModelAttributesCondition extends BaseCondition
     {
         $value = $model->{$attribute};
 
-        if (method_exists($this, 'get'.Str::studly($attribute).'Attribute'))
+        if (method_exists($this, 'get'.Str::studly($attribute).'Attribute')) {
             $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model);
+        }
 
         return mb_strtolower(trim($value));
     }

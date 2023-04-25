@@ -26,13 +26,13 @@ class BaseAction extends AbstractBase
     /**
      * Initialize method called when the action class is first loaded
      * with an existing model.
-     * @param $model
      * @return void
      */
     public function initialize($model)
     {
-        if (!$model)
+        if (!$model) {
             return;
+        }
 
         if (!$model->exists) {
             $this->initConfigData($model);
@@ -107,8 +107,9 @@ class BaseAction extends AbstractBase
         $results = [];
         $ruleActions = (array)BaseEvent::findRulesValues('actions');
         foreach ($ruleActions as $actionClass) {
-            if (!class_exists($actionClass))
+            if (!class_exists($actionClass)) {
                 continue;
+            }
 
             $actionObj = new $actionClass;
             $results[$actionClass] = $actionObj;

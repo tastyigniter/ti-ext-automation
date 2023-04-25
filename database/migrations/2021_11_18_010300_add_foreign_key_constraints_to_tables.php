@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
         Schema::disableForeignKeyConstraints();
@@ -57,8 +58,7 @@ return new class extends Migration {
             Schema::table('igniter_automation_rule_conditions', function (Blueprint $table) {
                 $table->dropForeign('igniter_conditions_automation_rule_id_foreign');
             });
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
         }
 
         try {
@@ -69,8 +69,7 @@ return new class extends Migration {
             Schema::table('igniter_automation_rule_conditions', function (Blueprint $table) {
                 $table->dropForeign(DB::getTablePrefix().'igniter_conditions_automation_rule_id_foreign');
             });
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
         }
     }
 };

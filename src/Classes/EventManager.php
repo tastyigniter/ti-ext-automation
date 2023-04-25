@@ -35,9 +35,6 @@ class EventManager
         }
     }
 
-    /**
-     * @param array $events
-     */
     public static function bindEvents(array $events)
     {
         foreach ($events as $event => $class) {
@@ -45,15 +42,12 @@ class EventManager
         }
     }
 
-    /**
-     * @param $eventCode
-     * @param $eventClass
-     */
     public static function bindEvent($eventCode, $eventClass)
     {
         Event::listen($eventCode, function () use ($eventCode, $eventClass) {
-            if (!method_exists($eventClass, 'makeParamsFromEvent'))
+            if (!method_exists($eventClass, 'makeParamsFromEvent')) {
                 return;
+            }
 
             $params = $eventClass::makeParamsFromEvent(func_get_args(), $eventCode);
             (new static)->queueEvent($eventClass, $params);
@@ -129,10 +123,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-                'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
-                'isConsole' => App::runningInConsole() ? 1 : 0,
-                'appLocale' => App::getLocale(),
-            ] + $globals;
+            'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
+            'isConsole' => App::runningInConsole() ? 1 : 0,
+            'appLocale' => App::getLocale(),
+        ] + $globals;
     }
 
     /**

@@ -35,7 +35,6 @@ class BaseEvent extends AbstractBase
 
     /**
      * Generates event parameters based on arguments from the triggering system event.
-     * @param array $args
      * @param string $eventName
      * @return array
      */
@@ -114,21 +113,23 @@ class BaseEvent extends AbstractBase
     {
         $results = [];
         $automationRules = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerAutomationRules');
-        if (is_null($key))
+        if (is_null($key)) {
             return $automationRules;
+        }
 
         foreach ($automationRules as $extension => $automationRule) {
-            if (!$values = array_get($automationRule, $key))
+            if (!$values = array_get($automationRule, $key)) {
                 continue;
+            }
 
-            if (!is_array($values))
+            if (!is_array($values)) {
                 $values = [$values];
+            }
 
             foreach ($values as $index => $value) {
                 if (is_string($index)) {
                     $results[$index] = $value;
-                }
-                else {
+                } else {
                     $results[] = $value;
                 }
             }
@@ -141,8 +142,9 @@ class BaseEvent extends AbstractBase
     {
         $results = [];
         foreach (self::findRulesValues('events') as $eventCode => $eventClass) {
-            if (!class_exists($eventClass))
+            if (!class_exists($eventClass)) {
                 continue;
+            }
 
             $eventObj = new $eventClass;
             $results[$eventClass] = [$eventCode, $eventObj];
@@ -170,8 +172,9 @@ class BaseEvent extends AbstractBase
     {
         $results = [];
         foreach (self::findEvents() as $eventClass => [$eventCode, $eventObj]) {
-            if ($eventObj->getEventGroup() == $group)
+            if ($eventObj->getEventGroup() == $group) {
                 $results[$eventClass] = $eventObj;
+            }
         }
 
         return $results;
@@ -180,8 +183,9 @@ class BaseEvent extends AbstractBase
     public static function findEventByIdentifier($identifier)
     {
         foreach (self::findEvents() as [$eventCode, $eventObj]) {
-            if ($eventObj->getEventIdentifier() == $identifier)
+            if ($eventObj->getEventIdentifier() == $identifier) {
                 return $eventObj;
+            }
         }
     }
 
@@ -194,8 +198,9 @@ class BaseEvent extends AbstractBase
     {
         $results = [];
         foreach (self::findEventPresets() as $code => $definition) {
-            if (array_get($definition, 'event', false) != $className)
+            if (array_get($definition, 'event', false) != $className) {
                 continue;
+            }
 
             $results[$code] = $definition;
         }

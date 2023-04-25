@@ -19,13 +19,13 @@ class BaseCondition extends AbstractBase
     /**
      * Initialize method called when the action class is first loaded
      * with an existing model.
-     * @param $model
      * @return void
      */
     public function initialize($model)
     {
-        if (!$model)
+        if (!$model) {
             return;
+        }
 
         if (!$model->exists) {
             $this->initConfigData($model);
@@ -76,8 +76,9 @@ class BaseCondition extends AbstractBase
         $results = [];
         $ruleConditions = (array)BaseEvent::findRulesValues('conditions');
         foreach ($ruleConditions as $conditionClass) {
-            if (!class_exists($conditionClass))
+            if (!class_exists($conditionClass)) {
                 continue;
+            }
 
             $conditionObj = new $conditionClass;
             $results[$conditionClass] = $conditionObj;

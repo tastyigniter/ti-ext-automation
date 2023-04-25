@@ -60,8 +60,9 @@ class Automations extends \Igniter\Admin\Classes\AdminController
 
     public function index()
     {
-        if ($this->getUser()->hasPermission('Igniter.Automation.Manage'))
+        if ($this->getUser()->hasPermission('Igniter.Automation.Manage')) {
             AutomationRule::syncAll();
+        }
 
         $this->asExtension('ListController')->index();
     }
@@ -78,8 +79,9 @@ class Automations extends \Igniter\Admin\Classes\AdminController
 
     public function formExtendFields($form)
     {
-        if ($form->context != 'create')
+        if ($form->context != 'create') {
             $form->getField('event_class')->disabled = true;
+        }
     }
 
     public function formBeforeCreate($model)
@@ -100,8 +102,9 @@ class Automations extends \Igniter\Admin\Classes\AdminController
     protected function loadConnectorFormField($method, $context, $recordId): array
     {
         $actionClass = post('AutomationRule._'.str_singular($method));
-        if (!strlen($actionClass))
+        if (!strlen($actionClass)) {
             throw new ApplicationException(sprintf('Please select an %s to attach', str_singular($method)));
+        }
 
         $formController = $this->asExtension('FormController');
         $model = $formController->formFindModelObject($recordId);
