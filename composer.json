@@ -1,29 +1,42 @@
 {
-  "name": "tastyigniter/ti-ext-automation",
-  "type": "tastyigniter-package",
-  "description": "Configure automation rules to be triggered when other specific actions have taken place.",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Sam Poyigi",
-      "email": "sam@sampoyigi.com"
+    "name": "tastyigniter/ti-ext-automation",
+    "type": "tastyigniter-package",
+    "description": "Configure automation rules to be triggered when other specific actions have taken place.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Poyigi",
+            "email": "sam@sampoyigi.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Igniter\\Automation\\": "src/"
+        }
+    },
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "igniter.automation",
+            "name": "Automation",
+            "icon": {
+                "class": "fa fa-tasks",
+                "backgroundColor": "#25C7EE",
+                "color": "#FFF"
+            },
+            "homepage": "https://tastyigniter.com/marketplace/item/igniter-automation"
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "pestphp/pest": "^2.5",
+        "orchestra/testbench": "^8.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Igniter\\Automation\\": "src/"
-    }
-  },
-  "extra": {
-    "tastyigniter-extension": {
-      "code": "igniter.automation",
-      "name": "Automation",
-      "icon": {
-        "class": "fa fa-tasks",
-        "backgroundColor": "#25C7EE",
-        "color": "#FFF"
-      },
-      "homepage": "https://tastyigniter.com/marketplace/item/igniter-automation"
-    }
-  }
 }
