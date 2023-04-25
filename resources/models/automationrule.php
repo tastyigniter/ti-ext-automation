@@ -41,11 +41,6 @@ return [
                     'href' => 'igniter/automation/automations/edit/{id}',
                 ],
             ],
-            'event_name' => [
-                'label' => 'lang:igniter.automation::default.column_event',
-                'type' => 'text',
-                'sortable' => false,
-            ],
             'name' => [
                 'label' => 'lang:admin::lang.label_name',
                 'type' => 'text',
@@ -55,6 +50,11 @@ return [
                 'label' => 'lang:igniter.automation::default.column_code',
                 'type' => 'text',
                 'searchable' => true,
+            ],
+            'event_name' => [
+                'label' => 'lang:igniter.automation::default.column_event',
+                'type' => 'text',
+                'sortable' => false,
             ],
             'status' => [
                 'label' => 'lang:admin::lang.label_status',
@@ -71,7 +71,7 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
-                'back' => ['label' => 'lang:admin::lang.button_icon_back', 'class' => 'btn btn-outline-default', 'href' => 'igniter/automation/automations'],
+                'back' => ['label' => 'lang:admin::lang.button_icon_back', 'class' => 'btn btn-outline-secondary', 'href' => 'igniter/automation/automations'],
                 'save' => [
                     'label' => 'lang:admin::lang.button_save',
                     'class' => 'btn btn-primary',

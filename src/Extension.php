@@ -92,7 +92,7 @@ class Extension extends BaseExtension
     protected function extendActionFormFields()
     {
         Event::listen('admin.form.extendFieldsBefore', function (Form $form) {
-            if (!$form->getController() instanceof \Igniter\Automation\Controllers\Automations) return;
+            if (!$form->getController() instanceof \Igniter\Automation\Http\Controllers\Automations) return;
             if ($form->model instanceof \Igniter\Automation\Models\RuleAction) {
                 $form->arrayName .= '[options]';
                 $form->fields = array_get($form->model->getFieldConfig(null), 'fields', []);
