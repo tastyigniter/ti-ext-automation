@@ -11,52 +11,47 @@ parameters:
 			path: database/migrations/2022_06_30_010000_drop_foreign_key_constraints.php
 
 		-
-			message: "#^Access to property \\$staff_group_id on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$staff_group_id\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/AssignToGroup.php
 
 		-
-			message: "#^Call to static method find\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\UserGroup\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Models\\\\UserGroup\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/AssignToGroup.php
 
 		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\UserGroup not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/AssignToGroup.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Traits\\\\Assignable not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/AssignToGroup.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/AutomationRules/Actions/AssignToGroup.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 3
-			path: src/AutomationRules/Actions/AssignToGroup.php
-
-		-
-			message: "#^Access to property \\$custom on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$custom\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to property \\$send_to on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$send_to\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to property \\$staff_group on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$staff_group\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to property \\$template on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$template\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendMailTemplate.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Igniter\\\\Admin\\\\Models\\\\Staff\\>\\:\\:lists\\(\\)\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendMailTemplate.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Models\\\\UserGroup\\:\\:find\\(\\)\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendMailTemplate.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Models\\\\MailTemplate\\:\\:dropdown\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
@@ -66,127 +61,7 @@ parameters:
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Call to static method all\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Staff\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Call to static method dropdown\\(\\) on an unknown class Igniter\\\\System\\\\Models\\\\MailTemplate\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Call to static method find\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\UserGroup\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\UserGroup not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 7
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Function setting not found\\.$#"
-			count: 2
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 3
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Call to method mailGetData\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Order\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/OrderSchedule.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\Order not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/OrderSchedule.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/OrderSchedule.php
-
-		-
-			message: "#^Call to method mailGetData\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Reservation\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/ReservationSchedule.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\Reservation not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/ReservationSchedule.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/ReservationSchedule.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Automation\\\\Classes\\\\AbstractBase\\:\\:extensionExtendCallback\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/AbstractBase.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Parameter \\$model of method Igniter\\\\Automation\\\\Classes\\\\BaseAction\\:\\:initConfigData\\(\\) has invalid type Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Property Igniter\\\\Automation\\\\Classes\\\\BaseAction\\:\\:\\$model has unknown class Igniter\\\\Flame\\\\Database\\\\Model as its type\\.$#"
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/Classes/BaseCondition.php
-
-		-
-			message: "#^Parameter \\$model of method Igniter\\\\Automation\\\\Classes\\\\BaseCondition\\:\\:initConfigData\\(\\) has invalid type Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 1
-			path: src/Classes/BaseCondition.php
-
-		-
-			message: "#^Property Igniter\\\\Automation\\\\Classes\\\\BaseCondition\\:\\:\\$model has unknown class Igniter\\\\Flame\\\\Database\\\\Model as its type\\.$#"
-			count: 1
-			path: src/Classes/BaseCondition.php
-
-		-
-			message: "#^Class Igniter\\\\System\\\\Classes\\\\ExtensionManager not found\\.$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 5
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Function normalize_class_name not found\\.$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 108$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Property Igniter\\\\Automation\\\\Classes\\\\BaseEvent\\:\\:\\$model has unknown class Igniter\\\\Flame\\\\Database\\\\Model as its type\\.$#"
 			count: 1
 			path: src/Classes/BaseEvent.php
 
@@ -196,43 +71,23 @@ parameters:
 			path: src/Classes/BaseModelAttributesCondition.php
 
 		-
-			message: "#^Access to property \\$operator on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 2
-			path: src/Classes/BaseModelAttributesCondition.php
-
-		-
-			message: "#^Access to property \\$options on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 2
-			path: src/Classes/BaseModelAttributesCondition.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 11
-			path: src/Classes/BaseModelAttributesCondition.php
-
-		-
-			message: "#^Parameter \\$model of method Igniter\\\\Automation\\\\Classes\\\\BaseModelAttributesCondition\\:\\:initConfigData\\(\\) has invalid type Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$operator\\.$#"
 			count: 1
 			path: src/Classes/BaseModelAttributesCondition.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Models\\\\Order\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/EventManager.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Models\\\\Reservation\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/EventManager.php
 
 		-
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
 			count: 2
-			path: src/Classes/EventManager.php
-
-		-
-			message: "#^Call to static method runningInAdmin\\(\\) on an unknown class Igniter\\\\Flame\\\\Igniter\\.$#"
-			count: 1
-			path: src/Classes/EventManager.php
-
-		-
-			message: "#^Call to static method where\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Order\\.$#"
-			count: 1
-			path: src/Classes/EventManager.php
-
-		-
-			message: "#^Call to static method where\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Reservation\\.$#"
-			count: 1
 			path: src/Classes/EventManager.php
 
 		-
@@ -246,42 +101,7 @@ parameters:
 			path: src/Classes/EventManager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Automation\\\\Models\\\\AutomationLog\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: src/Console/Cleanup.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Extension\\:\\:\\$app\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Access to property \\$arrayName on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Access to property \\$fields on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
-			count: 2
-			path: src/Extension.php
-
-		-
-			message: "#^Access to property \\$model on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
-			count: 2
-			path: src/Extension.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Extension\\:\\:registerConsoleCommand\\(\\)\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
 			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:getFieldConfig\\(\\)\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Call to method getController\\(\\) on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
 			count: 1
 			path: src/Extension.php
 
@@ -291,87 +111,22 @@ parameters:
 			path: src/Extension.php
 
 		-
-			message: "#^Function admin_url not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Function lang not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Parameter \\$form of anonymous function has invalid type Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
 			message: "#^Result of method Illuminate\\\\Console\\\\Scheduling\\\\CallbackEvent\\:\\:runInBackground\\(\\) \\(void\\) is used\\.$#"
 			count: 2
 			path: src/Extension.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:\\$widgets\\.$#"
-			count: 2
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:asExtension\\(\\)\\.$#"
-			count: 2
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:getUser\\(\\)\\.$#"
+			message: "#^Call to an undefined method Igniter\\\\Admin\\\\Classes\\\\BaseWidget\\:\\:getField\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Automations.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:makePartial\\(\\)\\.$#"
+			message: "#^Call to an undefined method Igniter\\\\Admin\\\\Classes\\\\BaseWidget\\:\\:renderField\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Automations.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:validatePasses\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Call to static method setContext\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\.$#"
-			count: 1
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\FormController not found\\.$#"
-			count: 1
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\ListController not found\\.$#"
-			count: 1
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Function post not found\\.$#"
-			count: 2
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Function str_singular not found\\.$#"
-			count: 2
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations\\:\\:__construct\\(\\) calls parent\\:\\:__construct\\(\\) but Igniter\\\\Automation\\\\Http\\\\Controllers\\\\Automations does not extend any class\\.$#"
-			count: 1
-			path: src/Http/Controllers/Automations.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Automations.php
 
@@ -417,26 +172,6 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:\\$automation_rule_id\\.$#"
-			count: 1
-			path: src/Models/AutomationLog.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationLog\\:\\:save\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationLog.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:getKey\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationLog.php
-
-		-
-			message: "#^Function lang not found\\.$#"
-			count: 1
-			path: src/Models/AutomationLog.php
-
-		-
-			message: "#^Function time_elapsed not found\\.$#"
 			count: 1
 			path: src/Models/AutomationLog.php
 
@@ -511,46 +246,6 @@ parameters:
 			path: src/Models/AutomationRule.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:asExtension\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:extendClassWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:getKey\\(\\)\\.$#"
-			count: 2
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:isClassExtendedWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:save\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:fill\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:save\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleCondition\\:\\:save\\(\\)\\.$#"
-			count: 1
-			path: src/Models/AutomationRule.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:applyStatus\\(\\)\\.$#"
 			count: 1
 			path: src/Models/AutomationRule.php
@@ -566,11 +261,6 @@ parameters:
 			path: src/Models/AutomationRule.php
 
 		-
-			message: "#^Function array_get not found\\.$#"
-			count: 4
-			path: src/Models/AutomationRule.php
-
-		-
 			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:\\$class_name\\.$#"
 			count: 3
 			path: src/Models/RuleAction.php
@@ -581,66 +271,6 @@ parameters:
 			path: src/Models/RuleAction.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:asExtension\\(\\)\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:extendClassWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:getAttributes\\(\\)\\.$#"
-			count: 3
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:isClassExtendedWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:setRawAttributes\\(\\)\\.$#"
-			count: 2
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Function array_except not found\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Function array_only not found\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\SystemException not found\\.$#"
-			count: 1
-			path: src/Models/RuleAction.php
-
-		-
 			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\RuleCondition\\:\\:\\$class_name\\.$#"
 			count: 3
-			path: src/Models/RuleCondition.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleCondition\\:\\:asExtension\\(\\)\\.$#"
-			count: 1
-			path: src/Models/RuleCondition.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleCondition\\:\\:extendClassWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/RuleCondition.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleCondition\\:\\:isClassExtendedWith\\(\\)\\.$#"
-			count: 1
 			path: src/Models/RuleCondition.php
