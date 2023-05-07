@@ -26,7 +26,7 @@ class Cleanup extends Command
     public function handle()
     {
         $this->comment('Cleaning old automation log...');
-        $logTTL = now()->subDays(config('igniter.system.deleteOldRecordsDays', static::$logTTL))->format('Y-m-d H:i:s');
+        $logTTL = now()->subDays(config('igniter-system.deleteOldRecordsDays', static::$logTTL))->format('Y-m-d H:i:s');
 
         $amountDeleted = AutomationLog::query()->where('created_at', '<', $logTTL)->delete();
 
