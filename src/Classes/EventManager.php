@@ -2,11 +2,11 @@
 
 namespace Igniter\Automation\Classes;
 
-use Igniter\Admin\Models\Order;
-use Igniter\Admin\Models\Reservation;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
+use Igniter\Cart\Models\Order;
 use Igniter\Flame\Igniter;
+use Igniter\Reservation\Models\Reservation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;

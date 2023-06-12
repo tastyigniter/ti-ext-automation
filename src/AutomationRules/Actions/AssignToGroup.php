@@ -2,10 +2,10 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Igniter\Admin\Models\UserGroup;
 use Igniter\Admin\Traits\Assignable;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\User\Models\UserGroup;
 
 class AssignToGroup extends BaseAction
 {
@@ -24,7 +24,7 @@ class AssignToGroup extends BaseAction
                 'staff_group_id' => [
                     'label' => 'lang:igniter.automation::default.label_assign_to_staff_group',
                     'type' => 'select',
-                    'options' => [\Igniter\Admin\Models\UserGroup::class, 'getDropdownOptions'],
+                    'options' => [\Igniter\User\Models\UserGroup::class, 'getDropdownOptions'],
                 ],
             ],
         ];
