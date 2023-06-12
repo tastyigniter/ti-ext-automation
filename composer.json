@@ -1,55 +1,56 @@
 {
-	"name": "tastyigniter/ti-ext-automation",
-	"type": "tastyigniter-package",
-	"description": "Configure automation rules to be triggered when other specific actions have taken place.",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Sam Poyigi",
-			"email": "sam@sampoyigi.com"
-		}
-	],
-	"require-dev": {
-		"laravel/pint": "^1.2",
-		"nunomaduro/larastan": "^2.4.0",
-		"orchestra/testbench": "^8.5",
-		"pestphp/pest-plugin-laravel": "^2.0",
-		"tastyigniter/core": "dev-master"
-	},
-	"autoload": {
-		"psr-4": {
-			"Igniter\\Automation\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Igniter\\Automation\\Tests\\": "tests/"
-		}
-	},
-	"extra": {
-		"tastyigniter-extension": {
-			"code": "igniter.automation",
-			"name": "Automation",
-			"icon": {
-				"class": "fa fa-tasks",
-				"backgroundColor": "#25C7EE",
-				"color": "#FFF"
-			},
-			"homepage": "https://tastyigniter.com/marketplace/item/igniter-automation"
-		}
-	},
-	"scripts": {
-		"test": "vendor/bin/pest",
-		"test-coverage": "vendor/bin/pest --coverage",
-		"format": "vendor/bin/pint",
-		"static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
-	},
-	"config": {
-		"allow-plugins": {
-			"pestphp/pest-plugin": true,
-			"php-http/discovery": true,
-			"composer/installers": true
-		},
-		"sort-packages": true
-	}
+    "name": "tastyigniter/ti-ext-automation",
+    "type": "tastyigniter-package",
+    "description": "Configure automation rules to be triggered when other specific actions have taken place.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Poyigi",
+            "email": "sam@sampoyigi.com"
+        }
+    ],
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "tastyigniter/core": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Igniter\\Automation\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Igniter\\Automation\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "igniter.automation",
+            "name": "Automation",
+            "icon": {
+                "class": "fa fa-tasks",
+                "backgroundColor": "#25C7EE",
+                "color": "#FFF"
+            },
+            "homepage": "https://tastyigniter.com/marketplace/item/igniter-automation"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "composer/installers": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
 }
