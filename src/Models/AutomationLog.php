@@ -4,11 +4,14 @@ namespace Igniter\Automation\Models;
 
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Prunable;
 use Throwable;
 
 class AutomationLog extends Model
 {
     use Validation;
+    use Prunable;
 
     /**
      * @var string The database table name
@@ -86,5 +89,14 @@ class AutomationLog extends Model
     public function getCreatedSinceAttribute($value)
     {
         return $this->created_at ? time_elapsed($this->created_at) : null;
+    }
+
+    //
+    // Concerns
+    //
+
+    public function prunable(): Builder
+    {
+        return static::query()->where('created_at', '<=', now()->subDays(setting('activity_log_timeout', 60)));
     }
 }

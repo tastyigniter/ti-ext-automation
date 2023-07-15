@@ -2,9 +2,9 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Igniter\Admin\Traits\Assignable;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\User\Models\Concerns\Assignable;
 use Igniter\User\Models\UserGroup;
 
 class AssignToGroup extends BaseAction
