@@ -31,7 +31,7 @@ class Extension extends BaseExtension
         return [
             'Igniter.Automation.Manage' => [
                 'description' => 'Create, modify and delete automations',
-                'group' => 'module',
+                'group' => 'admin',
             ],
         ];
     }
