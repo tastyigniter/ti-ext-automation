@@ -41,7 +41,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
         ],
         'preview' => [
             'title' => 'lang:admin::lang.form.preview_title',
-            'redirect' => 'igniter/automation/automations',
+            'back' => 'igniter/automation/automations',
         ],
         'delete' => [
             'redirect' => 'igniter/automation/automations',
