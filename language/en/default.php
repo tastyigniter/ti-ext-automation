@@ -32,8 +32,9 @@ return [
 
     'label_assign_to_staff' => 'Assign To Staff',
     'label_assign_to_staff_group' => 'Assign To Staff Group',
+    'label_send_to_customer_group' => 'Send To Customer Group',
 
     'help_event' => 'This rule is triggered by the selected system event',
     'help_actions' => 'Choose one or more actions to perform when this automation is triggered',
-    'help_conditions' => 'Only process the actions when ALL the conditions are TRUE.',
+    'help_conditions' => 'Choose one or more conditions that must be met for this automation to be triggered. You must choose at least one condition to enable this automation.',
 ];

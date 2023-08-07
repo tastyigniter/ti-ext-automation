@@ -2,6 +2,8 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Admin\Models\Customer_groups_model;
+use Admin\Models\Customers_model;
 use Admin\Models\Staff_groups_model;
 use Admin\Models\Staffs_model;
 use Igniter\Automation\Classes\BaseAction;
@@ -41,6 +43,16 @@ class SendMailTemplate extends BaseAction
                         'condition' => 'value[staff_group]',
                     ],
                 ],
+                'customer_group' => [
+                    'label' => 'lang:igniter.automation::default.label_send_to_customer_group',
+                    'type' => 'select',
+                    'options' => [\Admin\Models\Customer_groups_model::class, 'getDropdownOptions'],
+                    'trigger' => [
+                        'action' => 'show',
+                        'field' => 'send_to',
+                        'condition' => 'value[customer_group]',
+                    ],
+                ],
                 'custom' => [
                     'label' => 'lang:igniter.user::default.label_send_to_custom',
                     'type' => 'text',
@@ -76,9 +88,10 @@ class SendMailTemplate extends BaseAction
             'restaurant' => 'lang:igniter.user::default.text_send_to_restaurant',
             'location' => 'lang:igniter.user::default.text_send_to_location',
             'staff' => 'lang:igniter.user::default.text_send_to_staff_email',
-            'customer' => 'lang:igniter.user::default.text_send_to_customer_email',
-            'custom' => 'lang:igniter.user::default.text_send_to_custom',
             'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
+            'customer' => 'lang:igniter.user::default.text_send_to_customer_email',
+            'customer_group' => 'lang:igniter.user::default.text_send_to_customer_group',
+            'custom' => 'lang:igniter.user::default.text_send_to_custom',
         ];
     }
 
@@ -110,10 +123,19 @@ class SendMailTemplate extends BaseAction
                     if (!$staffGroup = Staff_groups_model::find($groupId))
                         throw new ApplicationException('Unable to find staff group with ID: '.$groupId);
 
-                    return $staffGroup->staffs->lists('staff_name', 'staff_email');
+                    return $staffGroup->staffs()->isEnabled()->pluck('staff_name', 'staff_email');
                 }
 
-                return Staffs_model::all()->lists('staff_name', 'staff_email');
+                return null;
+            case 'customer_group':
+                if ($groupId = $this->model->customer_group) {
+                    if (!$customerGroup = Customer_groups_model::find($groupId))
+                        throw new ApplicationException('Unable to find customer group with ID: '.$groupId);
+
+                    return $customerGroup->customers()->isEnabled()->pluck('full_name', 'email');
+                }
+
+                return null;
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name))

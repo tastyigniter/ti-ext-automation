@@ -114,28 +114,28 @@ class BaseModelAttributesCondition extends BaseCondition
         $conditionValue = mb_strtolower(trim(array_get($subCondition, 'value')));
         $modelValue = $this->getModelEvalAttribute($model, $attribute);
 
-        if ($operator == 'is')
+        if ($operator === 'is')
             return $modelValue == $conditionValue;
 
-        if ($operator == 'is_not')
+        if ($operator === 'is_not')
             return $modelValue != $conditionValue;
 
-        if ($operator == 'contains')
+        if ($operator === 'contains')
             return mb_strpos($modelValue, $conditionValue) !== false;
 
-        if ($operator == 'does_not_contain')
+        if ($operator === 'does_not_contain')
             return mb_strpos($modelValue, $conditionValue) === false;
 
-        if ($operator == 'equals_or_greater')
+        if ($operator === 'equals_or_greater')
             return $modelValue >= $conditionValue;
 
-        if ($operator == 'equals_or_less')
+        if ($operator === 'equals_or_less')
             return $modelValue <= $conditionValue;
 
-        if ($operator == 'greater')
+        if ($operator === 'greater')
             return $modelValue > $conditionValue;
 
-        if ($operator == 'less')
+        if ($operator === 'less')
             return $modelValue < $conditionValue;
 
         return false;
