@@ -36,5 +36,5 @@ return [
 
     'help_event' => 'This rule is triggered by the selected system event',
     'help_actions' => 'Choose one or more actions to perform when this automation is triggered',
-    'help_conditions' => 'Choose one or more conditions that must be met for this automation to be triggered. You must choose at least one condition to enable this automation.',
+    'help_conditions' => 'Choose one or more conditions that must be met for this automation to be triggered. Leave blank to always trigger this automation.',
 ];

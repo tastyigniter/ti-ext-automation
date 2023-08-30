@@ -161,45 +161,8 @@ class BaseEvent extends AbstractBase
         return $results;
     }
 
-    public static function findEventGroups()
-    {
-        return self::findRulesValues('groups');
-    }
-
-    public static function findEventsByGroup($group)
-    {
-        $results = [];
-        foreach (self::findEvents() as $eventClass => [$eventCode, $eventObj]) {
-            if ($eventObj->getEventGroup() == $group)
-                $results[$eventClass] = $eventObj;
-        }
-
-        return $results;
-    }
-
-    public static function findEventByIdentifier($identifier)
-    {
-        foreach (self::findEvents() as [$eventCode, $eventObj]) {
-            if ($eventObj->getEventIdentifier() == $identifier)
-                return $eventObj;
-        }
-    }
-
     public static function findEventPresets()
     {
         return self::findRulesValues('presets');
-    }
-
-    public static function findEventPresetsByClass($className)
-    {
-        $results = [];
-        foreach (self::findEventPresets() as $code => $definition) {
-            if (array_get($definition, 'event', false) != $className)
-                continue;
-
-            $results[$code] = $definition;
-        }
-
-        return $results;
     }
 }

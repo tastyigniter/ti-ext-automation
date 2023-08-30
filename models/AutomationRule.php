@@ -50,12 +50,12 @@ class AutomationRule extends Model
     public function triggerRule()
     {
         try {
-            if (!$this->conditions || !$this->actions)
+            if (!$this->actions)
                 return false;
 
             $params = $this->getEventObject()->getEventParams();
 
-            if (!$this->checkConditions($params))
+            if ($this->conditions && !$this->checkConditions($params))
                 return false;
 
             $this->actions->each(function ($action) use ($params) {
