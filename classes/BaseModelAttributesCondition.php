@@ -17,6 +17,8 @@ class BaseModelAttributesCondition extends BaseCondition
         'less' => 'less than',
     ];
 
+    protected ?array $modelAttributes = null;
+
     public function initConfigData($model)
     {
         $model->operator = 'is';
@@ -76,9 +78,8 @@ class BaseModelAttributesCondition extends BaseCondition
      */
     public function evalIsTrue($modelToEval)
     {
-        $model = $this->model;
         $attributes = $this->listModelAttributes();
-        $subConditions = $model->options ?? [];
+        $subConditions = $this->model->options ?? [];
 
         collect($subConditions)->sortBy('priority')->each(function ($subCondition) use (&$success, $modelToEval, $attributes) {
             $attribute = array_get($subCondition, 'attribute');
@@ -86,6 +87,9 @@ class BaseModelAttributesCondition extends BaseCondition
 
             if ($attributeType == 'string')
                 $success = $this->evalAttributeStringType($modelToEval, $subCondition);
+
+            if ($attributeType == 'custom')
+                $success = $this->evalAttributeCustomType($modelToEval, $subCondition);
 
             return $success;
         });
@@ -99,6 +103,10 @@ class BaseModelAttributesCondition extends BaseCondition
             return $this->modelAttributes;
 
         $attributes = array_map(function ($info) {
+            if (is_string($info)) {
+                $info = ['label' => $info];
+            }
+
             isset($info['type']) || $info['type'] = 'string';
 
             return $info;
@@ -112,7 +120,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $attribute = array_get($subCondition, 'attribute');
         $operator = array_get($subCondition, 'operator');
         $conditionValue = mb_strtolower(trim(array_get($subCondition, 'value')));
-        $modelValue = $this->getModelEvalAttribute($model, $attribute);
+        $modelValue = $this->getModelEvalAttribute($model, $attribute, $subCondition);
 
         if ($operator === 'is')
             return $modelValue == $conditionValue;
@@ -120,11 +128,17 @@ class BaseModelAttributesCondition extends BaseCondition
         if ($operator === 'is_not')
             return $modelValue != $conditionValue;
 
-        if ($operator === 'contains')
-            return mb_strpos($modelValue, $conditionValue) !== false;
+        if ($operator === 'contains') {
+            return is_array($conditionValue)
+                ? in_array($modelValue, $conditionValue) !== false
+                : mb_strpos($modelValue, $conditionValue) !== false;
+        }
 
-        if ($operator === 'does_not_contain')
-            return mb_strpos($modelValue, $conditionValue) === false;
+        if ($operator === 'does_not_contain') {
+            return is_array($conditionValue)
+                ? in_array($modelValue, $conditionValue) === false
+                : mb_strpos($modelValue, $conditionValue) === false;
+        }
 
         if ($operator === 'equals_or_greater')
             return $modelValue >= $conditionValue;
@@ -141,13 +155,53 @@ class BaseModelAttributesCondition extends BaseCondition
         return false;
     }
 
-    protected function getModelEvalAttribute($model, $attribute)
+    protected function getModelEvalAttribute($model, $attribute, $condition = [])
     {
         $value = $model->{$attribute};
 
         if (method_exists($this, 'get'.Str::studly($attribute).'Attribute'))
-            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model);
+            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model, $condition);
 
         return mb_strtolower(trim($value));
+    }
+
+    protected function applyDateRange($query, $attribute, $options)
+    {
+        $from = $this->getDateRangeFrom($options);
+        $to = $this->getDateRangeTo($options);
+        if ($from && $to) {
+            $query->whereBetween($attribute, [$from, $to]);
+        }
+
+        return $query;
+    }
+
+    protected function getDateRangeFrom(array $options)
+    {
+        if (array_get($options, 'when') === 'is_current'){
+            return now()->startOf(array_get($options, 'current', 'day'))->toDateTimeString();
+        }
+
+        if (array_get($options, 'when') === 'is_past'){
+            return now()
+                ->parse('- '.str_replace('_', ' ', array_get($options, 'range', '1_day')))
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        return null;
+    }
+
+    protected function getDateRangeTo(array $options)
+    {
+        if (array_get($options, 'when') === 'is_current'){
+            return now()->endOf(array_get($options, 'current', 'day'))->toDateTimeString();
+        }
+
+        if (array_get($options, 'when') === 'is_past'){
+            return now()->endOfDay()->toDateTimeString();
+        }
+
+        return null;
     }
 }
