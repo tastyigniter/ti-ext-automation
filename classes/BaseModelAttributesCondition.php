@@ -17,8 +17,6 @@ class BaseModelAttributesCondition extends BaseCondition
         'less' => 'less than',
     ];
 
-    protected ?array $modelAttributes = null;
-
     public function initConfigData($model)
     {
         $model->operator = 'is';
