@@ -117,7 +117,8 @@ class BaseModelAttributesCondition extends BaseCondition
     {
         $attribute = array_get($subCondition, 'attribute');
         $operator = array_get($subCondition, 'operator');
-        $conditionValue = mb_strtolower(trim(array_get($subCondition, 'value')));
+        $conditionValue = array_get($subCondition, 'value');
+        $conditionValue = is_array($conditionValue) ? $conditionValue : mb_strtolower(trim($conditionValue));
         $modelValue = $this->getModelEvalAttribute($model, $attribute, $subCondition);
 
         if ($operator === 'is')
