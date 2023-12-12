@@ -21,11 +21,6 @@ parameters:
 			path: src/AutomationRules/Actions/AssignToGroup.php
 
 		-
-			message: "#^Class Igniter\\\\Admin\\\\Traits\\\\Assignable not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/AssignToGroup.php
-
-		-
 			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$custom\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
@@ -121,7 +116,7 @@ parameters:
 			path: src/Extension.php
 
 		-
-			message: "#^Cannot call method hourly\\(\\) on void\\.$#"
+			message: "#^Cannot call method hourly\\(\\) on null\\.$#"
 			count: 2
 			path: src/Extension.php
 

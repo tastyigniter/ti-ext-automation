@@ -10,8 +10,8 @@ use Throwable;
 
 class AutomationLog extends Model
 {
-    use Validation;
     use Prunable;
+    use Validation;
 
     /**
      * @var string The database table name
@@ -46,7 +46,7 @@ class AutomationLog extends Model
 
     protected $appends = ['action_name', 'status_name', 'created_since'];
 
-    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], Throwable $exception = null)
+    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], ?Throwable $exception = null)
     {
         $record = new static;
         if ($rule instanceof RuleAction) {
