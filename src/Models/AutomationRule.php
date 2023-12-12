@@ -13,8 +13,8 @@ use Throwable;
 
 class AutomationRule extends Model
 {
-    use Validation;
     use Purgeable;
+    use Validation;
 
     /**
      * @var string The database table name
