@@ -2,9 +2,9 @@
 
 namespace Igniter\Automation\Models;
 
+use Igniter\Automation\AutomationException;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
-use Igniter\Flame\Exception\SystemException;
 
 class RuleAction extends Model
 {
@@ -115,7 +115,7 @@ class RuleAction extends Model
     protected function setCustomData()
     {
         if (!$actionObj = $this->getActionObject()) {
-            throw new SystemException(sprintf('Unable to find action object [%s]', $this->getActionClass()));
+            throw new AutomationException(sprintf('Unable to find action object [%s]', $this->getActionClass()));
         }
 
         $config = $actionObj->getFieldConfig();

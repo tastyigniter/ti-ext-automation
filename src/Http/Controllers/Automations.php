@@ -4,7 +4,7 @@ namespace Igniter\Automation\Http\Controllers;
 
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Automation\Models\AutomationRule;
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\FlashException;
 
 /**
  * Automation Admin Controller
@@ -102,9 +102,9 @@ class Automations extends \Igniter\Admin\Classes\AdminController
     protected function loadConnectorFormField($method, $context, $recordId): array
     {
         $actionClass = post('AutomationRule._'.str_singular($method));
-        if (!strlen($actionClass)) {
-            throw new ApplicationException(sprintf('Please select an %s to attach', str_singular($method)));
-        }
+        throw_unless(strlen($actionClass),
+            FlashException::error(sprintf('Please select an %s to attach', str_singular($method)))
+        );
 
         $formController = $this->asExtension('FormController');
         $model = $formController->formFindModelObject($recordId);
