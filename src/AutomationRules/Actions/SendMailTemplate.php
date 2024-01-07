@@ -2,9 +2,10 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
-use Igniter\Flame\Exception\ApplicationException;
 use Igniter\System\Models\MailTemplate;
+use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\Mail;
 
@@ -66,11 +67,11 @@ class SendMailTemplate extends BaseAction
     public function triggerAction($params)
     {
         if (!$templateCode = $this->model->template) {
-            throw new ApplicationException('SendMailTemplate: Missing a valid mail template');
+            throw new AutomationException('SendMailTemplate: Missing a valid mail template');
         }
 
         if (!$recipient = $this->getRecipientAddress($params)) {
-            throw new ApplicationException('SendMailTemplate: Missing a valid recipient from the event payload');
+            throw new AutomationException('SendMailTemplate: Missing a valid recipient from the event payload');
         }
 
         Mail::sendToMany($recipient, $templateCode, $params);
@@ -121,13 +122,13 @@ class SendMailTemplate extends BaseAction
             case 'staff_group':
                 if ($groupId = $this->model->staff_group) {
                     if (!$staffGroup = UserGroup::find($groupId)) {
-                        throw new ApplicationException('Unable to find staff group with ID: '.$groupId);
+                        throw new AutomationException('Unable to find staff group with ID: '.$groupId);
                     }
 
                     return $staffGroup->users()->whereIsEnabled()->lists('staff_name', 'staff_email');
                 }
 
-                return Staff::all()->lists('staff_name', 'staff_email');
+                return User::all()->lists('staff_name', 'staff_email');
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name)) {
