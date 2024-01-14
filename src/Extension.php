@@ -26,7 +26,7 @@ class Extension extends BaseExtension
         $this->extendActionFormFields();
     }
 
-    public function registerPermissions()
+    public function registerPermissions(): array
     {
         return [
             'Igniter.Automation.Manage' => [
@@ -36,7 +36,7 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerNavigation()
+    public function registerNavigation(): array
     {
         return [
             'tools' => [
@@ -74,7 +74,7 @@ class Extension extends BaseExtension
      * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
-    public function registerSchedule($schedule)
+    public function registerSchedule(string $schedule)
     {
         $schedule->call(function () {
             // Pull orders created within the last 30days
