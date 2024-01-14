@@ -11,12 +11,12 @@ use Igniter\Flame\Exception\FlashException;
  */
 class Automations extends \Igniter\Admin\Classes\AdminController
 {
-    public $implement = [
+    public array $implement = [
         \Igniter\Admin\Http\Actions\FormController::class,
         \Igniter\Admin\Http\Actions\ListController::class,
     ];
 
-    public $listConfig = [
+    public array $listConfig = [
         'list' => [
             'model' => \Igniter\Automation\Models\AutomationRule::class,
             'title' => 'lang:igniter.automation::default.text_title',
@@ -26,7 +26,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
         ],
     ];
 
-    public $formConfig = [
+    public array $formConfig = [
         'name' => 'lang:igniter.automation::default.text_form_name',
         'model' => \Igniter\Automation\Models\AutomationRule::class,
         'create' => [
@@ -49,7 +49,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
         'configFile' => 'automationrule',
     ];
 
-    protected $requiredPermissions = 'Igniter.Automation.*';
+    protected null|string|array $requiredPermissions = 'Igniter.Automation.*';
 
     public function __construct()
     {
