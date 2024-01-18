@@ -103,7 +103,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
     {
         $actionClass = post('AutomationRule._'.str_singular($method));
         throw_unless(strlen($actionClass),
-            FlashException::error(sprintf('Please select an %s to attach', str_singular($method)))
+            new FlashException(sprintf('Please select an %s to attach', str_singular($method)))
         );
 
         $formController = $this->asExtension('FormController');
