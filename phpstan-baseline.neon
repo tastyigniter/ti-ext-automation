@@ -61,16 +61,6 @@ parameters:
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Call to method mailGetData\\(\\) on an unknown class Igniter\\\\Reservation\\\\Models\\\\Reservation\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/ReservationSchedule.php
-
-		-
-			message: "#^Class Igniter\\\\Reservation\\\\Models\\\\Reservation not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Events/ReservationSchedule.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 108$#"
 			count: 1
 			path: src/Classes/BaseEvent.php
@@ -91,13 +81,13 @@ parameters:
 			path: src/Classes/EventManager.php
 
 		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
-			count: 2
+			message: "#^Call to an undefined static method Igniter\\\\Reservation\\\\Models\\\\Reservation\\:\\:where\\(\\)\\.$#"
+			count: 1
 			path: src/Classes/EventManager.php
 
 		-
-			message: "#^Call to static method where\\(\\) on an unknown class Igniter\\\\Reservation\\\\Models\\\\Reservation\\.$#"
-			count: 1
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
+			count: 2
 			path: src/Classes/EventManager.php
 
 		-
