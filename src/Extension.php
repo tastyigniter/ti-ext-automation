@@ -5,6 +5,7 @@ namespace Igniter\Automation;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\Classes\EventManager;
 use Igniter\System\Classes\BaseExtension;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
 
 /**
@@ -70,11 +71,8 @@ class Extension extends BaseExtension
 
     /**
      * Registers scheduled tasks that are executed on a regular basis.
-     *
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
-     * @return void
      */
-    public function registerSchedule(string $schedule)
+    public function registerSchedule(Schedule $schedule)
     {
         $schedule->call(function () {
             // Pull orders created within the last 30days
