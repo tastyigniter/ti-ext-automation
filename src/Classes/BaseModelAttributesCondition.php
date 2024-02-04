@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class BaseModelAttributesCondition extends BaseCondition
 {
-    protected $operators = [
+    protected array $operators = [
         'is' => 'is',
         'is_not' => 'is not',
         'contains' => 'contains',
@@ -16,6 +16,8 @@ class BaseModelAttributesCondition extends BaseCondition
         'greater' => 'greater than',
         'less' => 'less than',
     ];
+
+    protected $modelAttributes;
 
     public function initConfigData($model)
     {
@@ -123,35 +125,39 @@ class BaseModelAttributesCondition extends BaseCondition
         $conditionValue = is_array($conditionValue) ? $conditionValue : mb_strtolower(trim($conditionValue));
         $modelValue = $this->getModelEvalAttribute($model, $attribute, $subCondition);
 
-        if ($operator == 'is') {
+        if ($operator === 'is') {
             return $modelValue == $conditionValue;
         }
 
-        if ($operator == 'is_not') {
+        if ($operator === 'is_not') {
             return $modelValue != $conditionValue;
         }
 
-        if ($operator == 'contains') {
-            return mb_strpos($modelValue, $conditionValue) !== false;
+        if ($operator === 'contains') {
+            return is_array($conditionValue)
+                ? in_array($modelValue, $conditionValue) !== false
+                : mb_strpos($modelValue, $conditionValue) !== false;
         }
 
-        if ($operator == 'does_not_contain') {
-            return mb_strpos($modelValue, $conditionValue) === false;
+        if ($operator === 'does_not_contain') {
+            return is_array($conditionValue)
+                ? in_array($modelValue, $conditionValue) === false
+                : mb_strpos($modelValue, $conditionValue) === false;
         }
 
-        if ($operator == 'equals_or_greater') {
+        if ($operator === 'equals_or_greater') {
             return $modelValue >= $conditionValue;
         }
 
-        if ($operator == 'equals_or_less') {
+        if ($operator === 'equals_or_less') {
             return $modelValue <= $conditionValue;
         }
 
-        if ($operator == 'greater') {
+        if ($operator === 'greater') {
             return $modelValue > $conditionValue;
         }
 
-        if ($operator == 'less') {
+        if ($operator === 'less') {
             return $modelValue < $conditionValue;
         }
 
@@ -163,7 +169,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $value = $model->{$attribute};
 
         if (method_exists($this, 'get'.Str::studly($attribute).'Attribute')) {
-            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model);
+            $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model, $condition);
         }
 
         return mb_strtolower(trim($value));
@@ -182,11 +188,11 @@ class BaseModelAttributesCondition extends BaseCondition
 
     protected function getDateRangeFrom(array $options)
     {
-        if (array_get($options, 'when') === 'is_current'){
+        if (array_get($options, 'when') === 'is_current') {
             return now()->startOf(array_get($options, 'current', 'day'))->toDateTimeString();
         }
 
-        if (array_get($options, 'when') === 'is_past'){
+        if (array_get($options, 'when') === 'is_past') {
             return now()
                 ->parse('- '.str_replace('_', ' ', array_get($options, 'range', '1_day')))
                 ->startOfDay()
@@ -198,11 +204,11 @@ class BaseModelAttributesCondition extends BaseCondition
 
     protected function getDateRangeTo(array $options)
     {
-        if (array_get($options, 'when') === 'is_current'){
+        if (array_get($options, 'when') === 'is_current') {
             return now()->endOf(array_get($options, 'current', 'day'))->toDateTimeString();
         }
 
-        if (array_get($options, 'when') === 'is_past'){
+        if (array_get($options, 'when') === 'is_past') {
             return now()->endOfDay()->toDateTimeString();
         }
 

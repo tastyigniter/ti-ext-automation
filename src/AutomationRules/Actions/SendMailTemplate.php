@@ -5,6 +5,7 @@ namespace Igniter\Automation\AutomationRules\Actions;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\System\Models\MailTemplate;
+use Igniter\User\Models\CustomerGroup;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\Mail;
@@ -44,7 +45,7 @@ class SendMailTemplate extends BaseAction
                 'customer_group' => [
                     'label' => 'lang:igniter.automation::default.label_send_to_customer_group',
                     'type' => 'select',
-                    'options' => [\Admin\Models\Customer_groups_model::class, 'getDropdownOptions'],
+                    'options' => [CustomerGroup::class, 'getDropdownOptions'],
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
@@ -128,7 +129,17 @@ class SendMailTemplate extends BaseAction
                     return $staffGroup->users()->whereIsEnabled()->lists('staff_name', 'staff_email');
                 }
 
-                return User::all()->lists('staff_name', 'staff_email');
+                return User::whereIsEnabled()->pluck('staff_name', 'staff_email');
+            case 'customer_group':
+                if ($groupId = $this->model->customer_group) {
+                    if (!$customerGroup = CustomerGroup::find($groupId)) {
+                        throw new AutomationException('Unable to find customer group with ID: '.$groupId);
+                    }
+
+                    return $customerGroup->customers()->isEnabled()->pluck('full_name', 'email');
+                }
+
+                return null;
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name)) {
