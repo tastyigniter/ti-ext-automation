@@ -5,6 +5,7 @@ namespace Igniter\Automation\AutomationRules\Actions;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\System\Models\MailTemplate;
+use Igniter\User\Models\CustomerGroup;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\Mail;
@@ -39,6 +40,16 @@ class SendMailTemplate extends BaseAction
                         'action' => 'show',
                         'field' => 'send_to',
                         'condition' => 'value[staff_group]',
+                    ],
+                ],
+                'customer_group' => [
+                    'label' => 'lang:igniter.automation::default.label_send_to_customer_group',
+                    'type' => 'select',
+                    'options' => [CustomerGroup::class, 'getDropdownOptions'],
+                    'trigger' => [
+                        'action' => 'show',
+                        'field' => 'send_to',
+                        'condition' => 'value[customer_group]',
                     ],
                 ],
                 'custom' => [
@@ -79,6 +90,7 @@ class SendMailTemplate extends BaseAction
             'location' => 'lang:igniter.user::default.text_send_to_location',
             'staff' => 'lang:igniter.user::default.text_send_to_staff_email',
             'customer' => 'lang:igniter.user::default.text_send_to_customer_email',
+            'customer_group' => 'lang:igniter.user::default.text_send_to_customer_group',
             'custom' => 'lang:igniter.user::default.text_send_to_custom',
             'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
         ];
@@ -117,7 +129,17 @@ class SendMailTemplate extends BaseAction
                     return $staffGroup->staffs->lists('staff_name', 'staff_email');
                 }
 
-                return User::all()->lists('staff_name', 'staff_email');
+                return User::whereIsEnabled()->pluck('staff_name', 'staff_email');
+            case 'customer_group':
+                if ($groupId = $this->model->customer_group) {
+                    if (!$customerGroup = CustomerGroup::find($groupId)) {
+                        throw new AutomationException('Unable to find customer group with ID: '.$groupId);
+                    }
+
+                    return $customerGroup->customers()->isEnabled()->pluck('full_name', 'email');
+                }
+
+                return null;
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name)) {

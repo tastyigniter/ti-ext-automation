@@ -56,7 +56,7 @@ class AutomationRule extends Model
 
             $params = $this->getEventObject()->getEventParams();
 
-            if (!$this->checkConditions($params)) {
+            if ($this->conditions && !$this->checkConditions($params)) {
                 return false;
             }
 
