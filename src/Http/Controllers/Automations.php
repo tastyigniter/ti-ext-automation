@@ -92,6 +92,10 @@ class Automations extends \Igniter\Admin\Classes\AdminController
 
     public function formValidate($model, $form)
     {
+        if ($form->getContext() !== 'create') {
+            return;
+        }
+
         $rules = [
             ['event_class', 'lang:igniter.automation::default.label_event_class', 'sometimes|required'],
         ];
