@@ -60,7 +60,7 @@ class AutomationRule extends Model
                 return false;
             }
 
-            $this->actions->each(function ($action) use ($params) {
+            $this->actions->each(function($action) use ($params) {
                 $action->triggerAction($params);
             });
         } catch (Throwable|Exception $ex) {
@@ -70,21 +70,21 @@ class AutomationRule extends Model
 
     public function getEventClassOptions()
     {
-        return array_map(function (BaseEvent $eventObj) {
+        return array_map(function(BaseEvent $eventObj) {
             return $eventObj->getEventName().' - '.$eventObj->getEventDescription();
         }, BaseEvent::findEventObjects());
     }
 
     public function getActionOptions()
     {
-        return array_map(function (BaseAction $actionObj) {
+        return array_map(function(BaseAction $actionObj) {
             return $actionObj->getActionName();
         }, BaseAction::findActions());
     }
 
     public function getConditionOptions()
     {
-        return array_map(function (BaseCondition $conditionObj) {
+        return array_map(function(BaseCondition $conditionObj) {
             return $conditionObj->getConditionName();
         }, BaseCondition::findConditions());
     }
@@ -252,7 +252,7 @@ class AutomationRule extends Model
             return true;
         }
 
-        $validConditions = $conditions->sortBy('priority')->filter(function (RuleCondition $condition) use ($params) {
+        $validConditions = $conditions->sortBy('priority')->filter(function(RuleCondition $condition) use ($params) {
             return $condition->getConditionObject()->isTrue($params);
         })->values();
 

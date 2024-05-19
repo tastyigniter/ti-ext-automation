@@ -44,7 +44,7 @@ class EventManager
 
     public static function bindEvent($eventCode, $eventClass)
     {
-        Event::listen($eventCode, function () use ($eventCode, $eventClass) {
+        Event::listen($eventCode, function() use ($eventCode, $eventClass) {
             if (!method_exists($eventClass, 'makeParamsFromEvent')) {
                 return;
             }
@@ -58,7 +58,7 @@ class EventManager
     {
         Order::where('created_at', '>=', now()->subDays(30))
             ->lazy()
-            ->each(function ($order) {
+            ->each(function($order) {
                 Event::fire('automation.order.schedule.hourly', [$order]);
             });
     }
@@ -67,7 +67,7 @@ class EventManager
     {
         Reservation::where('reserve_date', '>=', now()->subDays(30))
             ->lazy()
-            ->each(function ($reservation) {
+            ->each(function($reservation) {
                 Event::fire('automation.reservation.schedule.hourly', [$reservation]);
             });
     }
@@ -84,7 +84,7 @@ class EventManager
     {
         $models = AutomationRule::listRulesForEvent($eventClass);
 
-        $models->each(function ($model) use ($params) {
+        $models->each(function($model) use ($params) {
             $model->setEventParams($params);
             $model->triggerRule();
         });

@@ -35,7 +35,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $attributes = $this->listModelAttributes();
         $subConditions = $model->options ?? [];
 
-        $result = collect($subConditions)->sortBy('priority')->map(function ($subCondition) use ($attributes) {
+        $result = collect($subConditions)->sortBy('priority')->map(function($subCondition) use ($attributes) {
             $attribute = array_get($subCondition, 'attribute');
             $operator = array_get($subCondition, 'operator');
             $value = array_get($subCondition, 'value');
@@ -62,7 +62,7 @@ class BaseModelAttributesCondition extends BaseCondition
 
     public function getAttributeOptions()
     {
-        return array_map(function ($attribute) {
+        return array_map(function($attribute) {
             return array_get($attribute, 'label');
         }, $this->listModelAttributes());
     }
@@ -81,7 +81,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $attributes = $this->listModelAttributes();
         $subConditions = $this->model->options ?? [];
 
-        collect($subConditions)->sortBy('priority')->each(function ($subCondition) use (&$success, $modelToEval, $attributes) {
+        collect($subConditions)->sortBy('priority')->each(function($subCondition) use (&$success, $modelToEval, $attributes) {
             $attribute = array_get($subCondition, 'attribute');
             $attributeType = array_get($attributes, $attribute.'.type');
 
@@ -104,7 +104,7 @@ class BaseModelAttributesCondition extends BaseCondition
             return $this->modelAttributes;
         }
 
-        $attributes = array_map(function ($info) {
+        $attributes = array_map(function($info) {
             if (is_string($info)) {
                 $info = ['label' => $info];
             }

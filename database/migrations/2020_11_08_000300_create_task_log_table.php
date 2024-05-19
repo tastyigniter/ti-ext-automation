@@ -16,7 +16,7 @@ return new class extends Migration
             return;
         }
 
-        Schema::create('igniter_automation_logs', function (Blueprint $table) {
+        Schema::create('igniter_automation_logs', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('automation_rule_id')->unsigned();

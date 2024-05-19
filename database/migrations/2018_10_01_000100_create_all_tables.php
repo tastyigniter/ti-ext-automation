@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('igniter_automation_rules', function (Blueprint $table) {
+        Schema::create('igniter_automation_rules', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_rule_actions', function (Blueprint $table) {
+        Schema::create('igniter_automation_rule_actions', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('automation_rule_id');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_rule_conditions', function (Blueprint $table) {
+        Schema::create('igniter_automation_rule_conditions', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('automation_rule_id');
@@ -39,7 +39,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_jobs', function (Blueprint $table) {
+        Schema::create('igniter_automation_jobs', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('event_class');
