@@ -74,12 +74,12 @@ class Extension extends BaseExtension
      */
     public function registerSchedule(Schedule $schedule)
     {
-        $schedule->call(function () {
+        $schedule->call(function() {
             // Pull orders created within the last 30days
             EventManager::fireOrderScheduleEvents();
         })->name('automation-order-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
 
-        $schedule->call(function () {
+        $schedule->call(function() {
             // Pull reservations booked within the last 30days
             EventManager::fireReservationScheduleEvents();
         })->name('automation-reservation-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
@@ -89,7 +89,7 @@ class Extension extends BaseExtension
 
     protected function extendActionFormFields()
     {
-        Event::listen('admin.form.extendFieldsBefore', function (Form $form) {
+        Event::listen('admin.form.extendFieldsBefore', function(Form $form) {
             if (!$form->getController() instanceof \Igniter\Automation\Http\Controllers\Automations) {
                 return;
             }

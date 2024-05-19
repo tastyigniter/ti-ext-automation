@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::table('igniter_automation_rule_actions', function (Blueprint $table) {
+        Schema::table('igniter_automation_rule_actions', function(Blueprint $table) {
             $table->dropForeignKeyIfExists(DB::getTablePrefix().'igniter_actions_automation_rule_id_foreign');
             $table->dropIndexIfExists(DB::getTablePrefix().'igniter_actions_automation_rule_id_foreign');
         });
 
-        Schema::table('igniter_automation_rule_conditions', function (Blueprint $table) {
+        Schema::table('igniter_automation_rule_conditions', function(Blueprint $table) {
             $table->dropForeignKeyIfExists(DB::getTablePrefix().'igniter_conditions_automation_rule_id_foreign');
             $table->dropIndexIfExists(DB::getTablePrefix().'igniter_conditions_automation_rule_id_foreign');
         });
 
-        Schema::table('igniter_automation_logs', function (Blueprint $table) {
+        Schema::table('igniter_automation_logs', function(Blueprint $table) {
             $table->dropForeignKeyIfExists('automation_rule_id');
             $table->dropForeignKeyIfExists('rule_action_id');
 
