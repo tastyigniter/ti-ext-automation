@@ -44,7 +44,7 @@ You can manage automations in the admin panel by navigating to Tools > Automatio
 
 An event class is responsible for preparing the parameters passed to the conditions and actions.
 
-Automation Event classes are typically stored in the `src/AutomationRules/Events` directory of an extension. The Event class is a simple class that extends `Igniter\Automation\Classes\BaseEvent` and defines the `eventDetails` and `makeParamsFromEvent` methods. 
+Automation Event classes are typically stored in the `src/AutomationRules/Events` directory of an extension. The Event class is a simple class that extends `Igniter\Automation\Classes\BaseEvent` and defines the `eventDetails` and `makeParamsFromEvent` methods.
 
 Here is an example of an event class:
 
@@ -81,7 +81,7 @@ These are the available options for the `eventDetails` method:
 
 ### Defining actions
 
-A action class defines the final step in an automation and performs the automation. 
+A action class defines the final step in an automation and performs the automation.
 
 Action classes are typically stored in the `src/AutomationRules/Actions` directory of an extension. The Action class is a simple class that extends `Igniter\Automation\Classes\BaseAction` and defines the `actionDetails`, `defineFormFields`, and `triggerAction` methods.
 
@@ -205,9 +205,9 @@ The `defineModelAttributes` method defines the model attributes and labels requi
 
 ### Registering automation events, actions, and conditions
 
-After creating the [event](#creating-an-event-class), [action](#creating-an-action-class) and [condition](#creating-a-condition-class) classes, you can make them available in the admin panel by registering them in the `registerAutomationRules` method of the extension class. 
+After creating the [event](#defining-events), [action](#defining-actions) and [condition](#defining-conditions) classes, you can make them available in the admin panel by registering them in the `registerAutomationRules` method of the extension class.
 
-The `registerAutomationRules` method should return an array with the following keys: 
+The `registerAutomationRules` method should return an array with the following keys:
 
 - `events` - an array of event class that triggers an automation.
 - `actions` - an array of action class that performs a task when an automation is triggered.
