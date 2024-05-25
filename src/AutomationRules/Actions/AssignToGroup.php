@@ -33,16 +33,16 @@ class AssignToGroup extends BaseAction
     public function triggerAction($params)
     {
         if (!$groupId = $this->model->staff_group_id) {
-            throw new AutomationException('Missing valid staff group to assign to.');
+            throw new AutomationException('AssignToGroup: Missing valid staff group to assign to.');
         }
 
         if (!$assigneeGroup = UserGroup::find($groupId)) {
-            throw new AutomationException('Invalid staff group to assign to.');
+            throw new AutomationException('AssignToGroup: Invalid staff group to assign to.');
         }
 
         $assignable = array_get($params, 'order', array_get($params, 'reservation'));
-        if (!in_array(Assignable::class, class_uses_recursive(get_class($assignable)))) {
-            throw new AutomationException('Missing assignable model.');
+        if (!$assignable || !in_array(Assignable::class, class_uses_recursive(get_class($assignable)))) {
+            throw new AutomationException('AssignToGroup: Missing assignable model.');
         }
 
         $assignable->assignToGroup($assigneeGroup);

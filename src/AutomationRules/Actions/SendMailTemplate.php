@@ -4,11 +4,12 @@ namespace Igniter\Automation\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
+use Igniter\System\Helpers\MailHelper;
 use Igniter\System\Models\MailTemplate;
 use Igniter\User\Models\CustomerGroup;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
-use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Mime\Address;
 
 class SendMailTemplate extends BaseAction
 {
@@ -75,7 +76,11 @@ class SendMailTemplate extends BaseAction
             throw new AutomationException('SendMailTemplate: Missing a valid recipient from the event payload');
         }
 
-        Mail::sendToMany($recipient, $templateCode, $params);
+        foreach ($recipient as $address => $name) {
+            MailHelper::sendTemplate($templateCode, $params, function($message) use ($address, $name) {
+                $message->to(new Address($address, $name));
+            });
+        }
     }
 
     public function getTemplateOptions()
@@ -102,7 +107,7 @@ class SendMailTemplate extends BaseAction
 
         switch ($mode) {
             case 'custom':
-                return $this->model->custom;
+                return [$this->model->custom => ''];
             case 'system':
                 $name = config('mail.from.name', 'Your Site');
                 $address = config('mail.from.address', 'admin@domain.tld');

@@ -119,7 +119,7 @@ class SendMailTemplate extends \Igniter\Automation\Classes\BaseAction
         $email = $this->model->send_to;
         $template = $this->model->template;
 
-        Mail::sendTo($email, $template, $params);
+        // Send mail
     }
 }
 ```
