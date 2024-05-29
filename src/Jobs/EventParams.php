@@ -3,11 +3,13 @@
 namespace Igniter\Automation\Jobs;
 
 use Igniter\Automation\Classes\EventManager;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesAndRestoresModelIdentifiers;
 
 class EventParams
 {
-    use \Illuminate\Queue\InteractsWithQueue;
-    use \Illuminate\Queue\SerializesAndRestoresModelIdentifiers;
+    use InteractsWithQueue;
+    use SerializesAndRestoresModelIdentifiers;
 
     protected $eventClass;
 
