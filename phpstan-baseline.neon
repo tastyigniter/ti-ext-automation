@@ -51,6 +51,11 @@ parameters:
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\Customer\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendMailTemplate.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\CustomerGroup\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
@@ -62,11 +67,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\UserGroup\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Mail\\:\\:sendToMany\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
@@ -88,11 +88,6 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Reservation\\\\Models\\\\Reservation\\:\\:where\\(\\)\\.$#"
 			count: 1
-			path: src/Classes/EventManager.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
-			count: 2
 			path: src/Classes/EventManager.php
 
 		-
@@ -227,6 +222,11 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:\\$class_name\\.$#"
+			count: 1
+			path: src/Models/AutomationRule.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:\\$options\\.$#"
 			count: 1
 			path: src/Models/AutomationRule.php
 
