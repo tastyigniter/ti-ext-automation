@@ -90,6 +90,7 @@ class BaseAction extends AbstractBase
 
     public function triggerAction($params)
     {
+        throw new \LogicException('Method '.get_class($this).'::triggerAction() is not implemented.');
     }
 
     public function getActionName()

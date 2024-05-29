@@ -6,10 +6,11 @@ use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\System\Helpers\MailHelper;
 use Igniter\System\Models\MailTemplate;
+use Igniter\User\Models\Customer;
 use Igniter\User\Models\CustomerGroup;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
-use Symfony\Component\Mime\Address;
+use Illuminate\Support\Facades\DB;
 
 class SendMailTemplate extends BaseAction
 {
@@ -77,9 +78,9 @@ class SendMailTemplate extends BaseAction
         }
 
         foreach ($recipient as $address => $name) {
-            MailHelper::sendTemplate($templateCode, $params, function($message) use ($address, $name) {
-                $message->to(new Address($address, $name));
-            });
+            if (empty($address)) continue;
+
+            MailHelper::sendTemplate($templateCode, $params, [$address, $name]);
         }
     }
 
@@ -91,13 +92,16 @@ class SendMailTemplate extends BaseAction
     public function getSendToOptions()
     {
         return [
+            'custom' => 'lang:igniter.user::default.text_send_to_custom',
             'restaurant' => 'lang:igniter.user::default.text_send_to_restaurant',
             'location' => 'lang:igniter.user::default.text_send_to_location',
             'staff' => 'lang:igniter.user::default.text_send_to_staff_email',
             'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
             'customer' => 'lang:igniter.user::default.text_send_to_customer_email',
             'customer_group' => 'lang:igniter.user::default.text_send_to_customer_group',
-            'custom' => 'lang:igniter.user::default.text_send_to_custom',
+            'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
+            'all_staff' => 'lang:igniter.user::default.text_send_to_all_staff',
+            'all_customer' => 'lang:igniter.user::default.text_send_to_all_customer',
         ];
     }
 
@@ -134,14 +138,18 @@ class SendMailTemplate extends BaseAction
                     return $staffGroup->users()->whereIsEnabled()->lists('staff_name', 'staff_email');
                 }
 
-                return User::whereIsEnabled()->pluck('staff_name', 'staff_email');
+                return null;
             case 'customer_group':
                 if ($groupId = $this->model->customer_group) {
                     if (!$customerGroup = CustomerGroup::find($groupId)) {
                         throw new AutomationException('Unable to find customer group with ID: '.$groupId);
                     }
 
-                    return $customerGroup->customers()->isEnabled()->pluck('full_name', 'email');
+                    return $customerGroup->customers()
+                        ->select('email', DB::raw('concat(first_name, last_name) as full_name'))
+                        ->whereIsEnabled()
+                        ->pluck('full_name', 'email')
+                        ->all();
                 }
 
                 return null;
@@ -167,6 +175,13 @@ class SendMailTemplate extends BaseAction
                 if ($orderOrReservation && $staff = $orderOrReservation->assignee) {
                     return [$staff->staff_email => $staff->staff_name];
                 }
+            case 'all_staff':
+                return User::whereIsEnabled()->pluck('staff_name', 'staff_email')->all();
+            case 'all_customer':
+                return Customer::whereIsEnabled()
+                    ->select('email', 'concat(first_name, last_name) as full_name')
+                    ->pluck('full_name', 'email')
+                    ->all();
         }
     }
 }

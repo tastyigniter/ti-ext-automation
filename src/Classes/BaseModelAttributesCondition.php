@@ -81,6 +81,8 @@ class BaseModelAttributesCondition extends BaseCondition
         $attributes = $this->listModelAttributes();
         $subConditions = $this->model->options ?? [];
 
+        $success = false;
+
         collect($subConditions)->sortBy('priority')->each(function($subCondition) use (&$success, $modelToEval, $attributes) {
             $attribute = array_get($subCondition, 'attribute');
             $attributeType = array_get($attributes, $attribute.'.type');

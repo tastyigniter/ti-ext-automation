@@ -59,7 +59,7 @@ class EventManager
         Order::where('created_at', '>=', now()->subDays(30))
             ->lazy()
             ->each(function($order) {
-                Event::fire('automation.order.schedule.hourly', [$order]);
+                Event::dispatch('automation.order.schedule.hourly', [$order]);
             });
     }
 
@@ -68,7 +68,7 @@ class EventManager
         Reservation::where('reserve_date', '>=', now()->subDays(30))
             ->lazy()
             ->each(function($reservation) {
-                Event::fire('automation.reservation.schedule.hourly', [$reservation]);
+                Event::dispatch('automation.reservation.schedule.hourly', [$reservation]);
             });
     }
 
@@ -123,10 +123,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-            'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
-            'isConsole' => App::runningInConsole() ? 1 : 0,
-            'appLocale' => App::getLocale(),
-        ] + $globals;
+                'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
+                'isConsole' => App::runningInConsole() ? 1 : 0,
+                'appLocale' => App::getLocale(),
+            ] + $globals;
     }
 
     /**

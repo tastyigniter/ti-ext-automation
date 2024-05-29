@@ -227,7 +227,7 @@ class AutomationRule extends Model
 
         foreach ($actions as $actionClass => $config) {
             $ruleAction = new RuleAction;
-            $ruleAction->fill($config);
+            $ruleAction->options = $config;
             $ruleAction->class_name = $actionClass;
             $ruleAction->automation_rule_id = $automation->getKey();
             $ruleAction->save();
