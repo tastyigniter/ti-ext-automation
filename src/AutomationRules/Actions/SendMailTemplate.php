@@ -78,7 +78,9 @@ class SendMailTemplate extends BaseAction
         }
 
         foreach ($recipient as $address => $name) {
-            if (empty($address)) continue;
+            if (empty($address)) {
+                continue;
+            }
 
             MailHelper::sendTemplate($templateCode, $params, [$address, $name]);
         }

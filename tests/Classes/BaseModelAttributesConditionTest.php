@@ -18,17 +18,16 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
     $modelToEval = new stdClass();
     $modelToEval->attribute = $evalValue;
 
-    $baseModelAttributesCondition = new class($operator, $value) extends BaseModelAttributesCondition {
+    $baseModelAttributesCondition = new class($operator, $value) extends BaseModelAttributesCondition
+    {
         public static $testOperator = '';
+
         public static $testValue = '';
 
         public function __construct($operator, $value)
         {
-            $this->model = new class([
-                'options' => [
-                    ['attribute' => 'attribute', 'operator' => $operator, 'value' => $value]
-                ]
-            ]) extends \Igniter\Flame\Database\Model {
+            $this->model = new class(['options' => [['attribute' => 'attribute', 'operator' => $operator, 'value' => $value]]]) extends \Igniter\Flame\Database\Model
+            {
             };
         }
 
@@ -36,8 +35,8 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
         {
             return [
                 'attribute' => [
-                    'label' => 'Attribute label'
-                ]
+                    'label' => 'Attribute label',
+                ],
             ];
         }
     };
