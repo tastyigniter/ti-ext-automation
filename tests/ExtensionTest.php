@@ -27,4 +27,3 @@ it('loads registered automation actions', function() {
     ]);
 });
 
-

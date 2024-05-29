@@ -21,7 +21,7 @@ it('assigns to valid group', function($params) {
     $staffGroup = UserGroup::factory()->create();
 
     $assignToGroup = new AssignToGroup(new RuleAction([
-        'staff_group_id' => $staffGroup->getKey()
+        'staff_group_id' => $staffGroup->getKey(),
     ]));
 
     $assignToGroup->triggerAction($params);

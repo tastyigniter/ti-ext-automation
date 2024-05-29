@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Queue;
 it('binds events correctly', function() {
     Queue::fake();
 
-    EventManager::bindEvents(['test.event' => new class extends BaseEvent {
+    EventManager::bindEvents(['test.event' => new class extends BaseEvent
+    {
         public static function makeParamsFromEvent(array $args, $eventName = null)
         {
             return ['param' => 'value'];
