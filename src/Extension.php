@@ -4,6 +4,8 @@ namespace Igniter\Automation;
 
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\Classes\EventManager;
+use Igniter\Automation\Models\AutomationLog;
+use Igniter\Flame\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
@@ -25,6 +27,8 @@ class Extension extends BaseExtension
         EventManager::bindRules();
 
         $this->extendActionFormFields();
+
+        Igniter::prunableModel(AutomationLog::class);
     }
 
     public function registerPermissions(): array
