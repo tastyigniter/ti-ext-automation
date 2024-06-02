@@ -34,15 +34,15 @@ it('updates automation', function() {
     $url = route('igniter.automation.automations', ['slug' => 'edit/'.$automation->getKey()]);
     $this->actingAs(User::factory()->superUser()->create(), 'igniter-admin')
         ->post($url, [
-            'Automation' => [
-                'event_class' => 'SomeClass',
+            'AutomationRule' => [
+                'name' => 'Some automation rule',
             ],
         ], [
             'X-Requested-With' => 'XMLHttpRequest',
             'X-IGNITER-REQUEST-HANDLER' => 'onSave',
         ]);
 
-    expect(AutomationRule::find($automation->getKey()))->event_class->toBe('SomeClass');
+    expect(AutomationRule::find($automation->getKey()))->name->toBe('Some automation rule');
 });
 
 it('deletes automation', function() {
