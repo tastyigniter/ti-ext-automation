@@ -19,7 +19,7 @@ it('returns order data from event', function() {
     $params = OrderSchedule::makeParamsFromEvent([$order]);
     expect($params)->toHaveKeys(['order', 'order_id', 'order_type', 'order_total'])
         ->and($params['order'])->toBeInstanceOf(Order::class)
-        ->and($params['order_type'])->toBe('delivery')
+        ->and($params['order_type'])->toBe('Delivery')
         ->and($params['order_total'])->toBe(10.0);
 });
 
