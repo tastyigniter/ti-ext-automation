@@ -73,14 +73,11 @@ return [
             'buttons' => [
                 'save' => [
                     'label' => 'lang:admin::lang.button_save',
+                    'context' => ['create', 'edit'],
+                    'partial' => 'form/toolbar_save_button',
                     'class' => 'btn btn-primary',
                     'data-request' => 'onSave',
-                ],
-                'saveClose' => [
-                    'label' => 'lang:admin::lang.button_save_close',
-                    'class' => 'btn btn-default',
-                    'data-request' => 'onSave',
-                    'data-request-data' => 'close:1',
+                    'data-progress-indicator' => 'admin::lang.text_saving',
                 ],
             ],
         ],
