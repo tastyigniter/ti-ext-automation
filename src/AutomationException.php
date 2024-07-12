@@ -2,6 +2,4 @@
 
 namespace Igniter\Automation;
 
-class AutomationException extends \Exception
-{
-}
+class AutomationException extends \Exception {}

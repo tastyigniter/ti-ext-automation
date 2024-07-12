@@ -5,9 +5,7 @@ namespace Igniter\Automation\Tests\Classes;
 use Igniter\Automation\Classes\BaseCondition;
 
 it('defines a name and description', function() {
-    $condition = new class extends BaseCondition
-    {
-    };
+    $condition = new class extends BaseCondition {};
 
     expect($condition->conditionDetails())->toHaveKeys(['name', 'description']);
 });

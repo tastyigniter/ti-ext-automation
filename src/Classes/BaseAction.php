@@ -46,9 +46,7 @@ class BaseAction extends AbstractBase
      * Initializes configuration data when the action is first created.
      * @param \Igniter\Flame\Database\Model $model
      */
-    public function initConfigData($model)
-    {
-    }
+    public function initConfigData($model) {}
 
     /**
      * Returns information about this action, including name and description.
