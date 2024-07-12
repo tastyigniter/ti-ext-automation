@@ -34,7 +34,5 @@ return new class extends Migration
         Schema::enableForeignKeyConstraints();
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 };

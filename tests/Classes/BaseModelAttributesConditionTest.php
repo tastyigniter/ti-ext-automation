@@ -26,9 +26,7 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
 
         public function __construct($operator, $value)
         {
-            $this->model = new class(['options' => [['attribute' => 'attribute', 'operator' => $operator, 'value' => $value]]]) extends \Igniter\Flame\Database\Model
-            {
-            };
+            $this->model = new class(['options' => [['attribute' => 'attribute', 'operator' => $operator, 'value' => $value]]]) extends \Igniter\Flame\Database\Model {};
         }
 
         public function defineModelAttributes()

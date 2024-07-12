@@ -5,25 +5,19 @@ namespace Igniter\Automation\Tests\Classes;
 use Igniter\Automation\Classes\BaseAction;
 
 it('defines a name and description', function() {
-    $action = new class extends BaseAction
-    {
-    };
+    $action = new class extends BaseAction {};
 
     expect($action->actionDetails())->toHaveKeys(['name', 'description']);
 });
 
 it('defines form fields', function() {
-    $action = new class extends BaseAction
-    {
-    };
+    $action = new class extends BaseAction {};
 
     expect($action->defineFormFields())->toBeArray();
 });
 
 it('defines validation rules', function() {
-    $action = new class extends BaseAction
-    {
-    };
+    $action = new class extends BaseAction {};
 
     expect($action->defineValidationRules())->toBeArray();
 });
