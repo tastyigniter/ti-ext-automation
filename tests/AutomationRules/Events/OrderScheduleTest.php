@@ -6,7 +6,7 @@ use Igniter\Automation\AutomationRules\Events\OrderSchedule;
 use Igniter\Cart\Models\Order;
 
 it('has a name and description', function() {
-    $event = new OrderSchedule();
+    $event = new OrderSchedule;
     expect($event->eventDetails())->toHaveKeys(['name', 'description']);
 });
 
@@ -31,7 +31,7 @@ it('returns empty array if order is not provided', function() {
 });
 
 it('returns empty array if order is not an instance of Order', function() {
-    $params = OrderSchedule::makeParamsFromEvent([new \stdClass()]);
+    $params = OrderSchedule::makeParamsFromEvent([new \stdClass]);
 
     expect($params)->toBeArray()
         ->and($params)->toBeEmpty();

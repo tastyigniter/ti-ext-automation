@@ -6,7 +6,7 @@ use Igniter\Automation\AutomationRules\Events\ReservationSchedule;
 use Igniter\Reservation\Models\Reservation;
 
 it('has a name and description', function() {
-    $event = new ReservationSchedule();
+    $event = new ReservationSchedule;
     expect($event->eventDetails())->toHaveKeys(['name', 'description']);
 });
 
@@ -29,7 +29,7 @@ it('returns empty array if order is not provided', function() {
 });
 
 it('returns empty array if order is not an instance of Order', function() {
-    $params = ReservationSchedule::makeParamsFromEvent([new \stdClass()]);
+    $params = ReservationSchedule::makeParamsFromEvent([new \stdClass]);
 
     expect($params)->toBeArray()
         ->and($params)->toBeEmpty();

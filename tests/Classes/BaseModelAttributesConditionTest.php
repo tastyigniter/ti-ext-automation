@@ -3,19 +3,19 @@
 use Igniter\Automation\Classes\BaseModelAttributesCondition;
 
 it('defines model attributes', function() {
-    $condition = new BaseModelAttributesCondition();
+    $condition = new BaseModelAttributesCondition;
 
     expect($condition->defineModelAttributes())->toBeArray();
 });
 
 it('evalIsTrue returns false when no subconditions', function() {
-    $modelToEval = new stdClass();
-    $baseModelAttributesCondition = new BaseModelAttributesCondition();
+    $modelToEval = new stdClass;
+    $baseModelAttributesCondition = new BaseModelAttributesCondition;
     expect($baseModelAttributesCondition->evalIsTrue($modelToEval))->toBeFalse();
 });
 
 it('evalIsTrue evaluates string type attribute correctly', function($evalValue, $operator, $value, $eval) {
-    $modelToEval = new stdClass();
+    $modelToEval = new stdClass;
     $modelToEval->attribute = $evalValue;
 
     $baseModelAttributesCondition = new class($operator, $value) extends BaseModelAttributesCondition
