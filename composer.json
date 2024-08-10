@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "tastyigniter/core": "v4.0@beta"
+    "tastyigniter/core": "^v4.0@beta"
   },
   "require-dev": {
     "laravel/pint": "^1.2",
