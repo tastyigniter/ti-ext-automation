@@ -23,7 +23,7 @@ it('defines validation rules', function() {
 });
 
 it('throws an exception if triggerAction method is not implemented', function() {
-    $action = new BaseAction();
+    $action = new BaseAction;
 
     $action->triggerAction([]);
 })->throws('Method Igniter\Automation\Classes\BaseAction::triggerAction() is not implemented.');

@@ -27,7 +27,7 @@ it('binds events correctly', function() {
 it('queues event correctly', function() {
     Queue::fake();
 
-    $eventManager = new EventManager();
+    $eventManager = new EventManager;
     $eventManager->queueEvent('SomeEventClass', ['param' => 'value']);
 
     Queue::assertPushed(EventParams::class);
@@ -82,7 +82,7 @@ it('does not dispatch reservation schedule hourly event if reservation is not cr
 });
 
 it('registers global params correctly', function() {
-    $eventManager = new EventManager();
+    $eventManager = new EventManager;
     $eventManager->registerGlobalParams(['param' => 'value']);
 
     $contextParams = $eventManager->getContextParams();
@@ -92,7 +92,7 @@ it('registers global params correctly', function() {
 });
 
 it('processes callbacks correctly', function() {
-    $eventManager = new EventManager();
+    $eventManager = new EventManager;
     $eventManager->registerCallback(function($manager) {
         $manager->registerGlobalParams(['callbackParam' => 'callbackValue']);
     });
