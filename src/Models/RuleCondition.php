@@ -63,11 +63,7 @@ class RuleCondition extends Model
             $class = $this->class_name;
         }
 
-        if (!$class) {
-            return false;
-        }
-
-        if (!$this->isClassExtendedWith($class)) {
+        if ($class && !$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
         }
 

@@ -4,7 +4,9 @@ namespace Igniter\Automation;
 
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\Classes\EventManager;
+use Igniter\Automation\Http\Controllers\Automations;
 use Igniter\Automation\Models\AutomationLog;
+use Igniter\Automation\Models\RuleAction;
 use Igniter\Flame\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,6 +19,8 @@ class Extension extends BaseExtension
 {
     public function register()
     {
+        parent::register();
+
         $this->app->singleton(EventManager::class);
 
         $this->registerConsoleCommand('automation.cleanup', Console\Cleanup::class);
@@ -94,10 +98,7 @@ class Extension extends BaseExtension
     protected function extendActionFormFields()
     {
         Event::listen('admin.form.extendFieldsBefore', function(Form $form) {
-            if (!$form->getController() instanceof \Igniter\Automation\Http\Controllers\Automations) {
-                return;
-            }
-            if ($form->model instanceof \Igniter\Automation\Models\RuleAction) {
+            if ($form->getController() instanceof Automations && $form->model instanceof RuleAction) {
                 $form->arrayName .= '[options]';
                 $form->fields = array_get($form->model->getFieldConfig(null), 'fields', []);
             }

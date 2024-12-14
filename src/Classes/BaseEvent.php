@@ -97,10 +97,6 @@ class BaseEvent extends AbstractBase
     public function getEventIdentifier()
     {
         $namespace = normalize_class_name(get_called_class());
-        if (strpos($namespace, '\\') === null) {
-            return $namespace;
-        }
-
         $parts = explode('\\', $namespace);
         $class = array_pop($parts);
         $slice = array_slice($parts, 1, 2);
@@ -116,16 +112,12 @@ class BaseEvent extends AbstractBase
             return $automationRules;
         }
 
-        foreach ($automationRules as $extension => $automationRule) {
+        foreach ($automationRules as $automationRule) {
             if (!$values = array_get($automationRule, $key)) {
                 continue;
             }
 
-            if (!is_array($values)) {
-                $values = [$values];
-            }
-
-            foreach ($values as $index => $value) {
+            foreach ((array)$values as $index => $value) {
                 if (is_string($index)) {
                     $results[$index] = $value;
                 } else {

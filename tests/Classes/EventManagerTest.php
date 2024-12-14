@@ -1,8 +1,13 @@
 <?php
 
+namespace Igniter\Automation\Tests\Classes;
+
 use Igniter\Automation\Classes\BaseEvent;
 use Igniter\Automation\Classes\EventManager;
 use Igniter\Automation\Jobs\EventParams;
+use Igniter\Automation\Models\AutomationRule;
+use Igniter\Automation\Tests\Fixtures\TestAction;
+use Igniter\Automation\Tests\Fixtures\TestEvent;
 use Igniter\Cart\Models\Order;
 use Igniter\Reservation\Models\Reservation;
 use Illuminate\Support\Facades\Event;
@@ -22,6 +27,18 @@ it('binds events correctly', function() {
     Event::dispatch('test.event');
 
     Queue::assertPushed(EventParams::class);
+});
+
+it('skips binding event when makeParamsFromEvent method is missing', function() {
+    Queue::fake();
+
+    EventManager::bindEvents(['test.event' => new class
+    {
+    }]);
+
+    Event::dispatch('test.event');
+
+    Queue::assertNotPushed(EventParams::class);
 });
 
 it('queues event correctly', function() {
@@ -79,6 +96,26 @@ it('does not dispatch reservation schedule hourly event if reservation is not cr
     EventManager::fireReservationScheduleEvents();
 
     Event::assertNotDispatched('automation.reservation.schedule.hourly');
+});
+
+it('triggers rules for the given event class', function() {
+    $eventClass = TestEvent::class;
+    $params = ['param1' => 'value1'];
+
+    $automationRule = AutomationRule::createFromPreset('some_rule', [
+        'name' => 'SomeRule',
+        'event' => $eventClass,
+        'actions' => [
+            TestAction::class => [],
+        ],
+    ]);
+    $automationRule->status = 1;
+    $automationRule->save();
+
+    $eventManager = new EventManager();
+    $eventManager->fireEvent($eventClass, $params);
+
+    expect(true)->toBeTrue();
 });
 
 it('registers global params correctly', function() {

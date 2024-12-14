@@ -33,7 +33,7 @@ class AutomationLog extends Model
         'is_success' => 'boolean',
         'message' => 'string',
         'params' => 'array',
-        'exception' => 'array',
+        'exception' => ['nullable', 'array'],
     ];
 
     protected $casts = [
@@ -77,7 +77,7 @@ class AutomationLog extends Model
     {
         return lang($this->is_success
             ? 'igniter.automation::default.text_success'
-            : 'igniter.automation::default.text_failed'
+            : 'igniter.automation::default.text_failed',
         );
     }
 
@@ -97,6 +97,8 @@ class AutomationLog extends Model
 
     public function prunable(): Builder
     {
-        return static::query()->where('created_at', '<=', now()->subDays(setting('activity_log_timeout', 60)));
+        return static::query()
+            ->whereNotNull('created_at')
+            ->where('created_at', '<=', now()->subDays(setting('activity_log_timeout', 60)));
     }
 }

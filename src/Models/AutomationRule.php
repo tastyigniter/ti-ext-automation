@@ -3,6 +3,7 @@
 namespace Igniter\Automation\Models;
 
 use Exception;
+use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Automation\Classes\BaseEvent;
@@ -50,8 +51,8 @@ class AutomationRule extends Model
     public function triggerRule()
     {
         try {
-            if (!$this->conditions || !$this->actions) {
-                return false;
+            if (!$this->actions || $this->actions->isEmpty()) {
+                throw new AutomationException('No actions found for this rule');
             }
 
             $params = $this->getEventObject()->getEventParams();
@@ -141,15 +142,9 @@ class AutomationRule extends Model
      */
     public function applyEventClass($class = null)
     {
-        if (!$class) {
-            $class = $this->event_class;
-        }
+        $class ??= $this->event_class;
 
-        if (!$class) {
-            return false;
-        }
-
-        if (!$this->isClassExtendedWith($class)) {
+        if ($class && !$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
         }
 
@@ -200,7 +195,7 @@ class AutomationRule extends Model
             }
 
             if (!array_key_exists($code, $presets)) {
-                self::whereName($code)->delete();
+                self::whereCode($code)->delete();
             }
         }
 

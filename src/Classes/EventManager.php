@@ -123,10 +123,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-            'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
-            'isConsole' => App::runningInConsole() ? 1 : 0,
-            'appLocale' => App::getLocale(),
-        ] + $globals;
+                'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
+                'isConsole' => App::runningInConsole() ? 1 : 0,
+                'appLocale' => App::getLocale(),
+            ] + $globals;
     }
 
     /**
@@ -135,12 +135,10 @@ class EventManager
      */
     protected function processCallbacks()
     {
-        if ($this->registered) {
-            return;
-        }
-
-        foreach ($this->callbacks as $callback) {
-            $callback($this);
+        if (!$this->registered) {
+            foreach ($this->callbacks as $callback) {
+                $callback($this);
+            }
         }
 
         $this->registered = true;

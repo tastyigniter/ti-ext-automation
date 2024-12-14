@@ -126,9 +126,6 @@ class SendMailTemplate extends BaseAction
                 return [$address => $name];
             case 'location':
                 $location = array_get($params, 'location');
-                if (empty($location->location_email) && empty($location->location_name)) {
-                    return null;
-                }
 
                 return [$location->location_email => $location->location_name];
             case 'staff_group':
@@ -142,19 +139,16 @@ class SendMailTemplate extends BaseAction
 
                 return null;
             case 'customer_group':
-                if ($groupId = $this->model->customer_group) {
-                    if (!$customerGroup = CustomerGroup::find($groupId)) {
-                        throw new AutomationException('Unable to find customer group with ID: '.$groupId);
-                    }
-
-                    return $customerGroup->customers()
-                        ->select('email', DB::raw('concat(first_name, last_name) as full_name'))
-                        ->whereIsEnabled()
-                        ->pluck('full_name', 'email')
-                        ->all();
+                $groupId = $this->model->customer_group;
+                if (!$groupId || !$customerGroup = CustomerGroup::find($groupId)) {
+                    throw new AutomationException('SendMailTemplate: Unable to find customer group with ID: '.$groupId);
                 }
 
-                return null;
+                return $customerGroup->customers()
+                    ->select('email', DB::raw('concat(first_name, last_name) as full_name'))
+                    ->whereIsEnabled()
+                    ->pluck('full_name', 'email')
+                    ->all();
             case 'customer':
                 $customer = array_get($params, 'customer');
                 if (!empty($customer->email) && !empty($customer->full_name)) {
@@ -166,22 +160,24 @@ class SendMailTemplate extends BaseAction
                     return [$params['email'] => $fullName];
                 }
 
-                return null;
+                throw new AutomationException('SendMailTemplate: Missing a valid customer email address');
             case 'staff':
                 $staff = array_get($params, 'staff');
-                if (!empty($staff->staff_email) && !empty($staff->staff_name)) {
-                    return [$staff->staff_email => $staff->staff_name];
+                if (!empty($staff->email) && !empty($staff->name)) {
+                    return [$staff->email => $staff->name];
                 }
 
                 $orderOrReservation = array_get($params, 'order', array_get($params, 'reservation'));
                 if ($orderOrReservation && $staff = $orderOrReservation->assignee) {
-                    return [$staff->staff_email => $staff->staff_name];
+                    return [$staff->email => $staff->name];
                 }
+
+                throw new AutomationException('SendMailTemplate: Missing a valid staff email address');
             case 'all_staff':
-                return User::whereIsEnabled()->pluck('staff_name', 'staff_email')->all();
+                return User::whereIsEnabled()->pluck('name', 'email')->all();
             case 'all_customer':
                 return Customer::whereIsEnabled()
-                    ->select('email', 'concat(first_name, last_name) as full_name')
+                    ->selectRaw('email, concat(first_name, last_name) as full_name')
                     ->pluck('full_name', 'email')
                     ->all();
         }

@@ -79,11 +79,7 @@ class RuleAction extends Model
             $class = $this->class_name;
         }
 
-        if (!$class) {
-            return false;
-        }
-
-        if (!$this->isClassExtendedWith($class)) {
+        if ($class && !$this->isClassExtendedWith($class)) {
             $this->extendClassWith($class);
         }
 
@@ -119,12 +115,10 @@ class RuleAction extends Model
         }
 
         $config = $actionObj->getFieldConfig();
-        if (!$fields = array_get($config, 'fields')) {
-            return;
+        if ($fields = array_get($config, 'fields')) {
+            $fieldAttributes = array_keys($fields);
+            $this->options = array_only($this->getAttributes(), $fieldAttributes);
+            $this->setRawAttributes(array_except($this->getAttributes(), $fieldAttributes));
         }
-
-        $fieldAttributes = array_keys($fields);
-        $this->options = array_only($this->getAttributes(), $fieldAttributes);
-        $this->setRawAttributes(array_except($this->getAttributes(), $fieldAttributes));
     }
 }
