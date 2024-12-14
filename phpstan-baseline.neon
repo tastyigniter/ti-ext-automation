@@ -261,7 +261,7 @@ parameters:
 			path: src/Models/AutomationRule.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:whereName\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:whereCode\\(\\)\\.$#"
 			count: 1
 			path: src/Models/AutomationRule.php
 
