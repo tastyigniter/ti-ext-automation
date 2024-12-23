@@ -222,6 +222,20 @@ it('returns false when no conditions are met with match type any', function() {
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeFalse();
 });
 
+it('deletes relationships when deleting automation rule', function() {
+    $automationRule = AutomationRule::create(['event_class' => TestEvent::class]);
+    $automationRule->conditions()->save(RuleCondition::create(['class_name' => TestCondition::class]));
+    $automationRule->actions()->save(RuleAction::create(['class_name' => TestAction::class]));
+    $automationRule->logs()->save(AutomationLog::create());
+
+    $automationRule->delete();
+
+    $this->assertDatabaseCount('igniter_automation_rules', 0);
+    $this->assertDatabaseCount('igniter_automation_rule_conditions', 0);
+    $this->assertDatabaseCount('igniter_automation_rule_actions', 0);
+    $this->assertDatabaseCount('igniter_automation_logs', 0);
+});
+
 it('configures automation rule model correctly', function() {
     $automationRule = new AutomationRule;
 
