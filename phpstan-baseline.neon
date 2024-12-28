@@ -86,6 +86,11 @@ parameters:
 			path: src/Classes/EventManager.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Support\\\\Facades\\\\Igniter\\:\\:runningInAdmin\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/EventManager.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\Reservation\\\\Models\\\\Reservation\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/EventManager.php
@@ -102,6 +107,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:getFieldConfig\\(\\)\\.$#"
+			count: 1
+			path: src/Extension.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Support\\\\Facades\\\\Igniter\\:\\:prunableModel\\(\\)\\.$#"
 			count: 1
 			path: src/Extension.php
 
