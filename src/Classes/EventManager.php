@@ -5,7 +5,7 @@ namespace Igniter\Automation\Classes;
 use Igniter\Automation\Jobs\EventParams;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Cart\Models\Order;
-use Igniter\Flame\Igniter;
+use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\Reservation\Models\Reservation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;

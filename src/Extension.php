@@ -7,7 +7,7 @@ use Igniter\Automation\Classes\EventManager;
 use Igniter\Automation\Http\Controllers\Automations;
 use Igniter\Automation\Models\AutomationLog;
 use Igniter\Automation\Models\RuleAction;
-use Igniter\Flame\Igniter;
+use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
