@@ -1,3 +1,10 @@
+<p align="center">
+    <a href="https://github.com/tastyigniter/ti-ext-automation/actions"><img src="https://github.com/tastyigniter/ti-ext-automation/actions/workflows/pipeline.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/tastyigniter/ti-ext-automation"><img src="https://img.shields.io/packagist/dt/tastyigniter/ti-ext-automation" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/tastyigniter/ti-ext-automation"><img src="https://img.shields.io/packagist/v/tastyigniter/ti-ext-automation" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/tastyigniter/ti-ext-automation"><img src="https://img.shields.io/packagist/l/tastyigniter/ti-ext-automation" alt="License"></a>
+</p>
+
 ## Introduction
 
 The TastyIgniter Automation extension allows you to automate certain actions within your TastyIgniter application. These automations are triggered when specific events occur, such as a change in order state. Actions can include sending an email to a customer or sending print jobs to a printer when an order status.
