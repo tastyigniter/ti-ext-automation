@@ -8,6 +8,45 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Prunable;
 use Throwable;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int|null $automation_rule_id
+ * @property int|null $rule_action_id
+ * @property bool $is_success
+ * @property string $message
+ * @property array|null $params
+ * @property array|null $exception
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $action_name
+ * @property-read mixed $created_since
+ * @property-read mixed $status_name
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog query()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog search(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereAutomationRuleId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereCreatedAt($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereException($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereIsSuccess($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereMessage($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereParams($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereRuleActionId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereUpdatedAt($value)
+ * @mixin \Igniter\Flame\Database\Model
+ */
 class AutomationLog extends Model
 {
     use Prunable;

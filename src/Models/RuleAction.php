@@ -6,6 +6,38 @@ use Igniter\Automation\AutomationException;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int|null $automation_rule_id
+ * @property string $class_name
+ * @property array $options
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $description
+ * @property-read mixed $name
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction query()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction search(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereAutomationRuleId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereClassName($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereCreatedAt($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereOptions($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereUpdatedAt($value)
+ * @mixin \Igniter\Flame\Database\Model
+ */
 class RuleAction extends Model
 {
     use Validation;

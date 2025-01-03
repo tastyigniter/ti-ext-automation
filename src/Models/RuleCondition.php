@@ -4,6 +4,38 @@ namespace Igniter\Automation\Models;
 
 use Igniter\Flame\Database\Model;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int|null $automation_rule_id
+ * @property string $class_name
+ * @property array $options
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $description
+ * @property-read mixed $name
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition query()
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition search(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereAutomationRuleId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereClassName($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereCreatedAt($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereOptions($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|RuleCondition whereUpdatedAt($value)
+ * @mixin \Igniter\Flame\Database\Model
+ */
 class RuleCondition extends Model
 {
     /**

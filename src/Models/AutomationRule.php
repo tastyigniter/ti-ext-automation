@@ -12,6 +12,48 @@ use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
 use Throwable;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $code
+ * @property string $description
+ * @property string|null $event_class
+ * @property array|null $config_data
+ * @property bool $is_custom
+ * @property bool $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $event_description
+ * @property-read mixed $event_name
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyClass($class)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyStatus($status = true)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule query()
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule search(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereCode($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereConfigData($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereCreatedAt($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereDescription($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereEventClass($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereId($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereIsCustom($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereName($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereStatus($value)
+ * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereUpdatedAt($value)
+ * @mixin \Igniter\Flame\Database\Model
+ */
 class AutomationRule extends Model
 {
     use Purgeable;
@@ -213,8 +255,8 @@ class AutomationRule extends Model
         }
 
         $automation = new self;
-        $automation->status = 0;
-        $automation->is_custom = 0;
+        $automation->status = false;
+        $automation->is_custom = false;
         $automation->code = $code;
         $automation->name = array_get($preset, 'name');
         $automation->event_class = array_get($preset, 'event');
