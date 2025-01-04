@@ -81,11 +81,6 @@ parameters:
 			path: src/Classes/EventManager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Reservation\\\\Models\\\\Reservation\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/EventManager.php
-
-		-
 			message: "#^Static call to instance method stdClass\\:\\:makeParamsFromEvent\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/EventManager.php
