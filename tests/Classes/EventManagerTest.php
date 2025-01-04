@@ -60,7 +60,7 @@ it('dispatches order schedule hourly event', function() {
     EventManager::fireOrderScheduleEvents();
 
     Event::assertDispatched('automation.order.schedule.hourly', 5);
-})->only();
+});
 
 it('does not dispatch order schedule hourly event if order is not created within 30 days', function() {
     Event::fake();
