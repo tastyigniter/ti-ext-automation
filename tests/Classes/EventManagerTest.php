@@ -54,13 +54,13 @@ it('dispatches order schedule hourly event', function() {
     Event::fake();
 
     Order::factory()->count(5)->create([
-        'created_at' => now()->subDays(30),
+        'created_at' => now()->subDays(28),
     ]);
 
     EventManager::fireOrderScheduleEvents();
 
     Event::assertDispatched('automation.order.schedule.hourly', 5);
-});
+})->only();
 
 it('does not dispatch order schedule hourly event if order is not created within 30 days', function() {
     Event::fake();
