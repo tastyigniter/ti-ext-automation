@@ -39,7 +39,7 @@ use Throwable;
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule newQuery()
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orLike(string $column, string $value, string $side = 'both')
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orSearch(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
+ * @method static array pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule query()
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule search(string $term, string $columns = [], string $mode = 'all')
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereCode($value)
