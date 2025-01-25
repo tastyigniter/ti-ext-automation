@@ -2,9 +2,9 @@
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Facades\Igniter\System\Helpers\MailHelper;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
-use Igniter\System\Helpers\MailHelper;
 use Igniter\System\Models\MailTemplate;
 use Igniter\User\Models\Customer;
 use Igniter\User\Models\CustomerGroup;
