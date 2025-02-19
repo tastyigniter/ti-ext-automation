@@ -6,7 +6,7 @@ use Igniter\Automation\Classes\BaseAction;
 
 class TestAction extends BaseAction
 {
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Test Action',
@@ -14,7 +14,7 @@ class TestAction extends BaseAction
         ];
     }
 
-    public function triggerAction($params)
+    public function triggerAction($params): void
     {
         expect($params)->toHaveKey('param1')
             ->and($params['param1'])->toBe('value1');

@@ -7,7 +7,7 @@ use Igniter\Reservation\Models\Reservation;
 
 class ReservationSchedule extends BaseEvent
 {
-    public function eventDetails()
+    public function eventDetails(): array
     {
         return [
             'name' => 'Reservation Hourly Schedule',

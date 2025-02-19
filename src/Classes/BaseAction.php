@@ -2,10 +2,13 @@
 
 namespace Igniter\Automation\Classes;
 
+use Igniter\Flame\Database\Model;
+use LogicException;
+
 class BaseAction extends AbstractBase
 {
     /**
-     * @var \Igniter\Flame\Database\Model model object
+     * @var Model model object
      */
     protected $model;
 
@@ -26,9 +29,8 @@ class BaseAction extends AbstractBase
     /**
      * Initialize method called when the action class is first loaded
      * with an existing model.
-     * @return void
      */
-    public function initialize($model)
+    public function initialize($model): void
     {
         if (!$model) {
             return;
@@ -44,12 +46,13 @@ class BaseAction extends AbstractBase
 
     /**
      * Initializes configuration data when the action is first created.
-     * @param \Igniter\Flame\Database\Model $model
+     * @param Model $model
      */
     public function initConfigData($model) {}
 
     /**
      * Returns information about this action, including name and description.
+     * @return array<string, string>
      */
     public function actionDetails()
     {
@@ -61,6 +64,7 @@ class BaseAction extends AbstractBase
 
     /**
      * Extra field configuration for the action.
+     * @return array<string, array>
      */
     public function defineFormFields()
     {
@@ -76,19 +80,19 @@ class BaseAction extends AbstractBase
         return [];
     }
 
-    public function hasFieldConfig()
+    public function hasFieldConfig(): bool
     {
         return (bool)$this->fieldConfig;
     }
 
-    public function getFieldConfig()
+    public function getFieldConfig(): array
     {
         return $this->fieldConfig;
     }
 
     public function triggerAction($params)
     {
-        throw new \LogicException('Method '.get_class($this).'::triggerAction() is not implemented.');
+        throw new LogicException('Method '.get_class($this).'::triggerAction() is not implemented.');
     }
 
     public function getActionName()

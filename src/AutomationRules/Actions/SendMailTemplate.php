@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class SendMailTemplate extends BaseAction
 {
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Compose a mail template',
@@ -22,7 +22,7 @@ class SendMailTemplate extends BaseAction
         ];
     }
 
-    public function defineFormFields()
+    public function defineFormFields(): array
     {
         return [
             'fields' => [
@@ -37,7 +37,7 @@ class SendMailTemplate extends BaseAction
                 'staff_group' => [
                     'label' => 'lang:igniter.user::default.label_send_to_staff_group',
                     'type' => 'select',
-                    'options' => [\Igniter\User\Models\UserGroup::class, 'getDropdownOptions'],
+                    'options' => [UserGroup::class, 'getDropdownOptions'],
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
@@ -67,7 +67,7 @@ class SendMailTemplate extends BaseAction
         ];
     }
 
-    public function triggerAction($params)
+    public function triggerAction($params): void
     {
         if (!$templateCode = $this->model->template) {
             throw new AutomationException('SendMailTemplate: Missing a valid mail template');
@@ -91,7 +91,7 @@ class SendMailTemplate extends BaseAction
         return MailTemplate::dropdown('label', 'code');
     }
 
-    public function getSendToOptions()
+    public function getSendToOptions(): array
     {
         return [
             'custom' => 'lang:igniter.user::default.text_send_to_custom',
@@ -107,7 +107,7 @@ class SendMailTemplate extends BaseAction
         ];
     }
 
-    protected function getRecipientAddress($params)
+    protected function getRecipientAddress(array $params)
     {
         $mode = $this->model->send_to;
 
@@ -181,5 +181,7 @@ class SendMailTemplate extends BaseAction
                     ->pluck('full_name', 'email')
                     ->all();
         }
+
+        return null;
     }
 }

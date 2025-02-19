@@ -17,7 +17,7 @@ use Igniter\Flame\Database\Traits\Validation;
 use Igniter\System\Classes\ExtensionManager;
 use Mockery;
 
-it('triggers actions when conditions are met', function() {
+it('triggers actions when conditions are met', function(): void {
     $automationRule = AutomationRule::createFromPreset('some_rule', [
         'name' => 'Test Automation Rule',
         'event' => TestEvent::class,
@@ -30,7 +30,7 @@ it('triggers actions when conditions are met', function() {
     expect($automationRule->triggerRule($order))->toBeNull();
 });
 
-it('logs exception when no actions are found', function() {
+it('logs exception when no actions are found', function(): void {
     $order = Mockery::mock(Order::class)->makePartial();
     $automationRule = AutomationRule::create([
         'code' => 'some_rule',
@@ -48,7 +48,7 @@ it('logs exception when no actions are found', function() {
     ]);
 });
 
-it('does not trigger actions when conditions are not met', function() {
+it('does not trigger actions when conditions are not met', function(): void {
     $automationRule = AutomationRule::create([
         'code' => 'some_rule',
         'name' => 'Test Automation Rule',
@@ -74,7 +74,7 @@ it('does not trigger actions when conditions are not met', function() {
     expect($automationRule->triggerRule($order))->toBeFalse();
 });
 
-it('returns event description when event object is valid', function() {
+it('returns event description when event object is valid', function(): void {
     $eventDescription = 'Sample Event Description';
     $eventObject = Mockery::mock(BaseEvent::class);
     $eventObject->shouldReceive('getEventDescription')->andReturn($eventDescription);
@@ -85,17 +85,17 @@ it('returns event description when event object is valid', function() {
     expect($automationRule->getEventDescriptionAttribute())->toBe($eventDescription);
 });
 
-it('applies class filter with object class name', function() {
+it('applies class filter with object class name', function(): void {
     $query = Mockery::mock(Builder::class);
     $query->shouldReceive('where')->with('event_class', TestEvent::class)->andReturnSelf();
 
-    $eventObject = new TestEvent();
+    $eventObject = new TestEvent;
 
     $result = (new AutomationRule)->scopeApplyClass($query, $eventObject);
     expect($result)->toBe($query);
 });
 
-it('syncs all rules and creates new ones from presets', function() {
+it('syncs all rules and creates new ones from presets', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerAutomationRules')->andReturn([
         [
@@ -113,7 +113,7 @@ it('syncs all rules and creates new ones from presets', function() {
     $this->assertDatabaseHas('igniter_automation_rules', ['code' => 'rule2']);
 });
 
-it('deletes non-customized rules not in presets', function() {
+it('deletes non-customized rules not in presets', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerAutomationRules')->andReturn([
         [
@@ -130,7 +130,7 @@ it('deletes non-customized rules not in presets', function() {
     $this->assertDatabaseMissing('igniter_automation_rules', ['code' => 'rule2']);
 });
 
-it('does not delete customized rules not in presets', function() {
+it('does not delete customized rules not in presets', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerAutomationRules')->andReturn([
         [
@@ -147,7 +147,7 @@ it('does not delete customized rules not in presets', function() {
     $this->assertDatabaseHas('igniter_automation_rules', ['code' => 'rule2']);
 });
 
-it('does not create rules if actions are missing or invalid', function() {
+it('does not create rules if actions are missing or invalid', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerAutomationRules')->andReturn([
         [
@@ -163,14 +163,14 @@ it('does not create rules if actions are missing or invalid', function() {
     $this->assertDatabaseMissing('igniter_automation_rules', ['code' => 'rule1']);
 });
 
-it('returns true when there are no conditions', function() {
+it('returns true when there are no conditions', function(): void {
     $rule = Mockery::mock(AutomationRule::class)->makePartial();
     $rule->shouldReceive('getAttribute')->with('conditions')->andReturn(collect());
 
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeTrue();
 });
 
-it('returns true when all conditions are met with match type all', function() {
+it('returns true when all conditions are met with match type all', function(): void {
     $condition = Mockery::mock(RuleCondition::class)->makePartial();
     $condition->shouldReceive('getConditionObject->isTrue')->andReturnTrue();
     $conditions = collect([$condition, $condition]);
@@ -182,7 +182,7 @@ it('returns true when all conditions are met with match type all', function() {
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeTrue();
 });
 
-it('returns false when not all conditions are met with match type all', function() {
+it('returns false when not all conditions are met with match type all', function(): void {
     $conditionTrue = Mockery::mock(RuleCondition::class)->makePartial();
     $conditionTrue->shouldReceive('getConditionObject->isTrue')->andReturnTrue();
     $conditionFalse = Mockery::mock(RuleCondition::class)->makePartial();
@@ -196,7 +196,7 @@ it('returns false when not all conditions are met with match type all', function
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeFalse();
 });
 
-it('returns true when at least one condition is met with match type any', function() {
+it('returns true when at least one condition is met with match type any', function(): void {
     $conditionTrue = Mockery::mock(RuleCondition::class)->makePartial();
     $conditionTrue->shouldReceive('getConditionObject->isTrue')->andReturnTrue();
     $conditionFalse = Mockery::mock(RuleCondition::class)->makePartial();
@@ -210,7 +210,7 @@ it('returns true when at least one condition is met with match type any', functi
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeTrue();
 });
 
-it('returns false when no conditions are met with match type any', function() {
+it('returns false when no conditions are met with match type any', function(): void {
     $conditionFalse = Mockery::mock(RuleCondition::class)->makePartial();
     $conditionFalse->shouldReceive('getConditionObject->isTrue')->andReturnFalse();
     $conditions = collect([$conditionFalse, $conditionFalse]);
@@ -222,7 +222,7 @@ it('returns false when no conditions are met with match type any', function() {
     expect(callProtectedMethod($rule, 'checkConditions', [[]]))->toBeFalse();
 });
 
-it('deletes relationships when deleting automation rule', function() {
+it('deletes relationships when deleting automation rule', function(): void {
     $automationRule = AutomationRule::create(['event_class' => TestEvent::class]);
     $automationRule->conditions()->save(RuleCondition::create(['class_name' => TestCondition::class]));
     $automationRule->actions()->save(RuleAction::create(['class_name' => TestAction::class]));
@@ -236,7 +236,7 @@ it('deletes relationships when deleting automation rule', function() {
     $this->assertDatabaseCount('igniter_automation_logs', 0);
 });
 
-it('configures automation rule model correctly', function() {
+it('configures automation rule model correctly', function(): void {
     $automationRule = new AutomationRule;
 
     expect(class_uses_recursive($automationRule))

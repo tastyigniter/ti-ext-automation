@@ -6,11 +6,10 @@ use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Support\Carbon;
 use Throwable;
 
 /**
- *
- *
  * @property int $id
  * @property int|null $automation_rule_id
  * @property int|null $rule_action_id
@@ -18,8 +17,8 @@ use Throwable;
  * @property string $message
  * @property array|null $params
  * @property array|null $exception
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read mixed $action_name
  * @property-read mixed $created_since
  * @property-read mixed $status_name
@@ -45,7 +44,7 @@ use Throwable;
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereParams($value)
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereRuleActionId($value)
  * @method static \Igniter\Flame\Database\Builder<static>|AutomationLog whereUpdatedAt($value)
- * @mixin \Igniter\Flame\Database\Model
+ * @mixin Model
  */
 class AutomationLog extends Model
 {
@@ -85,7 +84,7 @@ class AutomationLog extends Model
 
     protected $appends = ['action_name', 'status_name', 'created_since'];
 
-    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], ?Throwable $exception = null)
+    public static function createLog($rule, string $message, bool $isSuccess, array $params = [], ?Throwable $exception = null): static
     {
         $record = new static;
         if ($rule instanceof RuleAction) {
@@ -99,7 +98,7 @@ class AutomationLog extends Model
         $record->is_success = $isSuccess;
         $record->message = $message;
         $record->params = $params;
-        $record->exception = $exception ? [
+        $record->exception = $exception instanceof Throwable ? [
             'message' => $exception->getMessage(),
             'code' => $exception->getCode(),
             'file' => $exception->getFile(),
@@ -112,7 +111,7 @@ class AutomationLog extends Model
         return $record;
     }
 
-    public function getStatusNameAttribute($value)
+    public function getStatusNameAttribute($value): string
     {
         return lang($this->is_success
             ? 'igniter.automation::default.text_success'
@@ -125,7 +124,7 @@ class AutomationLog extends Model
         return optional($this->action)->name ?? '--';
     }
 
-    public function getCreatedSinceAttribute($value)
+    public function getCreatedSinceAttribute($value): ?string
     {
         return $this->created_at ? time_elapsed($this->created_at) : null;
     }

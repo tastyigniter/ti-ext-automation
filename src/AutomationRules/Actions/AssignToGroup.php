@@ -9,7 +9,7 @@ use Igniter\User\Models\UserGroup;
 
 class AssignToGroup extends BaseAction
 {
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Assign to staff group',
@@ -17,20 +17,20 @@ class AssignToGroup extends BaseAction
         ];
     }
 
-    public function defineFormFields()
+    public function defineFormFields(): array
     {
         return [
             'fields' => [
                 'staff_group_id' => [
                     'label' => 'lang:igniter.automation::default.label_assign_to_staff_group',
                     'type' => 'select',
-                    'options' => [\Igniter\User\Models\UserGroup::class, 'getDropdownOptions'],
+                    'options' => [UserGroup::class, 'getDropdownOptions'],
                 ],
             ],
         ];
     }
 
-    public function triggerAction($params)
+    public function triggerAction($params): void
     {
         if (!$groupId = $this->model->staff_group_id) {
             throw new AutomationException('AssignToGroup: Missing valid staff group to assign to.');

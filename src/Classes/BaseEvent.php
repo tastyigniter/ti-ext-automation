@@ -2,12 +2,13 @@
 
 namespace Igniter\Automation\Classes;
 
+use Igniter\Flame\Database\Model;
 use Igniter\System\Classes\ExtensionManager;
 
 class BaseEvent extends AbstractBase
 {
     /**
-     * @var \Igniter\Flame\Database\Model model object
+     * @var Model model object
      */
     protected $model;
 
@@ -23,6 +24,7 @@ class BaseEvent extends AbstractBase
 
     /**
      * Returns information about this event, including name and description.
+     * @return array<string, string>
      */
     public function eventDetails()
     {
@@ -46,9 +48,8 @@ class BaseEvent extends AbstractBase
     /**
      * Sets multiple params.
      * @param array $params
-     * @return void
      */
-    public function setEventParams($params)
+    public function setEventParams($params): void
     {
         $this->params = $params;
     }
@@ -94,7 +95,7 @@ class BaseEvent extends AbstractBase
      * @param mixed Class name or object
      * @return string Identifier in format of vendor-extension-class
      */
-    public function getEventIdentifier()
+    public function getEventIdentifier(): string
     {
         $namespace = normalize_class_name(get_called_class());
         $parts = explode('\\', $namespace);

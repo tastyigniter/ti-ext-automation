@@ -9,7 +9,7 @@ use Igniter\Flame\Database\Model;
 use Mockery;
 use stdClass;
 
-it('initialises config data', function() {
+it('initialises config data', function(): void {
     $model = Mockery::mock(Model::class)->makePartial();
     $condition = new class($model) extends BaseModelAttributesCondition
     {
@@ -22,16 +22,16 @@ it('initialises config data', function() {
     expect($condition->getModel())->operator->toBe('is');
 });
 
-it('defines model attributes', function() {
+it('defines model attributes', function(): void {
     $condition = new BaseModelAttributesCondition;
 
     expect($condition->defineModelAttributes())->toBeArray();
 });
 
-it('returns attribute labels from listModelAttributes', function() {
+it('returns attribute labels from listModelAttributes', function(): void {
     $condition = new class extends BaseModelAttributesCondition
     {
-        public function defineModelAttributes()
+        public function defineModelAttributes(): array
         {
             return [
                 'attribute1' => 'Label 1',
@@ -52,16 +52,16 @@ it('returns attribute labels from listModelAttributes', function() {
     expect($result)->toBeArray('Test modelAttrbiutes is set');
 });
 
-it('returns an empty array when no model attributes are defined', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns an empty array when no model attributes are defined', function(): void {
+    $condition = new BaseModelAttributesCondition;
 
     $result = $condition->getAttributeOptions();
 
     expect($result)->toBe([]);
 });
 
-it('returns the correct operator options', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns the correct operator options', function(): void {
+    $condition = new BaseModelAttributesCondition;
 
     $result = $condition->getOperatorOptions();
 
@@ -77,13 +77,13 @@ it('returns the correct operator options', function() {
     ]);
 });
 
-it('evalIsTrue returns false when no subconditions', function() {
+it('evalIsTrue returns false when no subconditions', function(): void {
     $modelToEval = new stdClass;
     $baseModelAttributesCondition = new BaseModelAttributesCondition;
     expect($baseModelAttributesCondition->evalIsTrue($modelToEval))->toBeFalse();
 });
 
-it('evalIsTrue returns false when matching operator', function() {
+it('evalIsTrue returns false when matching operator', function(): void {
     $operator = 'invalid';
     $modelToEval = new stdClass;
     $modelToEval->attribute = 'test';
@@ -101,12 +101,10 @@ it('evalIsTrue returns false when matching operator', function() {
                 ],
             ];
 
-            $this->model = new class($attributes) extends Model
-            {
-            };
+            $this->model = new class($attributes) extends Model {};
         }
 
-        public function defineModelAttributes()
+        public function defineModelAttributes(): array
         {
             return [
                 'attribute' => [
@@ -119,7 +117,7 @@ it('evalIsTrue returns false when matching operator', function() {
     expect($baseModelAttributesCondition->evalIsTrue($modelToEval))->toBeFalse();
 });
 
-it('evalIsTrue evaluates string type attribute correctly', function($evalValue, $operator, $value, $eval) {
+it('evalIsTrue evaluates string type attribute correctly', function($evalValue, $operator, $value, $eval): void {
     $modelToEval = new stdClass;
     $modelToEval->attribute = $evalValue;
 
@@ -137,12 +135,10 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
                 ],
             ];
 
-            $this->model = new class($attributes) extends Model
-            {
-            };
+            $this->model = new class($attributes) extends Model {};
         }
 
-        public function defineModelAttributes()
+        public function defineModelAttributes(): array
         {
             return [
                 'attribute' => [
@@ -178,13 +174,13 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
     [10, 'less', 5, false],
 ]);
 
-it('returns the custom attribute value when custom getter exists', function() {
+it('returns the custom attribute value when custom getter exists', function(): void {
     $modelToEval = new stdClass;
     $modelToEval->test = '  Test Value  ';
 
     $condition = new class extends BaseModelAttributesCondition
     {
-        public function getTestAttribute()
+        public function getTestAttribute(): string
         {
             return 'Custom Value';
         }
@@ -195,13 +191,13 @@ it('returns the custom attribute value when custom getter exists', function() {
     expect($result)->toBe('custom value');
 });
 
-it('applies date range when both from and to dates are present', function() {
+it('applies date range when both from and to dates are present', function(): void {
     $this->travelTo(Carbon::parse('2023-01-01 00:00:00'));
 
     $query = Mockery::mock(Builder::class);
     $query->shouldReceive('whereBetween')->with('created_at', ['2023-01-01 00:00:00', '2023-01-31 23:59:59'])->andReturnSelf();
 
-    $condition = new BaseModelAttributesCondition();
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_current', 'current' => 'month'];
 
     $result = callProtectedMethod($condition, 'applyDateRange', [$query, 'created_at', $options]);
@@ -209,8 +205,8 @@ it('applies date range when both from and to dates are present', function() {
     expect($result)->toBe($query);
 });
 
-it('returns null when no date range is specified in getDateRangeFrom', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns null when no date range is specified in getDateRangeFrom', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_future'];
 
     $result = callProtectedMethod($condition, 'getDateRangeFrom', [$options]);
@@ -218,8 +214,8 @@ it('returns null when no date range is specified in getDateRangeFrom', function(
     expect($result)->toBeNull();
 });
 
-it('returns start of current day for getDateRangeFrom when is_current is specified', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns start of current day for getDateRangeFrom when is_current is specified', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_current', 'current' => 'day'];
 
     $result = callProtectedMethod($condition, 'getDateRangeFrom', [$options]);
@@ -227,8 +223,8 @@ it('returns start of current day for getDateRangeFrom when is_current is specifi
     expect($result)->toBe(now()->startOfDay()->toDateTimeString());
 });
 
-it('returns start of past range for getDateRangeFrom when is_past is specified', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns start of past range for getDateRangeFrom when is_past is specified', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_past', 'range' => '1_week'];
 
     $result = callProtectedMethod($condition, 'getDateRangeFrom', [$options]);
@@ -236,8 +232,8 @@ it('returns start of past range for getDateRangeFrom when is_past is specified',
     expect($result)->toBe(now()->parse('- 1 week')->startOfDay()->toDateTimeString());
 });
 
-it('returns null when no date range is specified in getDateRangeTo', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns null when no date range is specified in getDateRangeTo', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_future'];
 
     $result = callProtectedMethod($condition, 'getDateRangeTo', [$options]);
@@ -245,8 +241,8 @@ it('returns null when no date range is specified in getDateRangeTo', function() 
     expect($result)->toBeNull();
 });
 
-it('returns end of current day for getDateRangeTo when is_current is specified', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns end of current day for getDateRangeTo when is_current is specified', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_current', 'current' => 'day'];
 
     $result = callProtectedMethod($condition, 'getDateRangeTo', [$options]);
@@ -254,8 +250,8 @@ it('returns end of current day for getDateRangeTo when is_current is specified',
     expect($result)->toBe(now()->endOfDay()->toDateTimeString());
 });
 
-it('returns end of current day for getDateRangeTo when is_past is specified', function() {
-    $condition = new BaseModelAttributesCondition();
+it('returns end of current day for getDateRangeTo when is_past is specified', function(): void {
+    $condition = new BaseModelAttributesCondition;
     $options = ['when' => 'is_past'];
 
     $result = callProtectedMethod($condition, 'getDateRangeTo', [$options]);

@@ -28,23 +28,23 @@ class EventManager
      */
     protected $registeredGlobalParams;
 
-    public static function bindRules()
+    public static function bindRules(): void
     {
         foreach (BaseEvent::findEvents() as $eventClass => [$eventCode, $eventObj]) {
             self::bindEvent($eventCode, $eventClass);
         }
     }
 
-    public static function bindEvents(array $events)
+    public static function bindEvents(array $events): void
     {
         foreach ($events as $event => $class) {
             self::bindEvent($event, $class);
         }
     }
 
-    public static function bindEvent($eventCode, $eventClass)
+    public static function bindEvent($eventCode, $eventClass): void
     {
-        Event::listen($eventCode, function() use ($eventCode, $eventClass) {
+        Event::listen($eventCode, function() use ($eventCode, $eventClass): void {
             if (!method_exists($eventClass, 'makeParamsFromEvent')) {
                 return;
             }
@@ -54,25 +54,25 @@ class EventManager
         });
     }
 
-    public static function fireOrderScheduleEvents()
+    public static function fireOrderScheduleEvents(): void
     {
         Order::where('created_at', '>=', now()->subDays(30))
             ->lazy()
-            ->each(function($order) {
+            ->each(function($order): void {
                 Event::dispatch('automation.order.schedule.hourly', [$order]);
             });
     }
 
-    public static function fireReservationScheduleEvents()
+    public static function fireReservationScheduleEvents(): void
     {
         Reservation::where('reserve_date', '>=', now()->subDays(30))
             ->lazy()
-            ->each(function($reservation) {
+            ->each(function($reservation): void {
                 Event::dispatch('automation.reservation.schedule.hourly', [$reservation]);
             });
     }
 
-    public function queueEvent($eventClass, array $params)
+    public function queueEvent($eventClass, array $params): void
     {
         $params += $this->getContextParams();
 
@@ -80,11 +80,11 @@ class EventManager
         Queue::push(new EventParams($eventClass, $params));
     }
 
-    public function fireEvent($eventClass, array $params)
+    public function fireEvent($eventClass, array $params): void
     {
         $models = AutomationRule::listRulesForEvent($eventClass);
 
-        $models->each(function($model) use ($params) {
+        $models->each(function($model) use ($params): void {
             $model->setEventParams($params);
             $model->triggerRule();
         });
@@ -102,12 +102,12 @@ class EventManager
      *
      * @param callable $callback A callable function.
      */
-    public function registerCallback(callable $callback)
+    public function registerCallback(callable $callback): void
     {
         $this->callbacks[] = $callback;
     }
 
-    public function registerGlobalParams(array $params)
+    public function registerGlobalParams(array $params): void
     {
         if (!$this->registeredGlobalParams) {
             $this->registeredGlobalParams = [];
@@ -123,10 +123,10 @@ class EventManager
         $globals = $this->registeredGlobalParams ?: [];
 
         return [
-                'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
-                'isConsole' => App::runningInConsole() ? 1 : 0,
-                'appLocale' => App::getLocale(),
-            ] + $globals;
+            'isAdmin' => Igniter::runningInAdmin() ? 1 : 0,
+            'isConsole' => App::runningInConsole() ? 1 : 0,
+            'appLocale' => App::getLocale(),
+        ] + $globals;
     }
 
     /**

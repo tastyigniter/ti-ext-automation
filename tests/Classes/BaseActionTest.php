@@ -6,34 +6,28 @@ use Igniter\Automation\Classes\BaseAction;
 use Igniter\System\Classes\ExtensionManager;
 use Mockery;
 
-it('defines a name and description', function() {
-    $action = new class extends BaseAction
-    {
-    };
+it('defines a name and description', function(): void {
+    $action = new class extends BaseAction {};
 
     expect($action->actionDetails())->toHaveKeys(['name', 'description']);
 });
 
-it('defines form fields', function() {
-    $action = new class extends BaseAction
-    {
-    };
+it('defines form fields', function(): void {
+    $action = new class extends BaseAction {};
 
     expect($action->defineFormFields())->toBeArray();
 });
 
-it('defines validation rules', function() {
-    $action = new class extends BaseAction
-    {
-    };
+it('defines validation rules', function(): void {
+    $action = new class extends BaseAction {};
 
     expect($action->defineValidationRules())->toBeArray();
 });
 
-it('returns true when fieldConfig is not empty', function() {
+it('returns true when fieldConfig is not empty', function(): void {
     $action = new class extends BaseAction
     {
-        public function defineFormFields()
+        public function defineFormFields(): array
         {
             return [
                 'fields' => [
@@ -51,10 +45,10 @@ it('returns true when fieldConfig is not empty', function() {
     expect($result)->toBeTrue();
 });
 
-it('returns fieldConfig when it is set', function() {
+it('returns fieldConfig when it is set', function(): void {
     $action = new class extends BaseAction
     {
-        public function defineFormFields()
+        public function defineFormFields(): array
         {
             return [
                 'fields' => [
@@ -72,18 +66,18 @@ it('returns fieldConfig when it is set', function() {
     expect($result['fields'])->toHaveKey('field1');
 });
 
-it('throws an exception if triggerAction method is not implemented', function() {
+it('throws an exception if triggerAction method is not implemented', function(): void {
     $action = new BaseAction;
 
     $action->triggerAction([]);
 })->throws('Method Igniter\Automation\Classes\BaseAction::triggerAction() is not implemented.');
 
-it('triggers an action', function() {
+it('triggers an action', function(): void {
     $action = new class extends BaseAction
     {
         public $actionRan = false;
 
-        public function triggerAction($params)
+        public function triggerAction($params): void
         {
             $this->actionRan = true;
         }
@@ -94,7 +88,7 @@ it('triggers an action', function() {
     expect($action->actionRan)->toBeTrue();
 });
 
-it('skips invalid action classes and continues processing', function() {
+it('skips invalid action classes and continues processing', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerAutomationRules')->andReturn([
         [

@@ -2,10 +2,12 @@
 
 namespace Igniter\Automation\Classes;
 
+use Igniter\Flame\Database\Model;
+
 class BaseCondition extends AbstractBase
 {
     /**
-     * @var \Igniter\Flame\Database\Model model object
+     * @var Model model object
      */
     protected $model;
 
@@ -19,9 +21,8 @@ class BaseCondition extends AbstractBase
     /**
      * Initialize method called when the action class is first loaded
      * with an existing model.
-     * @return void
      */
-    public function initialize($model)
+    public function initialize($model): void
     {
         if (!$model) {
             return;
@@ -34,12 +35,13 @@ class BaseCondition extends AbstractBase
 
     /**
      * Initializes configuration data when the action is first created.
-     * @param \Igniter\Flame\Database\Model $model
+     * @param Model $model
      */
     public function initConfigData($model) {}
 
     /**
      * Returns information about this condition, including name and description.
+     * @return array<string, string>
      */
     public function conditionDetails()
     {
@@ -49,14 +51,20 @@ class BaseCondition extends AbstractBase
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getConditionName()
     {
         return array_get($this->conditionDetails(), 'name', 'Condition');
     }
 
+    /**
+     * @return string
+     */
     public function getConditionDescription()
     {
-        return array_get($this->conditionDetails(), 'Condition description');
+        return array_get($this->conditionDetails(), 'description', 'Condition description');
     }
 
     /**
@@ -69,7 +77,7 @@ class BaseCondition extends AbstractBase
         return false;
     }
 
-    public static function findConditions()
+    public static function findConditions(): array
     {
         $results = [];
         $ruleConditions = (array)BaseEvent::findRulesValues('conditions');

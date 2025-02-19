@@ -19,32 +19,34 @@ class BaseModelAttributesCondition extends BaseCondition
 
     protected $modelAttributes;
 
-    public function initConfigData($model)
+    public function initConfigData($model): void
     {
         $model->operator = 'is';
     }
 
+    /**
+     * @return array<string, array>
+     */
     public function defineModelAttributes()
     {
         return [];
     }
 
-    public function getConditionDescription()
+    public function getConditionDescription(): string
     {
         $model = $this->model;
         $attributes = $this->listModelAttributes();
         $subConditions = $model->options ?? [];
 
-        $result = collect($subConditions)->sortBy('priority')->map(function($subCondition) use ($attributes) {
+        $result = collect($subConditions)->sortBy('priority')->map(function($subCondition) use ($attributes): string {
             $attribute = array_get($subCondition, 'attribute');
             $operator = array_get($subCondition, 'operator');
             $value = array_get($subCondition, 'value');
 
             $result = $this->getConditionAttributePrefix($attribute, $attributes);
             $result .= ' <b>'.array_get($this->operators, $operator, $operator).'</b> ';
-            $result .= $value;
 
-            return $result;
+            return $result.$value;
         })->toArray();
 
         return implode(' <b>AND</b> ', $result);
@@ -60,14 +62,14 @@ class BaseModelAttributesCondition extends BaseCondition
         return array_get($result, 'label', 'Unknown attribute');
     }
 
-    public function getAttributeOptions()
+    public function getAttributeOptions(): array
     {
         return array_map(function($attribute) {
             return array_get($attribute, 'label');
         }, $this->listModelAttributes());
     }
 
-    public function getOperatorOptions()
+    public function getOperatorOptions(): array
     {
         return $this->operators;
     }
@@ -111,7 +113,9 @@ class BaseModelAttributesCondition extends BaseCondition
                 $info = ['label' => $info];
             }
 
-            isset($info['type']) || $info['type'] = 'string';
+            if (!isset($info['type'])) {
+                $info['type'] = 'string';
+            }
 
             return $info;
         }, $this->defineModelAttributes());
@@ -137,7 +141,7 @@ class BaseModelAttributesCondition extends BaseCondition
 
         if ($operator === 'contains') {
             return is_array($conditionValue)
-                ? in_array($modelValue, $conditionValue) !== false
+                ? in_array($modelValue, $conditionValue)
                 : mb_strpos($modelValue, $conditionValue) !== false;
         }
 
@@ -166,7 +170,7 @@ class BaseModelAttributesCondition extends BaseCondition
         return false;
     }
 
-    protected function getModelEvalAttribute($model, $attribute, $condition = [])
+    protected function getModelEvalAttribute($model, $attribute, $condition = []): string
     {
         $value = $model->{$attribute};
 
@@ -177,7 +181,7 @@ class BaseModelAttributesCondition extends BaseCondition
         return mb_strtolower(trim($value));
     }
 
-    protected function applyDateRange($query, $attribute, $options)
+    protected function applyDateRange($query, $attribute, array $options)
     {
         $from = $this->getDateRangeFrom($options);
         $to = $this->getDateRangeTo($options);

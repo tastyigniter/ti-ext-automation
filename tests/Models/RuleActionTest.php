@@ -2,13 +2,14 @@
 
 namespace Igniter\Automation\Tests\Models;
 
+use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Automation\Models\RuleAction;
 use Igniter\Flame\Database\Traits\Validation;
 use Mockery;
 
-it('returns action name from action object', function() {
+it('returns action name from action object', function(): void {
     $actionObject = Mockery::mock(BaseAction::class);
     $actionObject->shouldReceive('getActionName')->andReturn('Sample Action Name');
 
@@ -18,7 +19,7 @@ it('returns action name from action object', function() {
     expect($ruleAction->getNameAttribute())->toBe('Sample Action Name');
 });
 
-it('returns action description from action object', function() {
+it('returns action description from action object', function(): void {
     $actionObject = Mockery::mock(BaseAction::class);
     $actionObject->shouldReceive('getActionDescription')->andReturn('Sample Action Description');
 
@@ -28,7 +29,7 @@ it('returns action description from action object', function() {
     expect($ruleAction->getDescriptionAttribute())->toBe('Sample Action Description');
 });
 
-it('applies action class and loads custom data after fetch', function() {
+it('applies action class and loads custom data after fetch', function(): void {
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial()->shouldAllowMockingProtectedMethods();
     $ruleAction->shouldReceive('applyActionClass')->once();
     $ruleAction->shouldReceive('loadCustomData')->once();
@@ -36,14 +37,14 @@ it('applies action class and loads custom data after fetch', function() {
     callProtectedMethod($ruleAction, 'afterFetch');
 });
 
-it('sets custom data before save', function() {
+it('sets custom data before save', function(): void {
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial()->shouldAllowMockingProtectedMethods();
     $ruleAction->shouldReceive('setCustomData')->once();
 
     callProtectedMethod($ruleAction, 'beforeSave');
 });
 
-it('applies and loads custom data', function() {
+it('applies and loads custom data', function(): void {
     $actionObject = Mockery::mock(BaseAction::class);
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial();
     $ruleAction->shouldReceive('getActionObject')->andReturn($actionObject);
@@ -64,7 +65,7 @@ it('applies and loads custom data', function() {
         ->and($ruleAction->options['custom_field'])->toBe('value');
 });
 
-it('applies action class when class name is provided', function() {
+it('applies action class when class name is provided', function(): void {
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial();
     $ruleAction->shouldReceive('isClassExtendedWith')->andReturn(false);
     $ruleAction->shouldReceive('extendClassWith')->with('SomeActionClass');
@@ -73,15 +74,15 @@ it('applies action class when class name is provided', function() {
         ->and($ruleAction->class_name)->toBe('SomeActionClass');
 });
 
-it('throws exception when action object is not found', function() {
+it('throws exception when action object is not found', function(): void {
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial();
     $ruleAction->options = ['custom_field' => 'custom_value'];
     $ruleAction->shouldReceive('getActionObject')->andReturn(null);
 
-    expect(fn() => $ruleAction->applyCustomData())->toThrow(\Igniter\Automation\AutomationException::class);
+    expect(fn() => $ruleAction->applyCustomData())->toThrow(AutomationException::class);
 });
 
-it('configures rule action model correctly', function() {
+it('configures rule action model correctly', function(): void {
     $ruleAction = new RuleAction;
 
     expect(class_uses_recursive($ruleAction))

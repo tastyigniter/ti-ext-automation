@@ -14,7 +14,7 @@ use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->mailTemplate = MailTemplate::create([
         'code' => 'test_template',
         'subject' => 'Test Subject',
@@ -23,7 +23,7 @@ beforeEach(function() {
     ]);
 });
 
-it('sends mail template to custom email', function() {
+it('sends mail template to custom email', function(): void {
     Mail::fake();
 
     $customEmail = 'custom@domain.tld';
@@ -35,13 +35,13 @@ it('sends mail template to custom email', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customEmail) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customEmail): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customEmail;
     });
 });
 
-it('sends mail template to restaurant', function() {
+it('sends mail template to restaurant', function(): void {
     Mail::fake();
 
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -51,13 +51,13 @@ it('sends mail template to restaurant', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address'));
     });
 });
 
-it('sends mail template to staff group', function() {
+it('sends mail template to staff group', function(): void {
     Mail::fake();
 
     $staff = User::factory()->create();
@@ -72,13 +72,13 @@ it('sends mail template to staff group', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $staff->email;
     });
 });
 
-it('sends mail template to customer group', function() {
+it('sends mail template to customer group', function(): void {
     Mail::fake();
 
     $customerGroup = CustomerGroup::factory()->create();
@@ -93,13 +93,13 @@ it('sends mail template to customer group', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customer->email;
     });
 });
 
-it('sends mail template to location', function() {
+it('sends mail template to location', function(): void {
     Mail::fake();
 
     $location = Location::factory()->create();
@@ -111,13 +111,13 @@ it('sends mail template to location', function() {
 
     $sendMailTemplate->triggerAction(['location' => $location]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($location) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($location): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $location->location_email;
     });
 });
 
-it('sends mail template to system', function() {
+it('sends mail template to system', function(): void {
     Mail::fake();
 
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -127,13 +127,13 @@ it('sends mail template to system', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address'));
     });
 });
 
-it('sends mail template to customer', function() {
+it('sends mail template to customer', function(): void {
     Mail::fake();
 
     $customer = Customer::factory()->create();
@@ -144,7 +144,7 @@ it('sends mail template to customer', function() {
 
     $sendMailTemplate->triggerAction(['customer' => $customer]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customer->email;
     });
@@ -155,13 +155,13 @@ it('sends mail template to customer', function() {
         'email' => $customer->email,
     ]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customer->email;
     });
 });
 
-it('sends mail template to staff', function() {
+it('sends mail template to staff', function(): void {
     Mail::fake();
 
     $staff = User::factory()->create();
@@ -172,7 +172,7 @@ it('sends mail template to staff', function() {
 
     $sendMailTemplate->triggerAction(['staff' => $staff]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $staff->email;
     });
@@ -181,13 +181,13 @@ it('sends mail template to staff', function() {
         'order' => (object)['assignee' => $staff],
     ]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $staff->email;
     });
 });
 
-it('sends mail template to all staff', function() {
+it('sends mail template to all staff', function(): void {
     Mail::fake();
 
     $staff1 = User::factory()->create(['status' => true]);
@@ -200,18 +200,18 @@ it('sends mail template to all staff', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff1) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff1): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $staff1->email;
     });
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff2) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff2): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $staff2->email;
     });
 });
 
-it('sends mail template to all customers', function() {
+it('sends mail template to all customers', function(): void {
     Mail::fake();
 
     $customer1 = Customer::factory()->create(['status' => 1]);
@@ -224,30 +224,30 @@ it('sends mail template to all customers', function() {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer1) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer1): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customer1->email;
     });
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer2) {
+    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer2): bool {
         return $mailable->getTemplateCode() === $this->mailTemplate->code
             && array_get($mailable->to, '0.address') === $customer2->email;
     });
 });
 
-it('throws exception when missing mail template', function() {
+it('throws exception when missing mail template', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction(['template' => null]));
 
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Missing a valid mail template');
 
-it('throws exception when missing recipient', function() {
+it('throws exception when missing recipient', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction(['template' => 'test_template']));
 
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Missing a valid recipient from the event payload');
 
-it('throws exception when missing staff group', function() {
+it('throws exception when missing staff group', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
         'template' => 'test_template',
         'send_to' => 'staff_group',
@@ -257,7 +257,7 @@ it('throws exception when missing staff group', function() {
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Unable to find staff group with ID: 123');
 
-it('throws exception when missing customer group', function() {
+it('throws exception when missing customer group', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
         'template' => 'test_template',
         'send_to' => 'customer_group',
@@ -267,7 +267,7 @@ it('throws exception when missing customer group', function() {
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Unable to find customer group with ID: 123');
 
-it('throws exception when missing customer', function() {
+it('throws exception when missing customer', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
         'template' => 'test_template',
         'send_to' => 'customer',
@@ -276,7 +276,7 @@ it('throws exception when missing customer', function() {
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Missing a valid customer email address');
 
-it('throws exception when missing staff', function() {
+it('throws exception when missing staff', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
         'template' => 'test_template',
         'send_to' => 'staff',
@@ -285,7 +285,7 @@ it('throws exception when missing staff', function() {
     $sendMailTemplate->triggerAction([]);
 })->throws(AutomationException::class, 'SendMailTemplate: Missing a valid staff email address');
 
-it('sends nothing when missing custom email', function() {
+it('sends nothing when missing custom email', function(): void {
     Mail::fake();
 
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -299,14 +299,14 @@ it('sends nothing when missing custom email', function() {
     Mail::assertNothingSent();
 });
 
-it('returns template options as dropdown', function() {
-    $action = new SendMailTemplate();
+it('returns template options as dropdown', function(): void {
+    $action = new SendMailTemplate;
     $result = $action->getTemplateOptions();
 
     expect($result)->toBeCollection();
 });
 
-it('returns send to options', function() {
+it('returns send to options', function(): void {
     $expectedOptions = [
         'custom' => 'lang:igniter.user::default.text_send_to_custom',
         'restaurant' => 'lang:igniter.user::default.text_send_to_restaurant',
@@ -319,7 +319,7 @@ it('returns send to options', function() {
         'all_customer' => 'lang:igniter.user::default.text_send_to_all_customer',
     ];
 
-    $action = new SendMailTemplate();
+    $action = new SendMailTemplate;
     $result = $action->getSendToOptions();
 
     expect($result)->toBe($expectedOptions);

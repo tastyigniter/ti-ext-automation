@@ -7,7 +7,7 @@ use Igniter\Cart\Models\Order;
 
 class OrderSchedule extends BaseEvent
 {
-    public function eventDetails()
+    public function eventDetails(): array
     {
         return [
             'name' => 'Order Hourly Schedule',

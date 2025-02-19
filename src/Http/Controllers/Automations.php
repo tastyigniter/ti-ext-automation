@@ -2,23 +2,26 @@
 
 namespace Igniter\Automation\Http\Controllers;
 
+use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
+use Igniter\Admin\Http\Actions\FormController;
+use Igniter\Admin\Http\Actions\ListController;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Flame\Exception\FlashException;
 
 /**
  * Automation Admin Controller
  */
-class Automations extends \Igniter\Admin\Classes\AdminController
+class Automations extends AdminController
 {
     public array $implement = [
-        \Igniter\Admin\Http\Actions\FormController::class,
-        \Igniter\Admin\Http\Actions\ListController::class,
+        FormController::class,
+        ListController::class,
     ];
 
     public array $listConfig = [
         'list' => [
-            'model' => \Igniter\Automation\Models\AutomationRule::class,
+            'model' => AutomationRule::class,
             'title' => 'lang:igniter.automation::default.text_title',
             'emptyMessage' => 'lang:igniter.automation::default.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -28,7 +31,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
 
     public array $formConfig = [
         'name' => 'lang:igniter.automation::default.text_form_name',
-        'model' => \Igniter\Automation\Models\AutomationRule::class,
+        'model' => AutomationRule::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniter/automation/automations/edit/{id}',
@@ -58,7 +61,7 @@ class Automations extends \Igniter\Admin\Classes\AdminController
         AdminMenu::setContext('tools', 'automation');
     }
 
-    public function index()
+    public function index(): void
     {
         if ($this->getUser()->hasPermission('Igniter.Automation.Manage')) {
             AutomationRule::syncAll();
@@ -67,30 +70,30 @@ class Automations extends \Igniter\Admin\Classes\AdminController
         $this->asExtension('ListController')->index();
     }
 
-    public function edit_onLoadCreateActionForm($context, $recordId)
+    public function edit_onLoadCreateActionForm($context, $recordId): array
     {
         return $this->loadConnectorFormField('actions', $context, $recordId);
     }
 
-    public function edit_onLoadCreateConditionForm($context, $recordId)
+    public function edit_onLoadCreateConditionForm($context, $recordId): array
     {
         return $this->loadConnectorFormField('conditions', $context, $recordId);
     }
 
-    public function formExtendFields($form)
+    public function formExtendFields($form): void
     {
         if ($form->context != 'create') {
             $form->getField('event_class')->disabled = true;
         }
     }
 
-    public function formBeforeCreate($model)
+    public function formBeforeCreate($model): void
     {
         $model->is_custom = true;
         $model->status = true;
     }
 
-    public function formValidate($model, $form)
+    public function formValidate($model, $form): array|false
     {
         $rules = [
             ['event_class', 'lang:igniter.automation::default.label_event', 'sometimes|required'],

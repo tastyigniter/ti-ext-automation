@@ -3,40 +3,41 @@
 namespace Igniter\Automation\Models;
 
 use Igniter\Automation\AutomationException;
+use Igniter\Automation\Classes\BaseAction;
+use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
+use Illuminate\Support\Carbon;
 
 /**
- *
- *
  * @property int $id
  * @property int|null $automation_rule_id
  * @property string $class_name
  * @property array $options
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read mixed $description
  * @property-read mixed $name
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction applyFilters(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction applySorts(array $sorts = [])
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction dropdown(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction like(string $column, string $value, string $side = 'both', string $boolean = 'and')
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction listFrontEnd(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction lists(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction newModelQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction newQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction orLike(string $column, string $value, string $side = 'both')
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|RuleAction applyFilters(array $options = [])
+ * @method static Builder<static>|RuleAction applySorts(array $sorts = [])
+ * @method static Builder<static>|RuleAction dropdown(string $column, string $key = null)
+ * @method static Builder<static>|RuleAction like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static Builder<static>|RuleAction listFrontEnd(array $options = [])
+ * @method static Builder<static>|RuleAction lists(string $column, string $key = null)
+ * @method static Builder<static>|RuleAction newModelQuery()
+ * @method static Builder<static>|RuleAction newQuery()
+ * @method static Builder<static>|RuleAction orLike(string $column, string $value, string $side = 'both')
+ * @method static Builder<static>|RuleAction orSearch(string $term, string $columns = [], string $mode = 'all')
  * @method static array pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction query()
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction search(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereAutomationRuleId($value)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereClassName($value)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereCreatedAt($value)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereId($value)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereOptions($value)
- * @method static \Igniter\Flame\Database\Builder<static>|RuleAction whereUpdatedAt($value)
- * @mixin \Igniter\Flame\Database\Model
+ * @method static Builder<static>|RuleAction query()
+ * @method static Builder<static>|RuleAction search(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|RuleAction whereAutomationRuleId($value)
+ * @method static Builder<static>|RuleAction whereClassName($value)
+ * @method static Builder<static>|RuleAction whereCreatedAt($value)
+ * @method static Builder<static>|RuleAction whereId($value)
+ * @method static Builder<static>|RuleAction whereOptions($value)
+ * @method static Builder<static>|RuleAction whereUpdatedAt($value)
+ * @mixin Model
  */
 class RuleAction extends Model
 {
@@ -94,7 +95,7 @@ class RuleAction extends Model
         $this->setCustomData();
     }
 
-    public function applyCustomData()
+    public function applyCustomData(): void
     {
         $this->setCustomData();
         $this->loadCustomData();
@@ -103,9 +104,8 @@ class RuleAction extends Model
     /**
      * Extends this model with the action class
      * @param string $class Class name
-     * @return bool
      */
-    public function applyActionClass($class = null)
+    public function applyActionClass($class = null): bool
     {
         if (!$class) {
             $class = $this->class_name;
@@ -121,9 +121,9 @@ class RuleAction extends Model
     }
 
     /**
-     * @return \Igniter\Automation\Classes\BaseAction
+     * @return BaseAction
      */
-    public function getActionObject()
+    public function getActionObject(): mixed
     {
         $this->applyActionClass();
 

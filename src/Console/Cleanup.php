@@ -23,7 +23,7 @@ class Cleanup extends Command
 
     public static $logTTL = 365 / 4;
 
-    public function handle()
+    public function handle(): void
     {
         $this->comment('Cleaning old automation log...');
         $logTTL = now()->subDays(config('igniter-system.deleteOldRecordsDays', static::$logTTL))->format('Y-m-d H:i:s');

@@ -6,7 +6,7 @@ use Igniter\Automation\Classes\BaseCondition;
 
 class TestCondition extends BaseCondition
 {
-    public function conditionDetails()
+    public function conditionDetails(): array
     {
         return [
             'name' => 'Test Action',
@@ -14,7 +14,7 @@ class TestCondition extends BaseCondition
         ];
     }
 
-    public function isTrue(&$params)
+    public function isTrue(&$params): bool
     {
         return false;
     }

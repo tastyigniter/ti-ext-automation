@@ -4,13 +4,14 @@ namespace Igniter\Automation\Tests\AutomationRules\Events;
 
 use Igniter\Automation\AutomationRules\Events\OrderSchedule;
 use Igniter\Cart\Models\Order;
+use stdClass;
 
-it('has a name and description', function() {
+it('has a name and description', function(): void {
     $event = new OrderSchedule;
     expect($event->eventDetails())->toHaveKeys(['name', 'description']);
 });
 
-it('returns order data from event', function() {
+it('returns order data from event', function(): void {
     $order = Order::factory()->create([
         'order_type' => 'delivery',
         'order_total' => 10.0,
@@ -23,15 +24,15 @@ it('returns order data from event', function() {
         ->and($params['order_total'])->toBe(10.0);
 });
 
-it('returns empty array if order is not provided', function() {
+it('returns empty array if order is not provided', function(): void {
     $params = OrderSchedule::makeParamsFromEvent([]);
 
     expect($params)->toBeArray()
         ->and($params)->toBeEmpty();
 });
 
-it('returns empty array if order is not an instance of Order', function() {
-    $params = OrderSchedule::makeParamsFromEvent([new \stdClass]);
+it('returns empty array if order is not an instance of Order', function(): void {
+    $params = OrderSchedule::makeParamsFromEvent([new stdClass]);
 
     expect($params)->toBeArray()
         ->and($params)->toBeEmpty();

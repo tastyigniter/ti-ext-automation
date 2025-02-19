@@ -7,13 +7,13 @@ use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\User\Models\User;
 
-it('loads automations page', function() {
+it('loads automations page', function(): void {
     $this->actingAs(User::factory()->superUser()->create(), 'igniter-admin')
         ->get(route('igniter.automation.automations'))
         ->assertOk();
 });
 
-it('loads edit automation page', function() {
+it('loads edit automation page', function(): void {
     AutomationRule::syncAll();
 
     $this->actingAs(User::factory()->superUser()->create(), 'igniter-admin')
@@ -21,13 +21,13 @@ it('loads edit automation page', function() {
         ->assertOk();
 });
 
-it('loads create automation page', function() {
+it('loads create automation page', function(): void {
     $this->actingAs(User::factory()->superUser()->create(), 'igniter-admin')
         ->get(route('igniter.automation.automations', ['slug' => 'create']))
         ->assertOk();
 });
 
-it('updates automation', function() {
+it('updates automation', function(): void {
     AutomationRule::syncAll();
 
     $automation = AutomationRule::first();
@@ -45,7 +45,7 @@ it('updates automation', function() {
     expect(AutomationRule::find($automation->getKey()))->name->toBe('Some automation rule');
 });
 
-it('deletes automation', function() {
+it('deletes automation', function(): void {
     AutomationRule::syncAll();
 
     $automation = AutomationRule::first();
@@ -59,7 +59,7 @@ it('deletes automation', function() {
     expect(AutomationRule::find($automation->getKey()))->toBeNull();
 });
 
-it('loads connector form field for', function($field, $className, $handler) {
+it('loads connector form field for', function($field, $className, $handler): void {
     AutomationRule::syncAll();
 
     $url = route('igniter.automation.automations', ['slug' => 'edit/'.AutomationRule::first()->getKey()]);
@@ -79,7 +79,7 @@ it('loads connector form field for', function($field, $className, $handler) {
     ['_condition', BaseCondition::class, 'onLoadCreateConditionForm'],
 ]);
 
-it('sets is_custom and status on form before create', function() {
+it('sets is_custom and status on form before create', function(): void {
     AutomationRule::syncAll();
 
     $url = route('igniter.automation.automations', ['slug' => 'create']);

@@ -2,6 +2,7 @@
 
 namespace Igniter\Automation\Tests\Models;
 
+use Exception;
 use Igniter\Automation\Models\AutomationLog;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Automation\Models\RuleAction;
@@ -9,7 +10,7 @@ use Igniter\Automation\Tests\Fixtures\TestAction;
 use Illuminate\Database\Eloquent\Prunable;
 use Mockery;
 
-it('creates a log entry with a rule action', function() {
+it('creates a log entry with a rule action', function(): void {
     $ruleAction = Mockery::mock(RuleAction::class)->makePartial();
     $ruleAction->shouldReceive('getKey')->andReturn(1);
     $ruleAction->automation_rule_id = 2;
@@ -24,7 +25,7 @@ it('creates a log entry with a rule action', function() {
         ->and($log->exception)->toBeNull();
 });
 
-it('creates a log entry without a rule action', function() {
+it('creates a log entry without a rule action', function(): void {
     $rule = Mockery::mock(AutomationRule::class);
     $rule->shouldReceive('getKey')->andReturn(1);
 
@@ -38,10 +39,10 @@ it('creates a log entry without a rule action', function() {
         ->and($log->exception)->toBeNull();
 });
 
-it('creates a log entry with an exception', function() {
+it('creates a log entry with an exception', function(): void {
     $rule = Mockery::mock(AutomationRule::class);
     $rule->shouldReceive('getKey')->andReturn(1);
-    $exception = new \Exception('Test exception', 123);
+    $exception = new Exception('Test exception', 123);
 
     $log = AutomationLog::createLog($rule, 'Test message', false, ['param1' => 'value1'], $exception);
 
@@ -54,55 +55,55 @@ it('creates a log entry with an exception', function() {
     ]);
 });
 
-it('returns the correct status name for success', function() {
-    $log = new AutomationLog();
+it('returns the correct status name for success', function(): void {
+    $log = new AutomationLog;
     $log->is_success = true;
 
     expect($log->status_name)->toBe(lang('igniter.automation::default.text_success'));
 });
 
-it('returns the correct status name for failure', function() {
-    $log = new AutomationLog();
+it('returns the correct status name for failure', function(): void {
+    $log = new AutomationLog;
     $log->is_success = false;
 
     expect($log->status_name)->toBe(lang('igniter.automation::default.text_failed'));
 });
 
-it('returns the correct action name', function() {
+it('returns the correct action name', function(): void {
     $action = Mockery::mock(RuleAction::class)->makePartial();
     $action->class_name = TestAction::class;
-    $log = new AutomationLog();
+    $log = new AutomationLog;
     $log->setRelation('action', $action);
 
     expect($log->action_name)->toBe('Test Action');
 });
 
-it('returns default action name when action is null', function() {
-    $log = new AutomationLog();
+it('returns default action name when action is null', function(): void {
+    $log = new AutomationLog;
 
     expect($log->action_name)->toBe('--');
 });
 
-it('returns created since attribute correctly', function() {
-    $log = new AutomationLog();
+it('returns created since attribute correctly', function(): void {
+    $log = new AutomationLog;
     $log->created_at = now()->subMinutes(5);
 
     expect($log->created_since)->toBe(time_elapsed($log->created_at));
 });
 
-it('returns null for created since attribute when created_at is null', function() {
-    $log = new AutomationLog();
+it('returns null for created since attribute when created_at is null', function(): void {
+    $log = new AutomationLog;
 
     expect($log->created_since)->toBeNull();
 });
 
-it('can prune automation logs', function() {
-    $query = (new AutomationLog())->prunable();
+it('can prune automation logs', function(): void {
+    $query = (new AutomationLog)->prunable();
 
     expect($query->toSql())->toContain('`created_at` is not null and `created_at` <= ?');
 });
 
-it('configures automation logs correctly', function() {
+it('configures automation logs correctly', function(): void {
     $model = new AutomationLog;
 
     expect(class_uses_recursive($model))

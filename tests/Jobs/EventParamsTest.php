@@ -6,7 +6,7 @@ use Igniter\Automation\Classes\EventManager;
 use Igniter\Automation\Jobs\EventParams;
 use Mockery;
 
-it('handles the event with serialized parameters', function() {
+it('handles the event with serialized parameters', function(): void {
     $eventClass = 'SomeEventClass';
     $params = ['param1' => 'value1', 'param2' => 'value2'];
 

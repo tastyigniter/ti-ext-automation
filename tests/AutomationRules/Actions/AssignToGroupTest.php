@@ -11,11 +11,11 @@ use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\Event;
 
 dataset('assignable', [
-    fn() => ['order' => Order::factory()->create()],
-    fn() => ['reservation' => Reservation::factory()->create()],
+    fn(): array => ['order' => Order::factory()->create()],
+    fn(): array => ['reservation' => Reservation::factory()->create()],
 ]);
 
-it('assigns to valid group', function($params) {
+it('assigns to valid group', function($params): void {
     Event::fake();
 
     $staffGroup = UserGroup::factory()->create();
@@ -31,21 +31,21 @@ it('assigns to valid group', function($params) {
     Event::assertDispatched('admin.assignable.assigned');
 })->with('assignable');
 
-it('throws exception when missing group id', function($params) {
+it('throws exception when missing group id', function($params): void {
     $action = new RuleAction(['staff_group_id' => null]);
     $assignToGroup = new AssignToGroup($action);
 
     $assignToGroup->triggerAction($params);
 })->with('assignable')->throws(AutomationException::class, 'Missing valid staff group to assign to.');
 
-it('throws exception when invalid group id', function($params) {
+it('throws exception when invalid group id', function($params): void {
     $action = new RuleAction(['staff_group_id' => 999]);
     $assignToGroup = new AssignToGroup($action);
 
     $assignToGroup->triggerAction($params);
 })->with('assignable')->throws(AutomationException::class, 'Invalid staff group to assign to.');
 
-it('throws exception when missing assignable model', function() {
+it('throws exception when missing assignable model', function(): void {
     $staffGroup = UserGroup::factory()->create();
     $action = new RuleAction(['staff_group_id' => $staffGroup->getKey()]);
     $assignToGroup = new AssignToGroup($action);

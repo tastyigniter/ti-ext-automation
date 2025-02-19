@@ -27,10 +27,8 @@ class EventParams
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         resolve(EventManager::class)->fireEvent(
             $this->eventClass,

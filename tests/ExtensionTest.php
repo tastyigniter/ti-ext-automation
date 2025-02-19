@@ -21,7 +21,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Event;
 use Mockery;
 
-it('registers event manager singleton and automation cleanup console command', function() {
+it('registers event manager singleton and automation cleanup console command', function(): void {
     $app = Mockery::mock(Application::class);
     $app->shouldReceive('singleton')->with(EventManager::class)->once();
     $app->shouldReceive('singleton')->with('command.automation.cleanup', Cleanup::class)->once();
@@ -30,7 +30,7 @@ it('registers event manager singleton and automation cleanup console command', f
     (new Extension($app))->register();
 });
 
-it('extends action form fields on boot', function() {
+it('extends action form fields on boot', function(): void {
     $app = Mockery::mock(Application::class);
     $form = new class extends Form
     {
@@ -43,8 +43,9 @@ it('extends action form fields on boot', function() {
     };
     $form->model = new RuleAction;
     $form->model->applyActionClass(TestAction::class);
-    Event::shouldReceive('listen')->with('admin.form.extendFieldsBefore', Mockery::on(function($callback) use ($form) {
+    Event::shouldReceive('listen')->with('admin.form.extendFieldsBefore', Mockery::on(function($callback) use ($form): true {
         $callback($form);
+
         return true;
     }))->once();
     Event::shouldReceive('listen')->with('automation.order.schedule.hourly', Mockery::any());
@@ -54,13 +55,14 @@ it('extends action form fields on boot', function() {
     (new Extension($app))->boot();
 });
 
-it('registers scheduled tasks', function() {
+it('registers scheduled tasks', function(): void {
     $app = Mockery::mock(Application::class);
     $app->shouldReceive('singleton');
 
     $schedule = Mockery::mock(Schedule::class);
-    $schedule->shouldReceive('call')->with(Mockery::on(function($callback) {
+    $schedule->shouldReceive('call')->with(Mockery::on(function($callback): true {
         $callback();
+
         return true;
     }))->andReturnSelf();
     $schedule->shouldReceive('name')->with('automation-order-schedule')->andReturnSelf()->once();
@@ -75,7 +77,7 @@ it('registers scheduled tasks', function() {
     (new Extension($app))->registerSchedule($schedule);
 });
 
-it('registers permissions with correct attributes', function() {
+it('registers permissions with correct attributes', function(): void {
     $app = Mockery::mock(Application::class);
     $permissions = (new Extension($app))->registerPermissions();
 
@@ -84,7 +86,7 @@ it('registers permissions with correct attributes', function() {
         ->and($permissions['Igniter.Automation.Manage']['group'])->toBe('igniter::admin.permissions.name');
 });
 
-it('registers navigation with correct attributes', function() {
+it('registers navigation with correct attributes', function(): void {
     $app = Mockery::mock(Application::class);
     $navigation = (new Extension($app))->registerNavigation();
 
@@ -97,7 +99,7 @@ it('registers navigation with correct attributes', function() {
         ->and($navigation['tools']['child']['automation']['permission'])->toBe('Igniter.Automation.*');
 });
 
-it('loads registered automation events', function() {
+it('loads registered automation events', function(): void {
     $events = BaseEvent::findEvents();
 
     expect($events)->toHaveKeys([
@@ -106,7 +108,7 @@ it('loads registered automation events', function() {
     ]);
 });
 
-it('loads registered automation actions', function() {
+it('loads registered automation actions', function(): void {
     $actions = BaseAction::findActions();
 
     expect($actions)->toHaveKeys([

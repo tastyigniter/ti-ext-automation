@@ -7,14 +7,15 @@ use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Automation\Classes\BaseEvent;
+use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Throwable;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string $code
@@ -23,36 +24,36 @@ use Throwable;
  * @property array|null $config_data
  * @property bool $is_custom
  * @property bool $status
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read mixed $event_description
  * @property-read mixed $event_name
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyClass($class)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyFilters(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applySorts(array $sorts = [])
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule applyStatus($status = true)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule dropdown(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule like(string $column, string $value, string $side = 'both', string $boolean = 'and')
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule listFrontEnd(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule lists(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule newModelQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule newQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orLike(string $column, string $value, string $side = 'both')
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|AutomationRule applyClass($class)
+ * @method static Builder<static>|AutomationRule applyFilters(array $options = [])
+ * @method static Builder<static>|AutomationRule applySorts(array $sorts = [])
+ * @method static Builder<static>|AutomationRule applyStatus($status = true)
+ * @method static Builder<static>|AutomationRule dropdown(string $column, string $key = null)
+ * @method static Builder<static>|AutomationRule like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static Builder<static>|AutomationRule listFrontEnd(array $options = [])
+ * @method static Builder<static>|AutomationRule lists(string $column, string $key = null)
+ * @method static Builder<static>|AutomationRule newModelQuery()
+ * @method static Builder<static>|AutomationRule newQuery()
+ * @method static Builder<static>|AutomationRule orLike(string $column, string $value, string $side = 'both')
+ * @method static Builder<static>|AutomationRule orSearch(string $term, string $columns = [], string $mode = 'all')
  * @method static array pluckDates(string $column, string $keyFormat = 'Y-m', string $valueFormat = 'F Y')
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule query()
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule search(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereCode($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereConfigData($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereCreatedAt($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereDescription($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereEventClass($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereId($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereIsCustom($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereName($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereStatus($value)
- * @method static \Igniter\Flame\Database\Builder<static>|AutomationRule whereUpdatedAt($value)
- * @mixin \Igniter\Flame\Database\Model
+ * @method static Builder<static>|AutomationRule query()
+ * @method static Builder<static>|AutomationRule search(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|AutomationRule whereCode($value)
+ * @method static Builder<static>|AutomationRule whereConfigData($value)
+ * @method static Builder<static>|AutomationRule whereCreatedAt($value)
+ * @method static Builder<static>|AutomationRule whereDescription($value)
+ * @method static Builder<static>|AutomationRule whereEventClass($value)
+ * @method static Builder<static>|AutomationRule whereId($value)
+ * @method static Builder<static>|AutomationRule whereIsCustom($value)
+ * @method static Builder<static>|AutomationRule whereName($value)
+ * @method static Builder<static>|AutomationRule whereStatus($value)
+ * @method static Builder<static>|AutomationRule whereUpdatedAt($value)
+ * @mixin Model
  */
 class AutomationRule extends Model
 {
@@ -90,7 +91,7 @@ class AutomationRule extends Model
      * Kicks off this notification rule, fires the event to obtain its parameters,
      * checks the rule conditions evaluate as true, then spins over each action.
      */
-    public function triggerRule()
+    public function triggerRule(): ?bool
     {
         try {
             if (!$this->actions || $this->actions->isEmpty()) {
@@ -103,29 +104,31 @@ class AutomationRule extends Model
                 return false;
             }
 
-            $this->actions->each(function($action) use ($params) {
+            $this->actions->each(function($action) use ($params): void {
                 $action->triggerAction($params);
             });
         } catch (Throwable|Exception $ex) {
             AutomationLog::createLog($this, $ex->getMessage(), false, $params ?? [], $ex);
         }
+
+        return null;
     }
 
-    public function getEventClassOptions()
+    public function getEventClassOptions(): array
     {
-        return array_map(function(BaseEvent $eventObj) {
+        return array_map(function(BaseEvent $eventObj): string {
             return $eventObj->getEventName().' - '.$eventObj->getEventDescription();
         }, BaseEvent::findEventObjects());
     }
 
-    public function getActionOptions()
+    public function getActionOptions(): array
     {
         return array_map(function(BaseAction $actionObj) {
             return $actionObj->getActionName();
         }, BaseAction::findActions());
     }
 
-    public function getConditionOptions()
+    public function getConditionOptions(): array
     {
         return array_map(function(BaseCondition $conditionObj) {
             return $conditionObj->getConditionName();
@@ -176,13 +179,11 @@ class AutomationRule extends Model
     //
     // Manager
     //
-
     /**
      * Extends this class with the event class
      * @param string $class Class name
-     * @return bool
      */
-    public function applyEventClass($class = null)
+    public function applyEventClass($class = null): bool
     {
         $class ??= $this->event_class;
 
@@ -197,9 +198,9 @@ class AutomationRule extends Model
 
     /**
      * Returns the event class extension object.
-     * @return \Igniter\Automation\Classes\BaseEvent
+     * @return BaseEvent
      */
-    public function getEventObject()
+    public function getEventObject(): mixed
     {
         $this->applyEventClass();
 
@@ -213,7 +214,7 @@ class AutomationRule extends Model
 
     /**
      * Returns an array of rule codes and descriptions.
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public static function listRulesForEvent($eventClass)
     {
@@ -222,9 +223,8 @@ class AutomationRule extends Model
 
     /**
      * Synchronise all file-based rules to the database.
-     * @return void
      */
-    public static function syncAll()
+    public static function syncAll(): void
     {
         $presets = BaseEvent::findEventPresets();
         $dbRules = self::pluck('is_custom', 'code')->toArray();
@@ -247,11 +247,11 @@ class AutomationRule extends Model
         }
     }
 
-    public static function createFromPreset($code, $preset)
+    public static function createFromPreset($code, $preset): ?\Igniter\Automation\Models\AutomationRule
     {
         $actions = array_get($preset, 'actions');
         if (!$actions || !is_array($actions)) {
-            return;
+            return null;
         }
 
         $automation = new self;
