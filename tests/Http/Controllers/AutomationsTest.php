@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Tests\Http\Controllers;
 
 use Igniter\Automation\AutomationRules\Actions\AssignToGroup;

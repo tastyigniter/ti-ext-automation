@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Classes;
 
 use Illuminate\Support\Str;
@@ -128,7 +130,7 @@ class BaseModelAttributesCondition extends BaseCondition
         $attribute = array_get($subCondition, 'attribute');
         $operator = array_get($subCondition, 'operator');
         $conditionValue = array_get($subCondition, 'value');
-        $conditionValue = is_array($conditionValue) ? $conditionValue : mb_strtolower(trim($conditionValue));
+        $conditionValue = is_array($conditionValue) ? $conditionValue : mb_strtolower(trim((string)$conditionValue));
         $modelValue = $this->getModelEvalAttribute($model, $attribute, $subCondition);
 
         if ($operator === 'is') {
@@ -178,7 +180,7 @@ class BaseModelAttributesCondition extends BaseCondition
             $value = $this->{'get'.Str::studly($attribute).'Attribute'}($value, $model, $condition);
         }
 
-        return mb_strtolower(trim($value));
+        return mb_strtolower(trim((string)$value));
     }
 
     protected function applyDateRange($query, $attribute, array $options)

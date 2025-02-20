@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Models;
 
 use Igniter\Flame\Database\Model;

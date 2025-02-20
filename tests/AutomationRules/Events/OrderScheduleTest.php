@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Tests\AutomationRules\Events;
 
 use Igniter\Automation\AutomationRules\Events\OrderSchedule;
@@ -37,4 +39,3 @@ it('returns empty array if order is not an instance of Order', function(): void 
     expect($params)->toBeArray()
         ->and($params)->toBeEmpty();
 });
-

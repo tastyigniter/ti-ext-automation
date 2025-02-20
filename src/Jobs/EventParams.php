@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Jobs;
 
 use Igniter\Automation\Classes\EventManager;

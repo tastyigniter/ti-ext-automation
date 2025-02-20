@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'text_title' => 'Automations',
     'text_form_name' => 'Automation',

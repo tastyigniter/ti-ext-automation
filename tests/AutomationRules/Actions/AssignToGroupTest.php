@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Tests\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
