@@ -123,7 +123,7 @@ class RuleAction extends Model
     }
 
     /**
-     * @return BaseAction
+     * @return null|BaseAction
      */
     public function getActionObject(): mixed
     {

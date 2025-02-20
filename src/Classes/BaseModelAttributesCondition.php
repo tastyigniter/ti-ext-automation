@@ -27,7 +27,7 @@ class BaseModelAttributesCondition extends BaseCondition
     }
 
     /**
-     * @return array<string, array>
+     * @return array<string, string|array>
      */
     public function defineModelAttributes()
     {
