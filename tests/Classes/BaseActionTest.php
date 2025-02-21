@@ -72,7 +72,7 @@ it('throws an exception if triggerAction method is not implemented', function():
     $action = new BaseAction;
 
     $action->triggerAction([]);
-})->throws('Method Igniter\Automation\Classes\BaseAction::triggerAction() is not implemented.');
+})->throws('Method '.BaseAction::class.'::triggerAction() is not implemented.');
 
 it('triggers an action', function(): void {
     $action = new class extends BaseAction

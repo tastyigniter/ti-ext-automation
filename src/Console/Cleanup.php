@@ -32,7 +32,7 @@ class Cleanup extends Command
 
         $amountDeleted = AutomationLog::query()->where('created_at', '<', $logTTL)->delete();
 
-        $this->info("Deleted {$amountDeleted} record(s) from the automation log.");
+        $this->info(sprintf('Deleted %s record(s) from the automation log.', $amountDeleted));
         $this->comment('All done!');
     }
 }

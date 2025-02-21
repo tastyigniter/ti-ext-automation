@@ -44,6 +44,9 @@ return RectorConfig::configure()
             __DIR__.'/src/Classes/BaseEvent.php',
         ],
     ])
-    ->withTypeCoverageLevel(100)
-    ->withDeadCodeLevel(100)
-    ->withCodeQualityLevel(100);
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+    );
