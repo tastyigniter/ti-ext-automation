@@ -13,7 +13,7 @@ it('initialises config data', function(): void {
     $model = Mockery::mock(Model::class);
     $condition = new class($model) extends BaseCondition
     {
-        public function getModel()
+        public function getModel(): ?Model
         {
             return $this->model;
         }
@@ -23,13 +23,17 @@ it('initialises config data', function(): void {
 });
 
 it('defines a name and description', function(): void {
-    $condition = new class extends BaseCondition {};
+    $condition = new class extends BaseCondition
+    {
+    };
 
     expect($condition->conditionDetails())->toHaveKeys(['name', 'description']);
 });
 
 it('checks condition', function(): void {
-    $condition = new class extends BaseCondition {};
+    $condition = new class extends BaseCondition
+    {
+    };
 
     $params = [];
 
