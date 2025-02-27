@@ -103,9 +103,7 @@ it('evalIsTrue returns false when matching operator', function(): void {
                 ],
             ];
 
-            $this->model = new class($attributes) extends Model
-            {
-            };
+            $this->model = new class($attributes) extends Model {};
         }
 
         public function defineModelAttributes(): array
@@ -139,9 +137,7 @@ it('evalIsTrue evaluates string type attribute correctly', function($evalValue, 
                 ],
             ];
 
-            $this->model = new class($attributes) extends Model
-            {
-            };
+            $this->model = new class($attributes) extends Model {};
         }
 
         public function defineModelAttributes(): array

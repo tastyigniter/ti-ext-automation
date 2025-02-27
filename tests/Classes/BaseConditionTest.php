@@ -23,17 +23,13 @@ it('initialises config data', function(): void {
 });
 
 it('defines a name and description', function(): void {
-    $condition = new class extends BaseCondition
-    {
-    };
+    $condition = new class extends BaseCondition {};
 
     expect($condition->conditionDetails())->toHaveKeys(['name', 'description']);
 });
 
 it('checks condition', function(): void {
-    $condition = new class extends BaseCondition
-    {
-    };
+    $condition = new class extends BaseCondition {};
 
     $params = [];
 
