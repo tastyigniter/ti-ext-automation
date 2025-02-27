@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Models;
 
+use Override;
 use Igniter\Automation\Classes\BaseCondition;
 use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
@@ -82,6 +83,7 @@ class RuleCondition extends Model
     // Events
     //
 
+    #[Override]
     protected function afterFetch()
     {
         $this->applyConditionClass();

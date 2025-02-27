@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Override;
 use Facades\Igniter\System\Helpers\MailHelper;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class SendMailTemplate extends BaseAction
 {
+    #[Override]
     public function actionDetails(): array
     {
         return [
@@ -24,6 +26,7 @@ class SendMailTemplate extends BaseAction
         ];
     }
 
+    #[Override]
     public function defineFormFields(): array
     {
         return [
@@ -39,7 +42,7 @@ class SendMailTemplate extends BaseAction
                 'staff_group' => [
                     'label' => 'lang:igniter.user::default.label_send_to_staff_group',
                     'type' => 'select',
-                    'options' => [UserGroup::class, 'getDropdownOptions'],
+                    'options' => UserGroup::getDropdownOptions(...),
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
@@ -49,7 +52,7 @@ class SendMailTemplate extends BaseAction
                 'customer_group' => [
                     'label' => 'lang:igniter.automation::default.label_send_to_customer_group',
                     'type' => 'select',
-                    'options' => [CustomerGroup::class, 'getDropdownOptions'],
+                    'options' => CustomerGroup::getDropdownOptions(...),
                     'trigger' => [
                         'action' => 'show',
                         'field' => 'send_to',
@@ -69,6 +72,7 @@ class SendMailTemplate extends BaseAction
         ];
     }
 
+    #[Override]
     public function triggerAction($params): void
     {
         if (!$templateCode = $this->model->template) {

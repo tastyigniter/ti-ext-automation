@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
+use Override;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\User\Models\Concerns\Assignable;
@@ -11,6 +12,7 @@ use Igniter\User\Models\UserGroup;
 
 class AssignToGroup extends BaseAction
 {
+    #[Override]
     public function actionDetails(): array
     {
         return [
@@ -19,6 +21,7 @@ class AssignToGroup extends BaseAction
         ];
     }
 
+    #[Override]
     public function defineFormFields(): array
     {
         return [
@@ -26,12 +29,13 @@ class AssignToGroup extends BaseAction
                 'staff_group_id' => [
                     'label' => 'lang:igniter.automation::default.label_assign_to_staff_group',
                     'type' => 'select',
-                    'options' => [UserGroup::class, 'getDropdownOptions'],
+                    'options' => UserGroup::getDropdownOptions(...),
                 ],
             ],
         ];
     }
 
+    #[Override]
     public function triggerAction($params): void
     {
         if (!$groupId = $this->model->staff_group_id) {
@@ -43,7 +47,7 @@ class AssignToGroup extends BaseAction
         }
 
         $assignable = array_get($params, 'order', array_get($params, 'reservation'));
-        if (!$assignable || !in_array(Assignable::class, class_uses_recursive(get_class($assignable)))) {
+        if (!$assignable || !in_array(Assignable::class, class_uses_recursive($assignable::class))) {
             throw new AutomationException('AssignToGroup: Missing assignable model.');
         }
 

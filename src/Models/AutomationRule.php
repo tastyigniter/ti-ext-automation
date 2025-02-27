@@ -15,6 +15,7 @@ use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Database\Traits\Validation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Override;
 use Throwable;
 
 /**
@@ -118,23 +119,17 @@ class AutomationRule extends Model
 
     public function getEventClassOptions(): array
     {
-        return array_map(function(BaseEvent $eventObj): string {
-            return $eventObj->getEventName().' - '.$eventObj->getEventDescription();
-        }, BaseEvent::findEventObjects());
+        return array_map(fn(BaseEvent $eventObj): string => $eventObj->getEventName().' - '.$eventObj->getEventDescription(), BaseEvent::findEventObjects());
     }
 
     public function getActionOptions(): array
     {
-        return array_map(function(BaseAction $actionObj) {
-            return $actionObj->getActionName();
-        }, BaseAction::findActions());
+        return array_map(fn(BaseAction $actionObj) => $actionObj->getActionName(), BaseAction::findActions());
     }
 
     public function getConditionOptions(): array
     {
-        return array_map(function(BaseCondition $conditionObj) {
-            return $conditionObj->getConditionName();
-        }, BaseCondition::findConditions());
+        return array_map(fn(BaseCondition $conditionObj) => $conditionObj->getConditionName(), BaseCondition::findConditions());
     }
 
     //
@@ -155,6 +150,7 @@ class AutomationRule extends Model
     // Events
     //
 
+    #[Override]
     protected function afterFetch()
     {
         $this->applyEventClass();
@@ -172,7 +168,7 @@ class AutomationRule extends Model
     public function scopeApplyClass($query, $class)
     {
         if (!is_string($class)) {
-            $class = get_class($class);
+            $class = $class::class;
         }
 
         return $query->where('event_class', $class);
@@ -291,9 +287,8 @@ class AutomationRule extends Model
             return true;
         }
 
-        $validConditions = $conditions->sortBy('priority')->filter(function(RuleCondition $condition) use ($params) {
-            return $condition->getConditionObject()->isTrue($params);
-        })->values();
+        $validConditions = $conditions->sortBy('priority')
+            ->filter(fn(RuleCondition $condition) => $condition->getConditionObject()->isTrue($params))->values();
 
         $matchType = $this->config_data['condition_match_type'] ?? 'all';
 

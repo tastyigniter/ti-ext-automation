@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Tests\Fixtures;
 
+use Override;
 use Igniter\Automation\Classes\BaseAction;
 
 class TestAction extends BaseAction
 {
+    #[Override]
     public function actionDetails(): array
     {
         return [
@@ -16,6 +18,7 @@ class TestAction extends BaseAction
         ];
     }
 
+    #[Override]
     public function triggerAction($params): void
     {
         expect($params)->toHaveKey('param1')

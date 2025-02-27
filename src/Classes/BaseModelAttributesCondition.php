@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Classes;
 
+use Override;
 use Illuminate\Support\Str;
 
 class BaseModelAttributesCondition extends BaseCondition
@@ -21,6 +22,7 @@ class BaseModelAttributesCondition extends BaseCondition
 
     protected $modelAttributes;
 
+    #[Override]
     public function initConfigData($model): void
     {
         $model->operator = 'is';
@@ -34,6 +36,7 @@ class BaseModelAttributesCondition extends BaseCondition
         return [];
     }
 
+    #[Override]
     public function getConditionDescription(): string
     {
         $model = $this->model;
@@ -66,9 +69,7 @@ class BaseModelAttributesCondition extends BaseCondition
 
     public function getAttributeOptions(): array
     {
-        return array_map(function($attribute) {
-            return array_get($attribute, 'label');
-        }, $this->listModelAttributes());
+        return array_map(fn($attribute) => array_get($attribute, 'label'), $this->listModelAttributes());
     }
 
     public function getOperatorOptions(): array

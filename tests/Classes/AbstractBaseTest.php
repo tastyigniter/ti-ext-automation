@@ -7,9 +7,7 @@ namespace Igniter\Automation\Tests\Classes;
 use Igniter\Automation\Classes\AbstractBase;
 
 it('extends the class with a callback', function(): void {
-    $callback = function(): string {
-        return 'extended';
-    };
+    $callback = fn(): string => 'extended';
 
     $abstractBase = new class extends AbstractBase
     {

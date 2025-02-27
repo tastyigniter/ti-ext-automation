@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Models;
 
+use Override;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Database\Builder;
@@ -86,12 +87,14 @@ class RuleAction extends Model
     // Events
     //
 
+    #[Override]
     protected function afterFetch()
     {
         $this->applyActionClass();
         $this->loadCustomData();
     }
 
+    #[Override]
     protected function beforeSave()
     {
         $this->setCustomData();

@@ -14,7 +14,7 @@ use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 return RectorConfig::configure()
     ->withImportNames(removeUnusedImports: true)
     ->withPaths([
-        __DIR__.'/resources',
+        __DIR__.'/database',
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
@@ -44,6 +44,7 @@ return RectorConfig::configure()
             __DIR__.'/src/Classes/BaseEvent.php',
         ],
     ])
+    ->withPhpSets(php83: true)
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,

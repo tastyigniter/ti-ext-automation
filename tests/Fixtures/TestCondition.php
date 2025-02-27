@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Tests\Fixtures;
 
+use Override;
 use Igniter\Automation\Classes\BaseCondition;
 
 class TestCondition extends BaseCondition
 {
+    #[Override]
     public function conditionDetails(): array
     {
         return [
@@ -16,6 +18,7 @@ class TestCondition extends BaseCondition
         ];
     }
 
+    #[Override]
     public function isTrue(&$params): bool
     {
         return false;

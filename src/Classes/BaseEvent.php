@@ -10,19 +10,11 @@ use Igniter\System\Classes\ExtensionManager;
 class BaseEvent extends AbstractBase
 {
     /**
-     * @var Model model object
-     */
-    protected $model;
-
-    /**
      * @var array Contains the event parameter values.
      */
     protected $params = [];
 
-    public function __construct($model = null)
-    {
-        $this->model = $model;
-    }
+    public function __construct(protected ?Model $model = null) {}
 
     /**
      * Returns information about this event, including name and description.
@@ -99,7 +91,7 @@ class BaseEvent extends AbstractBase
      */
     public function getEventIdentifier(): string
     {
-        $namespace = normalize_class_name(get_called_class());
+        $namespace = normalize_class_name(static::class);
         $parts = explode('\\', $namespace);
         $class = array_pop($parts);
         $slice = array_slice($parts, 1, 2);

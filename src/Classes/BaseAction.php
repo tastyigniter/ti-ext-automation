@@ -10,22 +10,18 @@ use LogicException;
 class BaseAction extends AbstractBase
 {
     /**
-     * @var Model model object
-     */
-    protected $model;
-
-    /**
      * @var mixed Extra field configuration for the action.
      */
     protected $fieldConfig;
 
-    public function __construct($model = null)
+    /**
+     * @param Model $model
+     */
+    public function __construct(protected $model = null)
     {
-        $this->model = $model;
-
         $this->fieldConfig = $this->defineFormFields();
 
-        $this->initialize($model);
+        $this->initialize($this->model);
     }
 
     /**
@@ -94,7 +90,7 @@ class BaseAction extends AbstractBase
 
     public function triggerAction($params)
     {
-        throw new LogicException('Method '.get_class($this).'::triggerAction() is not implemented.');
+        throw new LogicException('Method '.static::class.'::triggerAction() is not implemented.');
     }
 
     public function getActionName()

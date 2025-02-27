@@ -8,16 +8,9 @@ use Igniter\Flame\Database\Model;
 
 class BaseCondition extends AbstractBase
 {
-    /**
-     * @var Model model object
-     */
-    protected $model;
-
-    public function __construct($model = null)
+    public function __construct(protected ?Model $model = null)
     {
-        $this->model = $model;
-
-        $this->initialize($model);
+        $this->initialize($this->model);
     }
 
     /**

@@ -37,10 +37,8 @@ it('sends mail template to custom email', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customEmail): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customEmail;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customEmail);
 });
 
 it('sends mail template to restaurant', function(): void {
@@ -53,10 +51,8 @@ it('sends mail template to restaurant', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address'));
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address')));
 });
 
 it('sends mail template to staff group', function(): void {
@@ -74,10 +70,8 @@ it('sends mail template to staff group', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $staff->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $staff->email);
 });
 
 it('sends mail template to customer group', function(): void {
@@ -95,10 +89,8 @@ it('sends mail template to customer group', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customer->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customer->email);
 });
 
 it('sends mail template to location', function(): void {
@@ -113,10 +105,8 @@ it('sends mail template to location', function(): void {
 
     $sendMailTemplate->triggerAction(['location' => $location]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($location): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $location->location_email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $location->location_email);
 });
 
 it('sends mail template to system', function(): void {
@@ -129,10 +119,8 @@ it('sends mail template to system', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address'));
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === setting('site_email', config('mail.from.address')));
 });
 
 it('sends mail template to customer', function(): void {
@@ -146,10 +134,8 @@ it('sends mail template to customer', function(): void {
 
     $sendMailTemplate->triggerAction(['customer' => $customer]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customer->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customer->email);
 
     $sendMailTemplate->triggerAction([
         'first_name' => $customer->first_name,
@@ -157,10 +143,8 @@ it('sends mail template to customer', function(): void {
         'email' => $customer->email,
     ]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customer->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customer->email);
 });
 
 it('sends mail template to staff', function(): void {
@@ -174,19 +158,15 @@ it('sends mail template to staff', function(): void {
 
     $sendMailTemplate->triggerAction(['staff' => $staff]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $staff->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $staff->email);
 
     $sendMailTemplate->triggerAction([
         'order' => (object)['assignee' => $staff],
     ]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $staff->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $staff->email);
 });
 
 it('sends mail template to all staff', function(): void {
@@ -202,15 +182,11 @@ it('sends mail template to all staff', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff1): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $staff1->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $staff1->email);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($staff2): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $staff2->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $staff2->email);
 });
 
 it('sends mail template to all customers', function(): void {
@@ -226,15 +202,11 @@ it('sends mail template to all customers', function(): void {
 
     $sendMailTemplate->triggerAction([]);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer1): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customer1->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customer1->email);
 
-    Mail::assertSent(AnonymousTemplateMailable::class, function($mailable) use ($customer2): bool {
-        return $mailable->getTemplateCode() === $this->mailTemplate->code
-            && array_get($mailable->to, '0.address') === $customer2->email;
-    });
+    Mail::assertSent(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === $this->mailTemplate->code
+        && array_get($mailable->to, '0.address') === $customer2->email);
 });
 
 it('throws exception when missing mail template', function(): void {

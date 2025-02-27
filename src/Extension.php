@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Automation;
 
+use Override;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\AutomationRules\Actions\AssignToGroup;
 use Igniter\Automation\AutomationRules\Actions\SendMailTemplate;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Event;
  */
 class Extension extends BaseExtension
 {
+    #[Override]
     public function register(): void
     {
         parent::register();
@@ -33,6 +35,7 @@ class Extension extends BaseExtension
         $this->registerConsoleCommand('automation.cleanup', Cleanup::class);
     }
 
+    #[Override]
     public function boot(): void
     {
         EventManager::bindRules();
@@ -42,6 +45,7 @@ class Extension extends BaseExtension
         Igniter::prunableModel(AutomationLog::class);
     }
 
+    #[Override]
     public function registerPermissions(): array
     {
         return [
@@ -52,6 +56,7 @@ class Extension extends BaseExtension
         ];
     }
 
+    #[Override]
     public function registerNavigation(): array
     {
         return [
@@ -87,6 +92,7 @@ class Extension extends BaseExtension
     /**
      * Registers scheduled tasks that are executed on a regular basis.
      */
+    #[Override]
     public function registerSchedule(Schedule $schedule): void
     {
         $schedule->call(function(): void {

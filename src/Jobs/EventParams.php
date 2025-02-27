@@ -13,17 +13,13 @@ class EventParams
     use InteractsWithQueue;
     use SerializesAndRestoresModelIdentifiers;
 
-    protected $eventClass;
-
     protected $params;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($eventClass, array $params)
+    public function __construct(protected $eventClass, array $params)
     {
-        $this->eventClass = $eventClass;
-
         $this->params = $this->serializeParams($params);
     }
 
