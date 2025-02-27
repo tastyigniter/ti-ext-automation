@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Models;
 
-use Override;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 use Illuminate\Support\Carbon;
+use Override;
 
 /**
  * @property int $id

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Override;
 use Facades\Igniter\System\Helpers\MailHelper;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
@@ -14,6 +13,7 @@ use Igniter\User\Models\CustomerGroup;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 class SendMailTemplate extends BaseAction
 {

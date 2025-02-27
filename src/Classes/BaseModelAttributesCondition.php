@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Classes;
 
-use Override;
 use Illuminate\Support\Str;
+use Override;
 
 class BaseModelAttributesCondition extends BaseCondition
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\AutomationRules\Actions;
 
-use Override;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\User\Models\Concerns\Assignable;
 use Igniter\User\Models\UserGroup;
+use Override;
 
 class AssignToGroup extends BaseAction
 {

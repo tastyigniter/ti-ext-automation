@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Automation;
 
-use Override;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\AutomationRules\Actions\AssignToGroup;
 use Igniter\Automation\AutomationRules\Actions\SendMailTemplate;
@@ -19,6 +18,7 @@ use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
+use Override;
 
 /**
  * Automation Extension Information File

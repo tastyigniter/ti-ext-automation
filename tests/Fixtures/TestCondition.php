@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Tests\Fixtures;
 
-use Override;
 use Igniter\Automation\Classes\BaseCondition;
+use Override;
 
 class TestCondition extends BaseCondition
 {
