@@ -96,8 +96,9 @@ class BaseModelAttributesCondition extends BaseCondition
                 $success = $this->evalAttributeStringType($modelToEval, $subCondition);
             }
 
-            if ($attributeType == 'custom')
+            if ($attributeType == 'custom') {
                 $success = $this->evalAttributeCustomType($modelToEval, $subCondition);
+            }
 
             return $success;
         });
