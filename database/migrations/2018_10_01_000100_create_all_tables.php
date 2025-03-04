@@ -1,16 +1,16 @@
 <?php
 
-namespace Igniter\Automation\Database\Migrations;
+declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAllTables extends Migration
+return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('igniter_automation_rules', function (Blueprint $table) {
+        Schema::create('igniter_automation_rules', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
@@ -23,7 +23,7 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_rule_actions', function (Blueprint $table) {
+        Schema::create('igniter_automation_rule_actions', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('automation_rule_id');
@@ -32,7 +32,7 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_rule_conditions', function (Blueprint $table) {
+        Schema::create('igniter_automation_rule_conditions', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('automation_rule_id');
@@ -41,7 +41,7 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniter_automation_jobs', function (Blueprint $table) {
+        Schema::create('igniter_automation_jobs', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('event_class');
@@ -51,11 +51,11 @@ class CreateAllTables extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('igniter_automation_rules');
         Schema::dropIfExists('igniter_automation_rule_actions');
         Schema::dropIfExists('igniter_automation_rule_conditions');
         Schema::dropIfExists('igniter_automation_jobs');
     }
-}
+};
