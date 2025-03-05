@@ -31,16 +31,6 @@ parameters:
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$users\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:customers\\(\\)\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendMailTemplate.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 108$#"
 			count: 1
 			path: src/Classes/BaseEvent.php
