@@ -104,7 +104,6 @@ class SendMailTemplate extends BaseAction
             'restaurant' => 'lang:igniter.user::default.text_send_to_restaurant',
             'location' => 'lang:igniter.user::default.text_send_to_location',
             'staff' => 'lang:igniter.user::default.text_send_to_staff_email',
-            'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
             'customer' => 'lang:igniter.user::default.text_send_to_customer_email',
             'customer_group' => 'lang:igniter.user::default.text_send_to_customer_group',
             'staff_group' => 'lang:igniter.user::default.text_send_to_staff_group',
@@ -135,21 +134,20 @@ class SendMailTemplate extends BaseAction
 
                 return [$location->location_email => $location->location_name];
             case 'staff_group':
-                if ($groupId = $this->model->staff_group) {
-                    if (!$staffGroup = UserGroup::find($groupId)) {
-                        throw new AutomationException('Unable to find staff group with ID: '.$groupId);
-                    }
-
-                    return $staffGroup->users()->whereIsEnabled()->lists('staff_name', 'staff_email');
+                $groupId = $this->model->staff_group;
+                if (!$groupId || !$staffGroup = UserGroup::find($groupId)) {
+                    throw new AutomationException('SendMailTemplate: Unable to find staff group with ID: '.$groupId);
                 }
 
-                return null;
+                /** @var UserGroup $staffGroup */
+                return $staffGroup->users()->whereIsEnabled()->lists('name', 'email');
             case 'customer_group':
                 $groupId = $this->model->customer_group;
                 if (!$groupId || !$customerGroup = CustomerGroup::find($groupId)) {
                     throw new AutomationException('SendMailTemplate: Unable to find customer group with ID: '.$groupId);
                 }
 
+                /** @var CustomerGroup $customerGroup */
                 return $customerGroup->customers()
                     ->select('email', DB::raw('concat(first_name, last_name) as full_name'))
                     ->whereIsEnabled()

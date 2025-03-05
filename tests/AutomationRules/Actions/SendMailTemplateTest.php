@@ -58,7 +58,7 @@ it('sends mail template to restaurant', function(): void {
 it('sends mail template to staff group', function(): void {
     Mail::fake();
 
-    $staff = User::factory()->create();
+    $staff = User::factory()->create(['status' => true]);
     $staffGroup = UserGroup::factory()->create();
     $staff->addGroups([$staffGroup->getKey()]);
 
@@ -212,14 +212,16 @@ it('sends mail template to all customers', function(): void {
 it('throws exception when missing mail template', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction(['template' => null]));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Missing a valid mail template');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Missing a valid mail template');
+});
 
 it('throws exception when missing recipient', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction(['template' => 'test_template']));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Missing a valid recipient from the event payload');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Missing a valid recipient from the event payload');
+});
 
 it('throws exception when missing staff group', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -228,8 +230,9 @@ it('throws exception when missing staff group', function(): void {
         'staff_group' => 123,
     ]));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Unable to find staff group with ID: 123');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Unable to find staff group with ID: 123');
+});
 
 it('throws exception when missing customer group', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -238,8 +241,9 @@ it('throws exception when missing customer group', function(): void {
         'customer_group' => 123,
     ]));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Unable to find customer group with ID: 123');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Unable to find customer group with ID: 123');
+});
 
 it('throws exception when missing customer', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -247,8 +251,9 @@ it('throws exception when missing customer', function(): void {
         'send_to' => 'customer',
     ]));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Missing a valid customer email address');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Missing a valid customer email address');
+});
 
 it('throws exception when missing staff', function(): void {
     $sendMailTemplate = new SendMailTemplate(new RuleAction([
@@ -256,8 +261,9 @@ it('throws exception when missing staff', function(): void {
         'send_to' => 'staff',
     ]));
 
-    $sendMailTemplate->triggerAction([]);
-})->throws(AutomationException::class, 'SendMailTemplate: Missing a valid staff email address');
+    expect(fn() => $sendMailTemplate->triggerAction([]))
+        ->toThrow(AutomationException::class, 'SendMailTemplate: Missing a valid staff email address');
+});
 
 it('sends nothing when missing custom email', function(): void {
     Mail::fake();
