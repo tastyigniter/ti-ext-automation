@@ -1,3 +1,9 @@
+---
+title: "Automation"
+section: "extensions"
+sortOrder: 20
+---
+
 ## Installation
 
 You can install the extension via composer using the following command:
