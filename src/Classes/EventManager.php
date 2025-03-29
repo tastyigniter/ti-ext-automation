@@ -11,7 +11,6 @@ use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\Reservation\Models\Reservation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Queue;
 
 class EventManager
 {
