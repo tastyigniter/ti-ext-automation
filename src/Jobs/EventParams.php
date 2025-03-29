@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Igniter\Automation\Jobs;
 
 use Igniter\Automation\Classes\EventManager;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesAndRestoresModelIdentifiers;
 
-class EventParams
+class EventParams implements ShouldQueue
 {
+    use Queueable;
     use InteractsWithQueue;
     use SerializesAndRestoresModelIdentifiers;
 

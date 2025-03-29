@@ -79,7 +79,7 @@ class EventManager
         $params += $this->getContextParams();
 
         // If available, push to queue
-        Queue::push(new EventParams($eventClass, $params));
+        EventParams::dispatch($eventClass, $params)->afterCommit();
     }
 
     public function fireEvent($eventClass, array $params): void
