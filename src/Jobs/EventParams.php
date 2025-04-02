@@ -12,8 +12,8 @@ use Illuminate\Queue\SerializesAndRestoresModelIdentifiers;
 
 class EventParams implements ShouldQueue
 {
-    use Queueable;
     use InteractsWithQueue;
+    use Queueable;
     use SerializesAndRestoresModelIdentifiers;
 
     protected $params;
