@@ -1,101 +1,103 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$staff_group_id\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$staff_group_id\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/AssignToGroup.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$custom\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$custom\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$customer_group\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$customer_group\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$send_to\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$send_to\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$staff_group\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$staff_group\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$template\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$template\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendMailTemplate.php
 
 		-
-			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 108$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$operator\\.$#"
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$operator\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/Classes/BaseModelAttributesCondition.php
 
 		-
-			message: "#^Static call to instance method stdClass\\:\\:makeParamsFromEvent\\(\\)\\.$#"
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
 			count: 1
 			path: src/Classes/EventManager.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/EventManager.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Automation\\\\Models\\\\RuleAction\\:\\:getFieldConfig\\(\\)\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Cannot call method hourly\\(\\) on null\\.$#"
+			message: '#^Cannot call method hourly\(\) on null\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: src/Extension.php
 
 		-
-			message: "#^Result of method Illuminate\\\\Console\\\\Scheduling\\\\CallbackEvent\\:\\:runInBackground\\(\\) \\(void\\) is used\\.$#"
+			message: '#^Result of method Illuminate\\Console\\Scheduling\\CallbackEvent\:\:runInBackground\(\) \(void\) is used\.$#'
+			identifier: method.void
 			count: 2
 			path: src/Extension.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Admin\\\\Classes\\\\BaseWidget\\:\\:getField\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Admin\\Classes\\BaseWidget\:\:getField\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Http/Controllers/Automations.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Admin\\\\Classes\\\\BaseWidget\\:\\:renderField\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Admin\\Classes\\BaseWidget\:\:renderField\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Http/Controllers/Automations.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\AutomationLog\\:\\:\\$action\\.$#"
+			message: '#^Access to an undefined property Igniter\\Automation\\Models\\AutomationLog\:\:\$action\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/Models/AutomationLog.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
 			count: 1
 			path: src/Models/AutomationLog.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:\\$actions\\.$#"
+			message: '#^Access to an undefined property Igniter\\Automation\\Models\\AutomationRule\:\:\$actions\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/Models/AutomationRule.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Automation\\\\Models\\\\AutomationRule\\:\\:\\$conditions\\.$#"
+			message: '#^Access to an undefined property Igniter\\Automation\\Models\\AutomationRule\:\:\$conditions\.$#'
+			identifier: property.notFound
 			count: 2
 			path: src/Models/AutomationRule.php
 
 		-
-			message: "#^Binary operation \"\\.\" between array and ' \\- ' results in an error\\.$#"
+			message: '#^Binary operation "\." between array and '' \- '' results in an error\.$#'
+			identifier: binaryOp.invalid
 			count: 1
 			path: src/Models/AutomationRule.php

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Models;
 
-use Exception;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Automation\Classes\BaseCondition;
@@ -107,10 +106,10 @@ class AutomationRule extends Model
                 return false;
             }
 
-            $this->actions->each(function($action) use ($params): void {
+            $this->actions->each(function(RuleAction $action) use ($params): void {
                 $action->triggerAction($params);
             });
-        } catch (Throwable|Exception $ex) {
+        } catch (Throwable $ex) {
             AutomationLog::createLog($this, $ex->getMessage(), false, $params ?? [], $ex);
         }
 

@@ -113,7 +113,7 @@ class Extension extends BaseExtension
         Event::listen('admin.form.extendFieldsBefore', function(Form $form): void {
             if ($form->getController() instanceof Automations && $form->model instanceof RuleAction) {
                 $form->arrayName .= '[options]';
-                $form->fields = array_get($form->model->getFieldConfig(null), 'fields', []);
+                $form->fields = array_get($form->model->getFieldConfig(), 'fields', []);
             }
         });
     }

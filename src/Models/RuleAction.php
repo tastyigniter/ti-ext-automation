@@ -41,6 +41,7 @@ use Override;
  * @method static Builder<static>|RuleAction whereOptions($value)
  * @method static Builder<static>|RuleAction whereUpdatedAt($value)
  * @mixin Model
+ * @mixin BaseAction
  */
 class RuleAction extends Model
 {
