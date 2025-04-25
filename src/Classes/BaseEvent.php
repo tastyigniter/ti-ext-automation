@@ -86,7 +86,6 @@ class BaseEvent extends AbstractBase
 
     /**
      * Resolves an event or action identifier from the called class name or object.
-     * @param mixed Class name or object
      * @return string Identifier in format of vendor-extension-class
      */
     public function getEventIdentifier(): string
