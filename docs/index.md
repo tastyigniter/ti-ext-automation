@@ -38,7 +38,7 @@ You must configure and run a queue worker to process automation jobs. You can re
 
 ## Usage
 
-This section explains how to integrate the Automation Extension API into your extension if you're building an extension that provides automation rules, events, actions, or conditions. The Automation extension provides a simple API for defining and managing automation rules, events, actions, and conditions.
+This section covers how to integrate the Automation Extension API into your extension if you're building an extension that provides automation rules, events, actions, or conditions. The Automation extension provides a simple API for defining and managing automation rules, events, actions, and conditions.
 
 ### Defining events
 
