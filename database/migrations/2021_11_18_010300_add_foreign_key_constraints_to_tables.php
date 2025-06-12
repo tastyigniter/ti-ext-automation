@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::table('igniter_automation_rule_actions', function(Blueprint $table): void {
             $table->foreignId('automation_rule_id')->nullable()->change();
-            $table->foreign('automation_rule_id', 'igniter_actions_automation_rule_id_foreign')
+            $table->foreign('automation_rule_id', 'actions_automation_rule_id_foreign')
                 ->references('id')
                 ->on('igniter_automation_rules')
                 ->cascadeOnDelete()
@@ -24,7 +24,7 @@ return new class extends Migration
 
         Schema::table('igniter_automation_rule_conditions', function(Blueprint $table): void {
             $table->foreignId('automation_rule_id')->nullable()->change();
-            $table->foreign('automation_rule_id', 'igniter_conditions_automation_rule_id_foreign')
+            $table->foreign('automation_rule_id', 'conditions_automation_rule_id_foreign')
                 ->references('id')
                 ->on('igniter_automation_rules')
                 ->cascadeOnDelete()
@@ -33,7 +33,7 @@ return new class extends Migration
 
         Schema::table('igniter_automation_logs', function(Blueprint $table): void {
             $table->foreignId('automation_rule_id')->nullable()->change();
-            $table->foreign('automation_rule_id', 'igniter_logs_automation_rule_id_foreign')
+            $table->foreign('automation_rule_id', 'logs_automation_rule_id_foreign')
                 ->references('id')
                 ->on('igniter_automation_rules')
                 ->cascadeOnDelete()
@@ -54,22 +54,22 @@ return new class extends Migration
     {
         try {
             Schema::table('igniter_automation_rule_actions', function(Blueprint $table): void {
-                $table->dropForeign('igniter_actions_automation_rule_id_foreign');
+                $table->dropForeign('actions_automation_rule_id_foreign');
             });
 
             Schema::table('igniter_automation_rule_conditions', function(Blueprint $table): void {
-                $table->dropForeign('igniter_conditions_automation_rule_id_foreign');
+                $table->dropForeign('conditions_automation_rule_id_foreign');
             });
         } catch (Exception) {
         }
 
         try {
             Schema::table('igniter_automation_rule_actions', function(Blueprint $table): void {
-                $table->dropForeign('igniter_actions_automation_rule_id_foreign');
+                $table->dropForeign('actions_automation_rule_id_foreign');
             });
 
             Schema::table('igniter_automation_rule_conditions', function(Blueprint $table): void {
-                $table->dropForeign('igniter_conditions_automation_rule_id_foreign');
+                $table->dropForeign('conditions_automation_rule_id_foreign');
             });
         } catch (Exception) {
         }
