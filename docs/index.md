@@ -29,9 +29,16 @@ The Automation extension follows a specific workflow when an automation is trigg
 5. The automation conditions are checked to ensure that any required conditions are met.
 6. Finally, the automation actions associated with the triggered rules are executed using the captured parameters.
 
+## Getting started
+
+From your TastyIgniter Admin, you can manage automation rules by navigating to _Tools > Automations_.
+You can create new automation rules, edit existing ones, and manage the events, actions, and conditions associated with each rule.
+You can also view the history of automation runs, which shows the status of each run and any errors that occurred.
+You must configure and run a queue worker to process automation jobs. You can read more about this in the [Queue worker section of the TastyIgniter installation documentation](https://tastyigniter.com/docs/installation#setting-up-the-queue-daemon).
+
 ## Usage
 
-You can manage automations in the admin panel by navigating to Tools > Automations.
+This section covers how to integrate the Automation Extension API into your extension if you're building an extension that provides automation rules, events, actions, or conditions. The Automation extension provides a simple API for defining and managing automation rules, events, actions, and conditions.
 
 ### Defining events
 
@@ -117,7 +124,7 @@ class SendMailTemplate extends \Igniter\Automation\Classes\BaseAction
 }
 ```
 
-The `actionDetails` method returns information about the action, including the name and description. The `defineFormFields` method defines the form fields required for the action, see [TastyIgniter's available form field types](https://tastyigniter.com/docs/advanced/forms#available-field-types). You can access fields defined in the `defineFormFields` method using `$this->model->field_name`. The `triggerAction` method performs the automation action.
+The `actionDetails` method returns information about the action, including the name and description. The `defineFormFields` method defines the form fields required for the action, see [TastyIgniter's available form field types](https://tastyigniter.com/docs/extend/forms#available-field-types). You can access fields defined in the `defineFormFields` method using `$this->model->field_name`. The `triggerAction` method performs the automation action.
 
 These are the available options for the `actionDetails` method:
 
@@ -257,4 +264,4 @@ The Automation extension registers the following permissions:
 
 - `Igniter.Automation.Manage`: Control who can manage automations in the admin area.
 
-For more on restricting access to the admin area, see the [TastyIgniter Permissions](https://tastyigniter.com/docs/extend/permissions) documentation.
+For more on restricting access to the admin area, see the [TastyIgniter Permissions](https://tastyigniter.com/docs/customize/permissions) documentation.

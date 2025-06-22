@@ -21,6 +21,7 @@ use Override;
  * @property Carbon|null $updated_at
  * @property-read mixed $description
  * @property-read mixed $name
+ * @property-read AutomationRule|null $automation_rule
  * @method static Builder<static>|RuleAction applyFilters(array $options = [])
  * @method static Builder<static>|RuleAction applySorts(array $sorts = [])
  * @method static Builder<static>|RuleAction dropdown(string $column, string $key = null)
