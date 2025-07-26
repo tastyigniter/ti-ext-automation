@@ -35,7 +35,7 @@
             "name": "Automation",
             "icon": {
                 "class": "fa fa-tasks",
-                "backgroundColor": "#25C7EE",
+                "backgroundColor": "#FF4900",
                 "color": "#FFF"
             },
             "homepage": "https://tastyigniter.com/marketplace/item/igniter-automation"
