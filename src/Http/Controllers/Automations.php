@@ -104,6 +104,7 @@ class Automations extends AdminController
         if ($form->getContext() !== 'create') {
             $rules[] = ['name', 'lang:igniter::admin.label_name', 'sometimes|required'];
             $rules[] = ['code', 'lang:igniter.automation::default.label_code', 'sometimes|required'];
+            $rules[] = ['status', 'lang:igniter::admin.label_status', 'sometimes|required|boolean'];
         }
 
         return $this->validatePasses(post($form->arrayName), $rules);
