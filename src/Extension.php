@@ -98,12 +98,12 @@ class Extension extends BaseExtension
         $schedule->call(function(): void {
             // Pull orders created within the last 30days
             EventManager::fireOrderScheduleEvents();
-        })->name('automation-order-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
+        })->name('automation-order-schedule')->withoutOverlapping(5)->hourly();
 
         $schedule->call(function(): void {
             // Pull reservations booked within the last 30days
             EventManager::fireReservationScheduleEvents();
-        })->name('automation-reservation-schedule')->withoutOverlapping(5)->runInBackground()->hourly();
+        })->name('automation-reservation-schedule')->withoutOverlapping(5)->hourly();
 
         $schedule->command('automation:cleanup')->name('Automation Log Cleanup')->daily();
     }

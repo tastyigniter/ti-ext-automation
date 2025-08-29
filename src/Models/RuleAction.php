@@ -97,7 +97,7 @@ class RuleAction extends Model
     }
 
     #[Override]
-    protected function beforeSave()
+    protected function beforeSave(): void
     {
         $this->setCustomData();
     }
@@ -144,10 +144,10 @@ class RuleAction extends Model
 
     protected function loadCustomData()
     {
-        $this->setRawAttributes((array)$this->getAttributes() + (array)$this->options, true);
+        $this->setRawAttributes($this->getAttributes() + $this->options, true);
     }
 
-    protected function setCustomData()
+    protected function setCustomData(): void
     {
         if (!$actionObj = $this->getActionObject()) {
             throw new AutomationException(sprintf('Unable to find action object [%s]', $this->getActionClass()));
@@ -156,7 +156,7 @@ class RuleAction extends Model
         $config = $actionObj->getFieldConfig();
         if ($fields = array_get($config, 'fields')) {
             $fieldAttributes = array_keys($fields);
-            $this->options = array_only($this->getAttributes(), $fieldAttributes);
+            $this->options = array_merge($this->options ?? [], array_only($this->getAttributes(), $fieldAttributes));
             $this->setRawAttributes(array_except($this->getAttributes(), $fieldAttributes));
         }
     }
