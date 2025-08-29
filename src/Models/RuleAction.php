@@ -156,7 +156,7 @@ class RuleAction extends Model
         $config = $actionObj->getFieldConfig();
         if ($fields = array_get($config, 'fields')) {
             $fieldAttributes = array_keys($fields);
-            $this->options = array_only($this->options, $fieldAttributes);
+            $this->options = array_merge($this->options ?? [], array_only($this->getAttributes(), $fieldAttributes));
             $this->setRawAttributes(array_except($this->getAttributes(), $fieldAttributes));
         }
     }
