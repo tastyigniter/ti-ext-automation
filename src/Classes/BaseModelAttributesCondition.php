@@ -108,7 +108,7 @@ class BaseModelAttributesCondition extends BaseCondition
             return $this->modelAttributes;
         }
 
-        $attributes = array_map(function($info) {
+        $attributes = array_map(function(array|string $info): array {
             if (is_string($info)) {
                 $info = ['label' => $info];
             }
