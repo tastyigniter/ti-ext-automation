@@ -38,7 +38,7 @@ class BaseCondition extends AbstractBase
      * Returns information about this condition, including name and description.
      * @return array<string, string>
      */
-    public function conditionDetails()
+    public function conditionDetails(): array
     {
         return [
             'name' => 'Condition',

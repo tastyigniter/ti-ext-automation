@@ -52,7 +52,7 @@ class BaseAction extends AbstractBase
      * Returns information about this action, including name and description.
      * @return array<string, string>
      */
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Action',
