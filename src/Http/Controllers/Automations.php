@@ -113,7 +113,7 @@ class Automations extends AdminController
     protected function loadConnectorFormField($method, $context, $recordId): array
     {
         $actionClass = post('AutomationRule._'.str_singular($method));
-        throw_unless(strlen((string) $actionClass),
+        throw_unless(strlen((string)$actionClass),
             new FlashException(sprintf('Please select an %s to attach', str_singular($method)))
         );
 

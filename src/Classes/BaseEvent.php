@@ -20,7 +20,7 @@ class BaseEvent extends AbstractBase
      * Returns information about this event, including name and description.
      * @return array<string, string>
      */
-    public function eventDetails()
+    public function eventDetails(): array
     {
         return [
             'name' => 'Event',

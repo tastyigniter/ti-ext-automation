@@ -57,7 +57,7 @@ class BaseModelAttributesCondition extends BaseCondition
         return implode(' <b>AND</b> ', $result);
     }
 
-    protected function getConditionAttributePrefix($attribute, $attributes)
+    protected function getConditionAttributePrefix($attribute, array $attributes)
     {
         $result = [];
         if (isset($attributes[$attribute])) {

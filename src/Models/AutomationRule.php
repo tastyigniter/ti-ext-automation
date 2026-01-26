@@ -244,7 +244,7 @@ class AutomationRule extends Model
         }
     }
 
-    public static function createFromPreset($code, $preset): ?\Igniter\Automation\Models\AutomationRule
+    public static function createFromPreset($code, $preset): ?AutomationRule
     {
         $actions = array_get($preset, 'actions');
         if (!$actions || !is_array($actions)) {
