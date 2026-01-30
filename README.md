@@ -22,10 +22,6 @@ The TastyIgniter Automation extension allows you to automate certain actions wit
 
 Documentation can be found on the [TastyIgniter documentation website](https://tastyigniter.com/docs/extensions/automation).
 
-## Changelog
-
-Please see [CHANGELOG](https://github.com/tastyigniter/ti-ext-automation/blob/master/CHANGELOG.md) for more information on what has changed recently.
-
 ## Reporting issues
 
 If you find a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
