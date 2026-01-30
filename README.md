@@ -28,7 +28,7 @@ Please see [CHANGELOG](https://github.com/tastyigniter/ti-ext-automation/blob/ma
 
 ## Reporting issues
 
-If you find a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/ti-ext-automation/issues) on GitHub.
+If you find a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
 
 ## Contributing
 
