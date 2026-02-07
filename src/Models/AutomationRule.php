@@ -137,12 +137,12 @@ class AutomationRule extends Model
 
     public function getEventNameAttribute()
     {
-        return $this->getEventObject()->getEventName();
+        return $this->getEventObject()?->getEventName() ?? 'Unknown';
     }
 
     public function getEventDescriptionAttribute()
     {
-        return $this->getEventObject()->getEventDescription();
+        return $this->getEventObject()?->getEventDescription() ?? 'Unknown';
     }
 
     //
@@ -184,24 +184,26 @@ class AutomationRule extends Model
     {
         $class ??= $this->event_class;
 
-        if ($class && !$this->isClassExtendedWith($class)) {
-            $this->extendClassWith($class);
-        }
+        rescue(function() use ($class): void {
+            if ($class && !$this->isClassExtendedWith($class)) {
+                $this->extendClassWith($class);
+            }
 
-        $this->event_class = $class;
+            $this->event_class = $class;
+        });
 
-        return true;
+        return (bool) $this->event_class;
     }
 
     /**
      * Returns the event class extension object.
-     * @return BaseEvent
+     * @return BaseEvent|null
      */
     public function getEventObject(): mixed
     {
-        $this->applyEventClass();
-
-        return $this->asExtension($this->getEventClass());
+        return $this->applyEventClass()
+            ? $this->asExtension($this->getEventClass())
+            : null;
     }
 
     public function getEventClass()
