@@ -15,7 +15,7 @@ use Override;
 /**
  * @property int $id
  * @property int|null $automation_rule_id
- * @property string $class_name
+ * @property string|null $class_name
  * @property array $options
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -77,12 +77,12 @@ class RuleAction extends Model
 
     public function getNameAttribute()
     {
-        return $this->getActionObject()->getActionName();
+        return $this->getActionObject()?->getActionName() ?? 'Unknown';
     }
 
     public function getDescriptionAttribute()
     {
-        return $this->getActionObject()->getActionDescription();
+        return $this->getActionObject()?->getActionDescription() ?? 'Unknown';
     }
 
     //
@@ -118,13 +118,15 @@ class RuleAction extends Model
             $class = $this->class_name;
         }
 
-        if ($class && !$this->isClassExtendedWith($class)) {
-            $this->extendClassWith($class);
-        }
+        rescue(function() use ($class): void {
+            if ($class && !$this->isClassExtendedWith($class)) {
+                $this->extendClassWith($class);
+            }
 
-        $this->class_name = $class;
+            $this->class_name = $class;
+        });
 
-        return true;
+        return (bool) $this->class_name;
     }
 
     /**
@@ -132,9 +134,9 @@ class RuleAction extends Model
      */
     public function getActionObject(): mixed
     {
-        $this->applyActionClass();
-
-        return $this->asExtension($this->getActionClass());
+        return $this->applyActionClass()
+            ? $this->asExtension($this->getActionClass())
+            : null;
     }
 
     public function getActionClass()

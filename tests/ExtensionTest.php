@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Automation\Tests;
 
-use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Automation\AutomationRules\Actions\AssignToGroup;
 use Igniter\Automation\AutomationRules\Actions\SendMailTemplate;
@@ -38,7 +37,7 @@ it('extends action form fields on boot', function(): void {
     {
         public function __construct() {}
 
-        public function getController(): AdminController
+        public function getController(): Automations
         {
             return new Automations;
         }

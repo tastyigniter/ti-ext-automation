@@ -13,7 +13,7 @@ use Override;
 /**
  * @property int $id
  * @property int|null $automation_rule_id
- * @property string $class_name
+ * @property string|null $class_name
  * @property array $options
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -71,12 +71,12 @@ class RuleCondition extends Model
 
     public function getNameAttribute()
     {
-        return $this->getConditionObject()->getConditionName();
+        return $this->getConditionObject()?->getConditionName() ?? 'Unknown';
     }
 
     public function getDescriptionAttribute()
     {
-        return $this->getConditionObject()->getConditionDescription();
+        return $this->getConditionObject()?->getConditionDescription() ?? 'Unknown';
     }
 
     //
@@ -99,23 +99,25 @@ class RuleCondition extends Model
             $class = $this->class_name;
         }
 
-        if ($class && !$this->isClassExtendedWith($class)) {
-            $this->extendClassWith($class);
-        }
+        rescue(function() use ($class): void {
+            if ($class && !$this->isClassExtendedWith($class)) {
+                $this->extendClassWith($class);
+            }
 
-        $this->class_name = $class;
+            $this->class_name = $class;
+        });
 
-        return true;
+        return (bool) $this->class_name;
     }
 
     /**
-     * @return BaseCondition
+     * @return BaseCondition|null
      */
     public function getConditionObject(): mixed
     {
-        $this->applyConditionClass();
-
-        return $this->asExtension($this->getConditionClass());
+        return $this->applyConditionClass()
+            ? $this->asExtension($this->getConditionClass())
+            : null;
     }
 
     public function getConditionClass()
