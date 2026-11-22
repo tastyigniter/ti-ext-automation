@@ -113,9 +113,7 @@ class BaseModelAttributesCondition extends BaseCondition
                 $info = ['label' => $info];
             }
 
-            if (!isset($info['type'])) {
-                $info['type'] = 'string';
-            }
+            $info['type'] ??= 'string';
 
             return $info;
         }, $this->defineModelAttributes());

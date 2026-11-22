@@ -11,17 +11,12 @@ use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnDirectArrayRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictConstantReturnRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector;
-use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
-    ->withImportNames(removeUnusedImports: true)
     ->withPaths([
         __DIR__.'/database',
         __DIR__.'/src',
         __DIR__.'/tests',
-    ])
-    ->withRules([
-        DeclareStrictTypesRector::class,
     ])
     ->withSkip([
         CatchExceptionNameMatchingTypeRector::class,

@@ -7,7 +7,6 @@ return [
     'text_form_name' => 'Automation',
     'text_action_form_name' => 'Automation Rule Action',
     'text_condition_form_name' => 'Automation Rule Condition',
-    'text_tab_general' => 'General',
     'text_tab_logs' => 'Recent Failures',
     'text_empty' => 'No added automations',
     'text_condition_match_any' => 'Match ANY of the below',
@@ -30,9 +29,7 @@ return [
     'label_event' => 'Event',
     'label_actions' => 'Actions',
     'label_conditions' => 'Conditions',
-    'label_status' => 'Status',
 
-    'label_assign_to_staff' => 'Assign To Staff',
     'label_assign_to_staff_group' => 'Assign To Staff Group',
     'label_send_to_customer_group' => 'Send To Customer Group',
 

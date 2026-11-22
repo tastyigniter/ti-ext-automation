@@ -69,9 +69,9 @@ it('registers scheduled tasks', function(): void {
     $schedule->shouldReceive('name')->with('automation-order-schedule')->andReturnSelf()->once();
     $schedule->shouldReceive('name')->with('automation-reservation-schedule')->andReturnSelf()->once();
     $schedule->shouldReceive('name')->with('Automation Log Cleanup')->andReturnSelf()->once();
-    $schedule->shouldReceive('withoutOverlapping')->with(5)->andReturnSelf()->atMost(2);
-    $schedule->shouldReceive('runInBackground')->andReturnSelf()->atMost(2);
-    $schedule->shouldReceive('hourly')->andReturnSelf()->atMost(2);
+    $schedule->shouldReceive('withoutOverlapping')->with(5)->andReturnSelf()->atMost();
+    $schedule->shouldReceive('runInBackground')->andReturnSelf()->atMost();
+    $schedule->shouldReceive('hourly')->andReturnSelf()->atMost();
     $schedule->shouldReceive('command')->with('automation:cleanup')->andReturnSelf();
     $schedule->shouldReceive('daily')->andReturnSelf()->once();
 
